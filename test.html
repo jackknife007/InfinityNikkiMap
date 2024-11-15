@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>读取本地JSON文件</title>
+</head>
+<body>
+    <h1>读取本地JSON文件并打印内容</h1>
+    <script>
+        // 声明变量用来存储JSON数据
+        let jsonData;
+
+        // 使用fetch读取本地JSON文件
+        fetch('categories.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 将读取到的JSON数据存储到变量中
+                jsonData = data;
+                // 打印存储的数据
+                console.log(jsonData);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    </script>
+</body>
+</html>

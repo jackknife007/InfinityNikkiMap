@@ -1,0 +1,137 @@
+.map-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0;
+  position: relative;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+#map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: black; /* Set the background color to black */
+  z-index: 0;
+ 
+}
+.leaflet-popup-content-wrapper {
+  background: url("assets/backgrounds/wxnn.jpg") center; /* 自定义背景图片 */
+  background-size: cover;
+}
+.leaflet-popup-tip {
+  background-color: #f6efdd;
+}
+.leaflet-tooltip {
+  background-color: #f6efdd;
+  border: 2px solid #f6efdd;
+}
+.leaflet-tooltip-tip {
+  background-color: #f6efdd;
+}
+
+.map .leaflet-control-zoomslider {
+  width: 40px;
+  height: 200px;
+  font-size: 0;
+  display: block;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.map .leaflet-control-zoomslider-wrap {
+  background-color: initial;
+  border-bottom: none;
+  padding: 0;
+}
+.map
+  .leaflet-control-zoomslider
+  > a.leaflet-bar-part.leaflet-control-zoomslider-in {
+  background-image: url("/assets/icons/zoom/plus.png");
+  border-radius: 10px;
+  border: 1px solid hsla(0, 0%, 100%, 0.5);
+  margin-bottom: 5px;
+}
+.map
+  .leaflet-control-zoomslider
+  > a.leaflet-bar-part.leaflet-control-zoomslider-out {
+  background-image: url("/assets/icons/zoom/minus.png");
+  border-radius: 10px;
+  border: 1px solid hsla(0, 0%, 100%, 0.5);
+  margin-top: 5px;
+}
+.map .leaflet-control-zoomslider > a.leaflet-bar-part {
+  background-color: transparent;
+  margin-left: 10px;
+  border: none;
+  width: 20px;
+  height: 20px;
+  color: #864f7000;
+  background-size: 100% 100%;
+}
+
+.map .leaflet-control-zoomslider .leaflet-control-zoomslider-body {
+  width: 10px;
+  border-radius: 4px;
+  background: rgb(223, 159, 169);
+  border: 1px solid hsla(0, 0%, 100%, 0.5);
+  position: relative;
+  margin: 0 auto;
+}
+.map
+  .leaflet-control-zoomslider
+  .leaflet-control-zoomslider-body
+  .leaflet-control-zoomslider-knob {
+  width: 45px;
+  height: 45px;
+  left: -9px;
+  bottom: 15px;
+  background-image: url("/assets/icons/zoom/momo.png");
+  background-size: 100% 100%;
+  background-position: 100%;
+  background-color: initial !important;
+  border: none !important;
+  margin-left: -10px;
+  cursor: pointer;
+}
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.popup-content img {
+  max-width: 100px;
+  max-height: 100px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.popup-content .text {
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.popup-content button {
+  padding: 5px 10px;
+  background-color: #ffadd2; /* 粉色背景 */
+  border: none;
+  color: white;
+  border-radius: 20px; /* 圆角按钮 */
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.popup-content button:hover {
+  background-color: #ff69b4; /* 深粉色背景 */
+}

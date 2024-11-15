@@ -1,0 +1,8 @@
+{
+  "git.ignoreLimitWarning": true,
+  "liveServer.settings.AdvanceCustomBrowserCmdLine": "",
+  "liveServer.settings.host": "0.0.0.0",  // 允许所有IP访问
+  "liveServer.settings.port": 5500,        // 指定端口
+  "liveServer.settings.useLocalIp": true   // 使用本地IP
+}
+}

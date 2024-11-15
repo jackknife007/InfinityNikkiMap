@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>侧边栏示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            color: white;
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 25px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+        .close-div {
+            position: absolute;
+            top: 20px;
+            left: 250px; /* Ensure it's placed right next to the sidebar */
+            transform: translateX(-50%); /* Ensure it's centered */
+            font-size: 40px; /* Adjust size */
+            color: white;
+            background-color: #111;
+            padding: 10px;
+            cursor: pointer;
+            transition: 0.5s; /* Smooth transition */
+        }
+        #main {
+            transition: margin-left 0.5s;
+            padding: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <div id="sidebar" class="sidebar">
+        <a href="#">链接1</a>
+        <a href="#">链接2</a>
+        <a href="#">链接3</a>
+    </div>
+    <div class="close-div" onclick="toggleSidebar()">◀</div>
+</div>
+
+<div id="main">
+    <h2>页面内容</h2>
+    <p>这里是主要内容区域。fasfasfasfasfasfasf789asfuaj;snfjashgfasfa</p>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const closeDiv = document.querySelector(".close-div");
+        const main = document.getElementById("main");
+
+        if (sidebar.style.width === "0px" || sidebar.style.width === "") {
+            sidebar.style.width = "250px";
+            closeDiv.style.left = "250px"; // Move closeDiv next to the sidebar
+        } else {
+            sidebar.style.width = "0px";
+            closeDiv.style.left = "0px"; // Hide closeDiv or move it out of view
+        }
+    }
+</script>
+
+</body>
+</html>

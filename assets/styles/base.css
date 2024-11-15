@@ -1,0 +1,191 @@
+:root {
+  --swiper-navigation-size: 44px;
+}
+:root {
+  --gt-light-text-white: #fff;
+  --gt-light-text-primary: rgba(255, 255, 255, 0.9);
+  --gt-light-text-secondary: rgba(255, 255, 255, 0.65);
+  --gt-light-text-tertiary: rgba(255, 255, 255, 0.45);
+  --gt-light-text-quaternary: rgba(255, 255, 255, 0.35);
+  --gt-dark-text-black: #000;
+  --gt-dark-text-primary: rgba(0, 0, 0, 0.9);
+  --gt-dark-text-secondary: rgba(0, 0, 0, 0.65);
+  --gt-dark-text-tertiary: rgba(0, 0, 0, 0.45);
+  --gt-dark-text-quaternary: rgba(0, 0, 0, 0.25);
+  --gt-general-function-background: rgba(0, 0, 0, 0.65);
+  --gt-general-function-toast: rgba(0, 0, 0, 0.75);
+  --general-game-elemental-pyro: #ff6640;
+  --general-game-elemental-hydro: #00c0ff;
+  --general-game-elemental-anemo: #33d7a0;
+  --general-game-elemental-electro: #cc80ff;
+  --general-game-elemental-dendro: #90cc00;
+  --general-game-elemental-cyro: #7af2f2;
+  --general-game-elemental-geo: #ffb00d;
+  --general-game-quality-golden-1: #f2d230;
+  --general-game-quality-purple-1: #ec90f2;
+  --general-game-quality-blue-1: #47dce5;
+  --general-game-quality-green-1: #9be53d;
+  --general-game-quality-grey-1: #bfbfbf;
+  --general-game-quality-golden-2: #bb6a32;
+  --general-game-quality-purple-2: #a056dd;
+  --general-game-quality-blue-2: #547ecc;
+  --general-game-quality-green-2: #279070;
+  --general-game-quality-grey-2: #70768b;
+  --general-game-quality-golden-3: linear-gradient(#91653f 0%, #e7944a 100%);
+  --general-game-quality-purple-3: linear-gradient(#634c84 0%, #9b72d5 100%);
+  --general-game-quality-blue-3: linear-gradient(#416a83 0%, #4e9fcf 100%);
+  --general-game-quality-green-3: linear-gradient(#406d56 0%, #4ca276 100%);
+  --general-game-quality-grey-3: linear-gradient(#656565 0%, #949494 100%);
+  --general-game-quality-golden-4: linear-gradient(
+    rgba(187, 124, 69, 0) 0%,
+    #bb7c45 32.29%
+  );
+  --general-game-quality-purple-4: linear-gradient(
+    rgba(143, 111, 175, 0) 0%,
+    #8f6fae 27.65%
+  );
+  --general-game-quality-blue-4: linear-gradient(
+    rgba(83, 146, 184, 0) 0%,
+    #5392b8 29.35%
+  );
+  --general-game-quality-green-4: linear-gradient(
+    rgba(81, 144, 114, 0) 0%,
+    #519072 29.69%
+  );
+  --general-game-quality-grey-4: linear-gradient(
+    rgba(136, 135, 137, 0) 0%,
+    #888789 28.65%
+  );
+  --general-function-yellow: #ffcc33;
+  --general-function-red: #ff5e41;
+  --general-function-blue: #37a5ea;
+  --general-function-green: #9be53d;
+  --general-function-cyan: #4dffff;
+  --general-grey-white-1: rgba(255, 255, 255, 1);
+  --general-grey-white-2: rgba(255, 255, 255, 0.48);
+  --general-grey-white-3: rgba(255, 255, 255, 0.32);
+  --general-grey-white-4: rgba(255, 255, 255, 0.16);
+  --general-grey-white-5: rgba(255, 255, 255, 0.12);
+  --general-grey-white-6: rgba(255, 255, 255, 0.08);
+  --general-grey-black-1: rgba(0, 0, 0, 1);
+  --general-grey-black-2: rgba(0, 0, 0, 0.48);
+  --general-grey-black-3: rgba(0, 0, 0, 0.32);
+  --general-grey-black-4: rgba(0, 0, 0, 0.16);
+  --general-grey-black-5: rgba(0, 0, 0, 0.12);
+  --general-grey-black-6: rgba(0, 0, 0, 0.08);
+  --light-grey-white-1: #f4efe8;
+  --light-grey-white-2: #f0eae0;
+  --light-grey-white-3: #ece5d8;
+  --light-grey-white-4: #dbd1bf;
+  --light-grey-white-5: #cbbda7;
+  --light-grey-white-6: #bca890;
+  --light-brand-golden-1: #e7d8b3;
+  --light-brand-golden-2: #ddca9f;
+  --light-brand-golden-3: #d3bc8e;
+  --light-brand-golden-4: #c3aa80;
+  --light-brand-golden-5: #b49872;
+  --light-brand-yellow-1: #e5d7bb;
+  --light-brand-yellow-2: #dcc9a5;
+  --light-brand-yellow-3: #d3bc8e;
+  --light-brand-yellow-4: #c2aa80;
+  --light-brand-yellow-5: #b29a76;
+  --dark-grey-blue-1: #2c323d;
+  --dark-grey-blue-2: #3b4252;
+  --dark-grey-blue-3: #4a5366;
+  --dark-grey-blue-4: #586172;
+  --dark-grey-blue-5: #676e7e;
+  --dark-grey-blue-6: #757c8b;
+  --dark-brand-golden-1: #b1987d;
+  --dark-brand-golden-2: #a58769;
+  --dark-brand-golden-3: #997754;
+  --dark-brand-golden-4: #816447;
+  --dark-brand-golden-5: #685139;
+  --dark-brand-yellow-1: #ceb096;
+  --dark-brand-yellow-2: #c29e7d;
+  --dark-brand-yellow-3: #b78b64;
+  --dark-brand-yellow-4: #a17a58;
+  --dark-brand-yellow-5: #8b6a4c;
+  --brown-grey-brown-1: #4d413b;
+  --brown-grey-brown-2: #5f5149;
+  --brown-grey-brown-3: #716057;
+  --brown-grey-brown-4: #82736b;
+  --brown-grey-brown-5: #93867f;
+  --brown-grey-brown-6: #b1a8a3;
+  --brown-brand-brown-1: #cbad8e;
+  --brown-brand-brown-2: #be9974;
+  --brown-brand-brown-3: #b28659;
+  --brown-brand-brown-4: #9d764e;
+  --brown-brand-brown-5: #8c6b49;
+  --light-text-white-1: #fff;
+  --light-text-white-2: rgba(255, 255, 255, 0.9);
+  --light-text-white-3: rgba(255, 255, 255, 0.65);
+  --light-text-white-4: rgba(255, 255, 255, 0.45);
+  --light-text-white-5: rgba(255, 255, 255, 0.35);
+  --dark-text-black-1: #000;
+  --dark-text-black-2: rgba(0, 0, 0, 0.9);
+  --dark-text-black-3: rgba(0, 0, 0, 0.65);
+  --dark-text-black-4: rgba(0, 0, 0, 0.45);
+  --dark-text-black-5: rgba(0, 0, 0, 0.25);
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+#root {
+  width: 100%;
+  height: 100%;
+  background-color: #fcf9fe;
+}
+#root,
+html {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+#root {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  left: 0;
+  top: 0;
+}
+* {
+  margin: 0;
+}
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+* {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-focus-ring-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.reflow-hacker {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-name: run;
+  animation-name: run;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+}
