@@ -47,12 +47,12 @@
 }
 
 .mapboxgl-ctrl-zoom-in {
-  background: url("./assets/icons/zooms/in.png");
+  background: url("../../assets/icons/zooms/in.png");
   background-size: cover;
 }
 
 .mapboxgl-ctrl-zoom-out {
-  background: url("./assets/icons/zooms/out.png");
+  background: url("../../assets/icons/zooms/out.png");
   background-size: cover;
 }
 
@@ -79,7 +79,7 @@
 .mapboxgl-ctrl-slider-thumb {
   width: 50px;
   height: 50px;
-  background: url("./assets/icons/zooms/momo.png") no-repeat center;
+  background: url("../../assets/icons/zooms/momo.png") no-repeat center;
   background-size: contain;
   position: absolute;
   left: 50%;
@@ -99,6 +99,6 @@
   cursor: pointer;
   border: none;
   outline: none;
-  background-image: url("./assets/icons/elf.png");
+  background-image: url("../../assets/icons/elf.png");
   background-size: cover;
 }

@@ -28,7 +28,7 @@
 .filter-panel__fold-icon {
   width: 0.5rem;
   height: 0.5rem;
-  background-image: url("./assets/icons/arrow-left.png");
+  background-image: url("../../assets/icons/arrow-left.png");
   background-position: 20%;
   background-repeat: no-repeat;
   background-size: 0.3rem 0.3rem;
@@ -74,7 +74,7 @@
   display: -ms-flexbox;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  background: url("./assets/backgrounds/shenhu.png");
+  background: url("../../assets/backgrounds/shenhu.png");
   background-repeat: no-repeat; /* 防止图片重复 */
   background-position: center; /* 图片居中显示 */
   background-size: cover;
@@ -86,7 +86,7 @@
 }
 .filter-panel__header__img {
   height: 1.2rem;
-  background: url("./assets/backgrounds/wxnn-logo5.png");
+  background: url("../../assets/backgrounds/wxnn-logo5.png");
   background-size: 70%;
   margin: 0.1rem;
   background-position: center; /* 图片居中显示 */
@@ -265,7 +265,7 @@
 }
 
 .save-markers-btn {
-  background-image: url("./assets/icons/nikki.png");
+  background-image: url("../../assets/icons/nikki.png");
   width: 24px;
   height: 24px;
   background-size: contain;
