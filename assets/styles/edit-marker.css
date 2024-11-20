@@ -17,7 +17,7 @@ h3 {
 }
 
 .edit-form {
-  background: url("/assets/backgrounds/gezi.png");
+  background: url("./assets/backgrounds/gezi.png");
   background-size: 50%;
   display: flex;
   width: 400px;

@@ -145,7 +145,7 @@ function initLayerMarkers(categoryId, category) {
   };
 
   map.loadImage(
-    `/assets/icons/markers/${category.icon}.png`,
+    `./assets/icons/markers/${category.icon}.png`,
     (error, image) => {
       if (error) {
         console.warn(`图标 ${category.icon} 加载失败:`, error);

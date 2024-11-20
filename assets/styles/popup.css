@@ -6,7 +6,7 @@
 .mapboxgl-popup-content {
   min-width: 400px;
   height: 500px;
-  background: url("/assets/backgrounds/shenhu.png");
+  background: url("./assets/backgrounds/shenhu.png");
   border-radius: 8px;
   border: 2px ridge #d3bc8e92;
   padding: 15px;
@@ -40,7 +40,7 @@
 .marker-popup-copy-location-btn {
   height: 15px;
   width: 15px;
-  background: url("/assets/icons/copy.png") no-repeat;
+  background: url("./assets/icons/copy.png") no-repeat;
   background-size: contain;
   cursor: pointer;
 }
@@ -48,7 +48,7 @@
 .marker-popup-edit-marker-btn {
   height: 15px;
   width: 15px;
-  background: url("/assets/icons/edit.png") no-repeat;
+  background: url("./assets/icons/edit.png") no-repeat;
   background-size: contain;
   cursor: pointer;
 }
@@ -163,7 +163,7 @@
   cursor: pointer;
   height: 100%;
   width: 100%;
-  background: url("/assets/icons/media.png") no-repeat center;
+  background: url("./assets/icons/media.png") no-repeat center;
   background-size: 60%;
 }
 

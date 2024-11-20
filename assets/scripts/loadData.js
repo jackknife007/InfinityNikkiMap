@@ -7,10 +7,10 @@ let globalQuickPositions;
 async function loadData() {
   try {
     const [groups, categories, markers, qkPos] = await Promise.all([
-      fetch("/assets/data/groups.json").then((res) => res.json()),
-      fetch("/assets/data/categories.json").then((res) => res.json()),
-      fetch("/assets/data/markers.json").then((res) => res.json()),
-      fetch("/assets/data/quickPositions.json").then((res) => res.json()),
+      fetch("./assets/data/groups.json").then((res) => res.json()),
+      fetch("./assets/data/categories.json").then((res) => res.json()),
+      fetch("./assets/data/markers.json").then((res) => res.json()),
+      fetch("./assets/data/quickPositions.json").then((res) => res.json()),
     ]);
 
     var currentMarkerId = 0;

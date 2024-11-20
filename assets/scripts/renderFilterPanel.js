@@ -25,7 +25,7 @@ function renderFilterPanel() {
 
   // 创建 filter-panel__icon
   const filterPanelIcon = document.createElement("img");
-  filterPanelIcon.src = "/assets/icons/nikki.png";
+  filterPanelIcon.src = "./assets/icons/nikki.png";
   filterPanelIcon.className = "filter-panel__icon";
 
   // 创建 filter-panel__header
@@ -154,7 +154,7 @@ function renderFilterPanel() {
 
       // 添加图标
       const icon = document.createElement("img");
-      icon.src = `/assets/icons/markers/${category.icon}.png`;
+      icon.src = `./assets/icons/markers/${category.icon}.png`;
       icon.className = "filter-category__icon";
 
       // 添加标题
@@ -297,7 +297,7 @@ function renderFilterLocationPanel() {
   const filterLocationIcon = document.createElement("div");
   filterLocationIcon.className = "filter-location-icon";
   const filterLocationIconImg = document.createElement("img");
-  filterLocationIconImg.src = "/assets/icons/location.png";
+  filterLocationIconImg.src = "./assets/icons/location.png";
   filterLocationIconImg.className = "filter-location-icon-img";
   filterLocationIcon.appendChild(filterLocationIconImg);
 
