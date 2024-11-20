@@ -1,409 +1,88 @@
 <!DOCTYPE html>
 <html style="font-size: 100px; --gpx: 1px">
   <head>
-    <title>Leaflet Image</title>
-    <link rel="stylesheet" href="libs/leaflet/leaflet.css" />
-    <script src="libs/leaflet/leaflet.js"></script>
-    <link
-      rel="stylesheet"
-      href="libs/leaflet.zoomslider/L.Control.Zoomslider.css"
+    <title>无限暖暖在线地图</title>
+    <meta
+      content="无限暖暖，无限暖暖地图，无限暖暖互动地图，无限暖暖奇迹大陆"
+      name="keywords"
     />
-    <script src="libs/leaflet.zoomslider/L.Control.Zoomslider.js"></script>
+    <meta
+      content="无限暖暖在线地图，由黄大胖不胖制作，确保最新最全的地图信息。B站：黄大胖不胖"
+      name="description"
+    />
+    <link rel="icon" href="/assets/icons/favicon.png" type ="image/x-icon">
+    <link rel="shortcut icon" href="/assets/icons/favicon.png" type ="image/x-icon">
+    <script src="/libs/mapbox-gl/mapbox-gl.js"></script>
+    <link href="/libs/mapbox-gl/mapbox-gl.css" rel="stylesheet" />
+    <script src="/libs/clipboard/clipboard.min.js"></script>
     <link rel="stylesheet" href="assets/styles/base.css" />
     <link rel="stylesheet" href="assets/styles/map.css" />
-    <style>
-      .filter-panel {
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 4.15rem;
-        height: 100vh;
-        padding: 0.2rem;
-        z-index: 1;
-      }
-
-      .filter-panel__fold {
-        position: absolute;
-        right: -0.4rem;
-        width: 0.6rem;
-        height: 0.4rem;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        cursor: pointer;
-        top: 0.3rem;
-        background: linear-gradient(to right, #cfbe92, #ffffff63);
-        padding: 0.1rem;
-        border-radius: 0rem 0.12rem 0.12rem 0rem;
-      }
-      .filter-panel__fold-icon {
-        width: 0.5rem;
-        height: 0.5rem;
-        background-image: url("assets/icons/arrow-left.png");
-        background-position: 20%;
-        background-repeat: no-repeat;
-        background-size: 0.3rem 0.3rem;
-      }
-      .filter-panel__fold--active {
-        left: 0.6rem;
-        right: auto;
-        top: 0.26rem;
-      }
-      .filter-panel--hidden {
-        width: 0;
-        height: 0;
-      }
-      .filter-panel--hidden .filter-panel__body[data-v-0c5c71d6],
-      .filter-panel--hidden .filter-panel--hidden .filter-panel__header {
-        visibility: hidden;
-      }
-      .filter-panel__icon {
-        display: none;
-        width: 0.6rem;
-        height: 0.6rem;
-        position: absolute;
-        cursor: pointer;
-      }
-      .filter-panel__icon--active {
-        display: inline-block;
-        top: -0.08rem;
-      }
-      .filter-panel__fold--active .filter-panel__fold-icon {
-        -webkit-transform: rotate(180deg);
-        -ms-transform: rotate(180deg);
-        transform: rotate(180deg);
-      }
-      .filter-panel__content {
-        position: relative;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        background: url("/assets/backgrounds/wxnn-bg.jpg");
-        width: 100%;
-        height: 100%;
-        border-radius: 0.12rem 0.12rem 0.12rem 0.12rem;
-        visibility: visible;
-      }
-      .filter-panel__header {
-        height: 1.2rem;
-        background: url("/assets/backgrounds/wxnn-logo.png");
-        background-size: 50%;
-        background-position: center; /* 图片居中显示 */
-        background-repeat: no-repeat; /* 防止图片重复 */
-      }
-      .filter-panel__body {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-        flex-grow: 1;
-        overflow: hidden;
-        -webkit-box-align: stretch;
-        -ms-flex-align: stretch;
-        overflow-y: auto;
-        align-items: stretch;
-        border-radius: 0 0 0.12rem 0.12rem;
-        min-width: 0.97rem;
-        scrollbar-width: none;
-      }
-      .filter-panel__footer {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 0.56rem;
-        line-height: 0.16rem;
-        z-index: 2;
-      }
-      /* 添加样式 */
-      .filter-groups {
-        width: 100%;
-        padding: 0.1rem;
-      }
-
-      .filter-group {
-        margin-bottom: 0.2rem;
-      }
-
-      .filter-group__title {
-        font-size: 0.16rem;
-        font-weight: bold;
-        margin-bottom: 0.1rem;
-        color: #333;
-      }
-
-      .filter-group__categories {
-        display: flex;
-        flex-wrap: wrap;
-      }
-
-      .filter-category {
-        /* 添加固定宽度，使每行显示两个 */
-        flex: 0 0 calc(50% - 0.05rem); /* 50%减去间隔的一半 */
-        display: flex;
-        align-items: center;
-        padding: 0.08rem;
-        background: rgba(255, 255, 255, 0);
-        border-radius: 0.06rem;
-        cursor: pointer;
-        /* 防止内容溢出 */
-        overflow: hidden;
-        box-sizing: border-box;
-      }
-
-      .filter-category__title {
-        /* 防止文字溢出 */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .filter-category:hover {
-        background: rgba(255, 255, 255, 1);
-      }
-
-      .filter-category__icon {
-        width: 0.2rem;
-        height: 0.2rem;
-        margin-right: 0.06rem;
-      }
-
-      .filter-category__title {
-        font-size: 0.13rem;
-        color: #191818;
-      }
-      .location-button--folded {
-        display: none;
-      }
-      .location-button {
-        position: absolute;
-        left: 4.07rem;
-        top: 0.84rem;
-        z-index: 1;
-      }
-      .location-icon {
-        width: 0.4rem;
-        height: 0.4rem;
-        background-color: #f6efdd;
-        border-radius: 8px;
-        cursor: pointer;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-      }
-      .location-icon-img {
-        width: 0.3rem;
-        height: 0.28rem;
-      }
-
-      .location-popup {
-        position: absolute;
-        top: 0;
-        left: 100%;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        display: none;
-      }
-      @media only screen and (min-width: 900px) {
-        .location-popup {
-          padding-left: 0.12rem;
-        }
-      }
-      .location-list {
-        background: #f6efdd;
-        border-radius: 0.12rem;
-        box-shadow: 0 0.06rem 0.12rem rgba(0, 0, 0, 0.1);
-        padding: 0.1rem;
-      }
-      .location-list-title {
-        font-size: 0.14rem;
-        color: #d3bc8e;
-        padding: 0.12rem;
-        border-bottom: 1px solid rgba(86, 97, 120, 0.2);
-      }
-
-      @media only screen and (min-width: 900px) {
-        .location-list-title {
-          font-size: 0.16rem;
-        }
-      }
-
-      .location-button:hover .location-popup {
-        display: block;
-      }
-
-      .location-item {
-        position: relative;
-        z-index: 2;
-        font-size: 0.14rem;
-        line-height: 0.16rem;
-        color: #d3bc8e;
-        width: 0.8rem;
-        max-height: 6.45rem;
-        overflow-y: auto;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-      }
-
-      .location-item:hover {
-        background: #f5f5f5;
-      }
-    </style>
+    <link rel="stylesheet" href="assets/styles/filter.css" />
+    <link rel="stylesheet" href="assets/styles/popup.css" />
+    <link rel="stylesheet" href="assets/styles/edit-marker.css" />
   </head>
   <body>
     <div id="root" class>
       <div class="map-container">
-        <div class="reflow-hacker"></div>
         <div id="map" class="map"></div>
-        <div class="filter-panel">
-          <div class="filter-panel__fold">
-            <div class="filter-panel__fold-icon"></div>
-          </div>
-          <div class="filter-panel__content">
-            <img src="/assets/icons/nikki.png" class="filter-panel__icon" />
-            <div class="filter-panel__header"></div>
-            <div class="filter-panel__body"></div>
-            <div class="filter-panel__footer"></div>
-          </div>
-        </div>
-        <div class="location-button">
-          <div class="location-icon">
-            <img src="/assets/icons/location.png" class="location-icon-img" />
-          </div>
-          <div class="location-popup">
-            <div class="location-list">
-              <h3 class="location-list-title">地点列表</h3>
-              <div class="location-item" data-lat="0.3" data-lng="0.3">
-                地点1
-              </div>
-              <div class="location-item" data-lat="0.4" data-lng="0.4">
-                地点2
-              </div>
-              <div class="location-item" data-lat="0.5" data-lng="0.5">
-                地点3
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-    <script src="map.js"></script>
+    <script src="/assets/scripts/map.js"></script>
+    <script src="/assets/scripts/loadData.js"></script>
+    <script src="/assets/scripts/renderFilterPanel.js"></script>
+    <script src="/assets/scripts/editMarkers.js"></script>
+    <script src="/assets/scripts/renderMarkers.js"></script>
     <script>
-      // 加载数据
-      async function loadData() {
+      document.addEventListener("DOMContentLoaded", async () => {
+        const root = document.getElementById("root");
+        const formOverlay = createEditForm();
+        const contextMenu = initContextMenu();
+        root.appendChild(formOverlay);
+        root.appendChild(contextMenu);
+
         try {
-          const [groups, categories] = await Promise.all([
-            fetch("assets/data/groups.json").then((res) => res.json()),
-            fetch("assets/data/categories.json").then((res) => res.json()),
-          ]);
+          // 等待数据加载完成
+          await loadData();
 
-          renderFilterPanel(groups, categories);
+          initFilterPanel();
+
+          map.on("load", () => {
+            renderMarkers();
+            const url = new URL(window.location.href);
+            const locationId = url.searchParams.get("locationId");
+            if (locationId) {
+              const marker = globalMarkers.get(Number(locationId));
+              if (marker) {
+                map.flyTo({ center: [marker.lng, marker.lat], zoom: 5 });
+              }
+            }
+            const newUrl = window.location.pathname;
+            history.replaceState(null, "", newUrl);
+          });
+
+          const categorySelect = document.getElementById("edit-category");
+
+          // 添加分类选项
+          for (const [id, category] of globalCategories) {
+            const option = document.createElement("option");
+            option.value = id;
+            option.textContent = category.title;
+            categorySelect.appendChild(option);
+          }
         } catch (error) {
-          console.error("加载数据失败:", error);
+          console.error("初始化失败:", error);
         }
-      }
+      });
 
-      // 渲染面板
-      function renderFilterPanel(groups, categories) {
-        const filterBody = document.querySelector(".filter-panel__body");
-        filterBody.innerHTML = "";
-
-        const container = document.createElement("div");
-        container.className = "filter-groups";
-
-        groups.forEach((group) => {
-          // 创建分组容器
-          const groupDiv = document.createElement("div");
-          groupDiv.className = "filter-group";
-
-          // 添加分组标题
-          const groupTitle = document.createElement("div");
-          groupTitle.className = "filter-group__title";
-          groupTitle.textContent = group.title;
-          groupDiv.appendChild(groupTitle);
-
-          // 添加该分组下的类别
-          const categoryList = document.createElement("div");
-          categoryList.className = "filter-group__categories";
-
-          // 筛选属于该分组的类别
-          const groupCategories = categories.filter(
-            (cat) => cat.group_id === group.id
-          );
-          groupCategories.forEach((category) => {
-            const categoryDiv = document.createElement("div");
-            categoryDiv.className = "filter-category";
-
-            // 添加图标
-            const icon = document.createElement("img");
-            icon.src = "/assets/icons/marker/" + category.icon + ".png";
-            icon.className = "filter-category__icon";
-
-            // 添加标题
-            const title = document.createElement("span");
-            title.className = "filter-category__title";
-            title.textContent = category.title;
-
-            categoryDiv.appendChild(icon);
-            categoryDiv.appendChild(title);
-            categoryList.appendChild(categoryDiv);
-          });
-
-          groupDiv.appendChild(categoryList);
-          container.appendChild(groupDiv);
-        });
-
-        filterBody.appendChild(container);
-      }
-
-      function initFoldPanel() {
-        // 获取相关元素
-        const foldBtn = document.querySelector(".filter-panel__fold");
-        const filterPanel = document.querySelector(".filter-panel");
-        const filterHeader = document.querySelector(".filter-panel__header");
-        const filterIcon = document.querySelector(".filter-panel__icon");
-        const locationButton = document.querySelector(".location-button");
-
-        // 添加点击事件
-        foldBtn.addEventListener("click", () => {
-          foldBtn.classList.toggle("filter-panel__fold--active");
-          // 切换panel的class
-          filterPanel.classList.toggle("filter-panel--hidden");
-          // 切换header的class
-          filterHeader.classList.toggle("filter-panel__content--hidden");
-
-          filterIcon.classList.toggle("filter-panel__icon--active");
-          locationButton.classList.toggle("location-button--folded");
-        });
-
-        document.querySelectorAll(".location-item").forEach((item) => {
-          item.addEventListener("click", () => {
-            const lat = parseFloat(item.dataset.lat);
-            const lng = parseFloat(item.dataset.lng);
-            map.flyTo([lat, lng], 6, {
-              duration: 2, // 飞行时间(秒)
-              easeLinearity: 0.5,
-            });
-          });
-        });
-      }
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        loadData();
-        initFoldPanel();
+      var clipboardBtn = new ClipboardJS(".marker-popup-copy-location-btn");
+      clipboardBtn.on("success", function (e) {
+        e.clearSelection();
+        //showTooltip(e.trigger, "复制成功!");
+      });
+      clipboardBtn.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        //showTooltip(e.trigger, fallbackMessage(e.action));
       });
     </script>
   </body>

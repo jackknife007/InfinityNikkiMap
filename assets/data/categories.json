@@ -1,177 +1,184 @@
 [
-    {
-        "id": 1,
-        "title": "流转之柱",
-        "icon": "world_trans",
-        "group_id": 1,
-        "group_title": "地点"
-    },
-    {
-        "id": 2,
-        "title": "惊喜滚滚机",
-        "icon": "world_lottery",
-        "group_id": 1,
-        "group_title": "地点"
-    },
-    {
-        "id": 3,
-        "title": "搭配师协会",
-        "icon": "world_basecamp",
-        "group_id": 1,
-        "group_title": "地点"
-    },
-    {
-        "id": 4,
-        "title": "服装店",
-        "icon": "world_clothstore",
-        "group_id": 1,
-        "group_title": "地点"
-    },
-    {
-        "id": 5,
-        "title": "房屋建筑",
-        "icon": "world_house",
-        "group_id": 1,
-        "group_title": "地点"
-    },
-    {
-        "id": 6,
-        "title": "转转自行车租车站点",
-        "icon": "world_bike",
-        "group_id": 1,
-        "group_title": "地点"
-    },
-    {
-        "id": 7,
-        "title": "洞窟",
-        "icon": "world_cave",
-        "group_id": 1,
-        "group_title": "地点"
-    },
-    {
-        "id": 8,
-        "title": "副本",
-        "icon": "world_level",
-        "group_id": 1,
-        "group_title": "地点"
-    },
-    {
-        "id": 9,
-        "title": "滑翔小站",
-        "icon": "world_glide",
-        "group_id": 1,
-        "group_title": "地点"
-    },
-    {
-        "id": "10",
-        "title": "弹射海豹",
-        "icon": "world_seal",
-        "group_id": 1,
-        "group_title": "地点"
-    },
-    {
-        "id": "11",
-        "title": "小游戏",
-        "icon": "world_minigame",
-        "group_id": 1,
-        "group_title": "地点"
-    },
-    {
-        "id": "12",
-        "title": "唱诗蓝龙·基洛",
-        "icon": "npc_dragon",
-        "group_id": 2,
-        "group_title": "NPC"
-    },
-    {
-        "id": "13",
-        "title": "奇幻星商人-流浪帽仔",
-        "icon": "npc_star_merchant",
-        "group_id": 2,
-        "group_title": "NPC"
-    },
-    {
-        "id": "14",
-        "title": "搭配挑战NPC",
-        "icon": "npc_fightnpc",
-        "group_id": 2,
-        "group_title": "NPC"
-    },
-    {
-        "id": "15",
-        "title": "材料商人",
-        "icon": "npc_materialstore",
-        "group_id": 2,
-        "group_title": "NPC"
-    },
-    {
-        "id": "16",
-        "title": "奇想星",
-        "icon": "collection_star",
-        "group_id": 3,
-        "group_title": "收集"
-    },
-    {
-        "id": "17",
-        "title": "灵感露珠",
-        "icon": "collection_luzhu",
-        "group_id": 3,
-        "group_title": "收集"
-    },
-    {
-        "id": "18",
-        "title": "钻石宝箱",
-        "icon": "collection_chest",
-        "group_id": 3,
-        "group_title": "收集"
-    },
-    {
-        "id": "19",
-        "title": "设计图宝箱",
-        "icon": "collection_chest_cloth",
-        "group_id": 3,
-        "group_title": "收集"
-    },
-    {
-        "id": "20",
-        "title": "噗灵",
-        "icon": "collection_puling",
-        "group_id": 3,
-        "group_title": "收集"
-    },
-    {
-        "id": "21",
-        "title": "主线任务",
-        "icon": "quest_main",
-        "group_id": 4,
-        "group_title": "任务"
-    },
-    {
-        "id": "22",
-        "title": "世界任务",
-        "icon": "quest_shijie",
-        "group_id": 4,
-        "group_title": "任务"
-    },
-    {
-        "id": "23",
-        "title": "见闻任务",
-        "icon": "quest_jianwen",
-        "group_id": 4,
-        "group_title": "任务"
-    },
-    {
-        "id": "24",
-        "title": "拍照打卡点",
-        "icon": "custom_photo",
-        "group_id": 4,
-        "group_title": "任务"
-    },
-    {
-        "id": "25",
-        "title": "民俗游戏",
-        "icon": "custom_puzzle",
-        "group_id": 4,
-        "group_title": "任务"
-    }
+  {
+    "id": 1,
+    "title": "流转之柱",
+    "icon": "world_trans",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": 2,
+    "title": "惊喜滚滚机",
+    "icon": "world_lottery",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": 3,
+    "title": "搭配师协会",
+    "icon": "world_basecamp",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": 4,
+    "title": "服装店",
+    "icon": "world_clothstore",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": 5,
+    "title": "房屋建筑",
+    "icon": "world_house",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": 6,
+    "title": "转转自行车租车站点",
+    "icon": "world_bike",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": 7,
+    "title": "洞窟",
+    "icon": "world_cave",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": 8,
+    "title": "副本",
+    "icon": "world_level",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": 9,
+    "title": "滑翔小站",
+    "icon": "world_glide",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": "10",
+    "title": "弹射海豹",
+    "icon": "world_seal",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": "11",
+    "title": "小游戏",
+    "icon": "world_minigame",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": "12",
+    "title": "唱诗蓝龙·基洛",
+    "icon": "npc_dragon",
+    "groupId": 2,
+    "groupTitle": "NPC"
+  },
+  {
+    "id": "13",
+    "title": "奇幻星商人-流浪帽仔",
+    "icon": "npc_star_merchant",
+    "groupId": 2,
+    "groupTitle": "NPC"
+  },
+  {
+    "id": "14",
+    "title": "搭配挑战NPC",
+    "icon": "npc_fightnpc",
+    "groupId": 2,
+    "groupTitle": "NPC"
+  },
+  {
+    "id": "15",
+    "title": "材料商人",
+    "icon": "npc_materialstore",
+    "groupId": 2,
+    "groupTitle": "NPC"
+  },
+  {
+    "id": "16",
+    "title": "奇想星",
+    "icon": "collection_star",
+    "groupId": 3,
+    "groupTitle": "收集"
+  },
+  {
+    "id": "17",
+    "title": "灵感露珠",
+    "icon": "collection_luzhu",
+    "groupId": 3,
+    "groupTitle": "收集"
+  },
+  {
+    "id": "18",
+    "title": "钻石宝箱",
+    "icon": "collection_chest",
+    "groupId": 3,
+    "groupTitle": "收集"
+  },
+  {
+    "id": "19",
+    "title": "设计图宝箱",
+    "icon": "collection_chest_cloth",
+    "groupId": 3,
+    "groupTitle": "收集"
+  },
+  {
+    "id": "20",
+    "title": "噗灵",
+    "icon": "collection_puling",
+    "groupId": 3,
+    "groupTitle": "收集"
+  },
+  {
+    "id": "21",
+    "title": "主线任务",
+    "icon": "quest_main",
+    "groupId": 4,
+    "groupTitle": "任务"
+  },
+  {
+    "id": "22",
+    "title": "世界任务",
+    "icon": "quest_shijie",
+    "groupId": 4,
+    "groupTitle": "任务"
+  },
+  {
+    "id": "23",
+    "title": "见闻任务",
+    "icon": "quest_jianwen",
+    "groupId": 4,
+    "groupTitle": "任务"
+  },
+  {
+    "id": "24",
+    "title": "拍照打卡点",
+    "icon": "custom_photo",
+    "groupId": 4,
+    "groupTitle": "任务"
+  },
+  {
+    "id": "25",
+    "title": "民俗游戏",
+    "icon": "custom_puzzle",
+    "groupId": 4,
+    "groupTitle": "任务"
+  },
+  {
+    "id": "26",
+    "title": "自定义",
+    "icon": "other_default",
+    "groupId": 5,
+    "groupTitle": "其他"
+  }
 ]

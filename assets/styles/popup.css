@@ -1,0 +1,280 @@
+.mapboxgl-popup-tip {
+  transform: translate(0px, -230px);
+  border-right-color: #e5e0d4 !important ; /* 当tip朝下时 */
+}
+
+.mapboxgl-popup-content {
+  min-width: 400px;
+  height: 500px;
+  background: url("/assets/backgrounds/shenhu.png");
+  border-radius: 8px;
+  border: 2px ridge #d3bc8e92;
+  padding: 15px;
+}
+
+.marker-popup {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* 充满父容器高度 */
+}
+
+.marker-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.marker-popup-header-left {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.marker-popup-header-left span {
+  font-size: 25px;
+  color: rgb(209, 207, 184);
+}
+
+.marker-popup-copy-location-btn {
+  height: 15px;
+  width: 15px;
+  background: url("/assets/icons/copy.png") no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+
+.marker-popup-edit-marker-btn {
+  height: 15px;
+  width: 15px;
+  background: url("/assets/icons/edit.png") no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+
+.marker-popup-update-time {
+  font-size: 11px;
+  color: rgb(209, 207, 184);
+  opacity: 0.8;
+  padding-right: 10px;
+}
+
+.marker-popup-body {
+  overflow-y: auto; /* 添加垂直滚动条 */
+  scrollbar-width: thin; /* Firefox滚动条样式 */
+  scrollbar-color: #d3bc8e transparent; /* 滚动条颜色 */
+  padding-right: 5px; /* 为滚动条留出空间 */
+  display: flex;
+  flex-direction: column;
+}
+
+.marker-popup-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.marker-popup-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.marker-popup-body::-webkit-scrollbar-thumb {
+  background-color: #d3bc8e;
+  border-radius: 3px;
+}
+
+.marker-popup-body::-webkit-scrollbar-thumb:hover {
+  background-color: #c4ad7f;
+}
+
+.marker-popup-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.marker-popup-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #d3bc8e;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.marker-popup-description {
+  margin: 8px 0;
+  font-size: 16px;
+  color: rgb(219, 218, 197);
+  white-space: pre-wrap; /* 保留换行符和空格 */
+  line-height: 1.3;
+}
+
+/* footer固定在底部 */
+.marker-popup-footer {
+  margin-top: 10px; /* 将剩余空间推到上方 */
+  flex-shrink: 0; /* 防止footer被压缩 */
+  padding: 5px 0; /* 适当的内边距 */
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+}
+
+.marker-popup-author {
+  font-size: 14px;
+  color: rgb(168, 165, 130);
+}
+
+.marker-popup-author a {
+  color: rgb(211, 188, 142); /* 链接颜色 */
+  transition: all 0.2s ease; /* 平滑过渡效果 */
+}
+
+.marker-popup-author a:hover {
+  color: rgb(230, 215, 187); /* 悬停时颜色 */
+  text-decoration: underline; /* 悬停时显示下划线 */
+  opacity: 0.9; /* 轻微透明效果 */
+}
+
+.marker-popup-author a:active {
+  color: rgb(180, 165, 130); /* 点击时颜色 */
+}
+
+.marker-popup-video {
+  height: 100%;
+  width: 30px; 
+}
+
+.marker-popup-video-img {
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  background: url("/assets/icons/media.png") no-repeat center;
+  background-size: 60%;
+}
+
+.marker-popup-ignore-control {
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  background-color: rgb(89, 111, 109);
+  border: 1px ridge #d3bc8e;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  gap: 5px;
+  border-radius: 0.05rem;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.marker-popup-ignore-text {
+  font-size: 12px;
+  color: rgb(219, 218, 198);
+}
+
+.marker-popup-ignore-checkbox {
+  margin: 0; /* 移除默认边距 */
+  cursor: pointer; /* 鼠标手型 */
+  accent-color: #d3bc8e; /* 复选框颜色 */
+}
+
+.mapboxgl-popup-close-button {
+  font-size: 20px;
+  color: rgb(209, 207, 184);
+}
+
+/* 图片放大相关样式 */
+.image-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.large-image-container {
+  position: relative;
+  max-width: 70%;
+  max-height: 70%;
+}
+
+.large-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+.image-close-btn {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 30px;
+  height: 30px;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 视频播放相关样式 */
+/* 全屏遮罩样式 */
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.video-container {
+  position: relative;
+  width: 70%;
+  height: 70%;
+}
+
+.video-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-close-btn {
+  position: absolute;
+  top: 0px;
+  right: 15px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.video-close-btn:hover {
+  transform: scale(1.1);
+}
