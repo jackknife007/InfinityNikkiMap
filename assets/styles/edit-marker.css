@@ -27,6 +27,25 @@ h3 {
   border-radius: 10px;
 }
 
+.edit-form h3 {
+  color: rgb(57, 68, 67);
+  margin-bottom: 5px;
+}
+
+.edit-form-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 5px;
+}
+
+.edit-form-label {
+  font-size: 13px;
+  min-width: 35px;
+  text-align: left;
+  color: rgb(57, 68, 67);
+}
+
 .edit-form input,
 .edit-form textarea,
 .edit-form select {
@@ -57,7 +76,6 @@ h3 {
 /* 添加下拉框样式 */
 #edit-category {
   width: 100%;
-  margin-bottom: 10px;
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;

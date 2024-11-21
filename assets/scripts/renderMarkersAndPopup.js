@@ -140,7 +140,13 @@ class PopupContent {
       this.imageContainer.innerHTML = '<div class="loading-spinner"></div>';
 
       const img = new Image();
-      img.src = marker.image;
+      var imgUrl = marker.image;
+      if ((marker.image.match(/\./g)?.length || 0) === 1) {
+        imgUrl = "./assets/images/markers/" + marker.image;
+      } else if (marker.image.startsWith("http")) {
+        img.crossOrigin = "anonymous";
+      }
+      img.src = imgUrl;
       img.alt = marker.name;
       img.className = "marker-popup-image";
 
@@ -160,7 +166,7 @@ class PopupContent {
 
           // 创建大图
           const largeImg = new Image();
-          largeImg.src = marker.image;
+          largeImg.src = imgUrl;
           largeImg.className = "large-image";
 
           // 创建关闭按钮
@@ -170,7 +176,7 @@ class PopupContent {
 
           // 点击遮罩或关闭按钮时关闭
           overlay.addEventListener("click", (e) => {
-            if (e.target === overlay) {
+            if (e.target === overlay || e.target === largeImg) {
               overlay.remove();
             }
           });

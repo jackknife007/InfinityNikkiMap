@@ -8,8 +8,8 @@
     "description": "This is a description for Marker 1.",
     "author": "黄大胖不胖",
     "authorLink": "https://space.bilibili.com/619196/",
-    "image": "/assets/images/2.jpg",
-    "video": "BV1w9p4ewEJ4",
+    "image": "1.jpg",
+    "video": "BV1bLU1YgEma",
     "ignore": false,
     "updateTime": "2024-11-19 18:41:09"
   },
@@ -22,8 +22,8 @@
     "description": "This is a description for Marker 2.",
     "author": "黄大胖不胖",
     "authorLink": "https://space.bilibili.com/619196/",
-    "image": "/assets/images/3.jpg",
-    "video": "BV1w9p4ewEJ4",
+    "image": "2.png",
+    "video": "BV1bLU1YgEma",
     "ignore": false,
     "updateTime": "2024-11-19 18:41:09"
   },
@@ -36,8 +36,8 @@
     "description": "This is a description for Marker 3.",
     "author": "黄大胖不胖",
     "authorLink": "https://space.bilibili.com/619196/",
-    "image": "/assets/images/3.jpg",
-    "video": "BV1w9p4ewEJ4",
+    "image": "3.png",
+    "video": "BV1bLU1YgEma",
     "ignore": false,
     "updateTime": "2024-11-19 18:41:09"
   },
@@ -50,8 +50,8 @@
     "description": "This is a description for Marker 4.",
     "author": "黄大胖不胖",
     "authorLink": "https://space.bilibili.com/619196/",
-    "image": "/assets/images/2.jpg",
-    "video": "BV1w9p4ewEJ4",
+    "image": "4.png",
+    "video": "BV1bLU1YgEma",
     "ignore": false,
     "updateTime": "2024-11-19 18:41:09"
   },
@@ -64,8 +64,8 @@
     "description": "This is a description for Marker 5.",
     "author": "黄大胖不胖",
     "authorLink": "https://space.bilibili.com/619196/",
-    "image": "/assets/images/2.jpg",
-    "video": "BV1w9p4ewEJ4",
+    "image": "5.png",
+    "video": "BV1bLU1YgEma",
     "ignore": true,
     "updateTime": "2024-11-19 18:41:09"
   }

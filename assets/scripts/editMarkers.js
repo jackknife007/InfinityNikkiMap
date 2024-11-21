@@ -76,17 +76,37 @@ function createEditForm() {
 
   // 创建表单元素
   const inputs = [
-    { id: "edit-name", type: "text", placeholder: "名称" },
-    { id: "edit-category", type: "select" },
-    { id: "edit-description", type: "textarea", placeholder: "描述" },
-    { id: "edit-image", type: "text", placeholder: "图片链接" },
-    { id: "edit-video", type: "text", placeholder: "视频链接" },
-    { id: "edit-author", type: "text", placeholder: "作者" },
-    { id: "edit-author-link", type: "text", placeholder: "作者链接" },
+    { id: "edit-name", type: "text", placeholder: "名称", label: "名称:" },
+    { id: "edit-category", type: "select", label: "分类:" },
+    {
+      id: "edit-description",
+      type: "textarea",
+      placeholder: "描述",
+      label: "描述:",
+    },
+    { id: "edit-image", type: "text", placeholder: "图片链接", label: "图片:" },
+    { id: "edit-video", type: "text", placeholder: "视频链接", label: "视频:" },
+    { id: "edit-author", type: "text", placeholder: "作者", label: "作者:" },
+    {
+      id: "edit-author-link",
+      type: "text",
+      placeholder: "作者链接",
+      label: "链接:",
+    },
   ];
 
   // 生成表单元素
   inputs.forEach((input) => {
+    // 创建包装容器
+    const wrapper = document.createElement("div");
+    wrapper.className = "edit-form-field";
+
+    // 创建标签
+    const label = document.createElement("label");
+    label.textContent = input.label;
+    label.className = "edit-form-label";
+
+    // 创建输入元素
     let element;
     if (input.type === "textarea") {
       element = document.createElement("textarea");
@@ -98,7 +118,11 @@ function createEditForm() {
     }
     element.id = input.id;
     element.placeholder = input.placeholder;
-    editForm.appendChild(element);
+
+    // 组装
+    wrapper.appendChild(label);
+    wrapper.appendChild(element);
+    editForm.appendChild(wrapper);
   });
 
   // 创建按钮容器
