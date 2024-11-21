@@ -107,60 +107,54 @@ function createPopupDomContent() {
 }
 
 function renderMarkers() {
-  map.on("click", (e) => {
-    // 查询点击位置的图层
-    const features = map.queryRenderedFeatures(e.point, {
-      layers: Array.from(globalCategories.keys()).map(
-        (id) => `category-layer-${id}`
-      ),
-    });
-
-    // 如果点击位置没有找到任何 category-layer
-    if (features.length === 0) {
-      // 关闭所有 popup
-      popup.remove();
-      popupMarker = 0;
-    }
-  });
   for (const [categoryId, category] of globalCategories.entries()) {
     initLayerMarkers(categoryId, category);
   }
 }
 
 function initLayerMarkers(categoryId, category) {
-  // 创建 GeoJSON 数据
-  const geojson = {
-    type: "FeatureCollection",
-    features: Array.from(category.markersId).map((markerId) => {
-      const marker = globalMarkers.get(markerId);
-      return {
-        type: "Feature",
-        id: markerId,
-        geometry: {
-          type: "Point",
-          coordinates: [marker.lng, marker.lat],
-        },
-      };
-    }),
-  };
+  // 检查图片是否已加载
+  if (map.hasImage(category.icon)) {
+    addLayerWithSource();
+    return;
+  }
 
+  // 加载图片
   map.loadImage(
     `./assets/icons/markers/${category.icon}.png`,
     (error, image) => {
       if (error) {
         console.warn(`图标 ${category.icon} 加载失败:`, error);
-        throw error;
+        return;
       }
 
       map.addImage(category.icon, image);
-
-      // 添加数据源
+      addLayerWithSource();
+    }
+  );
+  function addLayerWithSource() {
+    // 添加数据源和图层的代码
+    if (!map.getSource(`category-${categoryId}`)) {
       map.addSource(`category-${categoryId}`, {
         type: "geojson",
-        data: geojson,
+        data: {
+          type: "FeatureCollection",
+          features: Array.from(category.markersId).map((markerId) => {
+            const marker = globalMarkers.get(markerId);
+            return {
+              type: "Feature",
+              id: markerId,
+              geometry: {
+                type: "Point",
+                coordinates: [marker.lng, marker.lat],
+              },
+            };
+          }),
+        },
       });
+    }
 
-      // 添加图层
+    if (!map.getLayer(`category-layer-${categoryId}`)) {
       map.addLayer({
         id: `category-layer-${categoryId}`,
         type: "symbol",
@@ -169,6 +163,7 @@ function initLayerMarkers(categoryId, category) {
           "icon-image": category.icon,
           "icon-size": 0.5,
           "icon-allow-overlap": true,
+          "icon-ignore-placement": true, // 禁用图标自动调整位置
         },
         paint: {
           "icon-opacity": [
@@ -179,10 +174,9 @@ function initLayerMarkers(categoryId, category) {
           ],
         },
       });
-
       InitIgnoreMarker(categoryId);
     }
-  );
+  }
 
   // 添加点击事件
   map.on("click", `category-layer-${categoryId}`, (e) => {
@@ -389,6 +383,22 @@ function initLayerMarkers(categoryId, category) {
     );
     if (features.length === 0 || isCategoryInFeatures) {
       map.getCanvas().style.cursor = "";
+    }
+  });
+
+  map.on("click", (e) => {
+    // 查询点击位置的图层
+    const features = map.queryRenderedFeatures(e.point, {
+      layers: Array.from(globalCategories.keys()).map(
+        (id) => `category-layer-${id}`
+      ),
+    });
+
+    // 如果点击位置没有找到任何 category-layer
+    if (features.length === 0) {
+      // 关闭所有 popup
+      popup.remove();
+      popupMarker = 0;
     }
   });
 }

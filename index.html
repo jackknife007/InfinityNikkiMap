@@ -44,10 +44,9 @@
           // 等待数据加载完成
           await loadData();
 
-          initFilterPanel();
-
           map.on("load", () => {
             renderMarkers();
+            initFilterPanel();
             const url = new URL(window.location.href);
             const locationId = url.searchParams.get("locationId");
             if (locationId) {
