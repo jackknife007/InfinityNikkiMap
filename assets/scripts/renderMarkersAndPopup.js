@@ -84,9 +84,9 @@ class PopupContent {
 
     checkbox.addEventListener("change", () => {
       const markerId = Number(editBtn.dataset.markerId);
-      changeMarkerIgnoreState(markerId);
-      setIgnoreMarkerOnLayer(markerId);
       const marker = globalMarkers.get(markerId);
+      changeMarkerIgnoreState(marker);
+      setIgnoreMarkerOnLayer(marker);
       updateCategoryCountShow(marker.categoryId, true);
     });
     ignoreControl.appendChild(checkbox);
@@ -409,9 +409,10 @@ function initLayerMarkers(categoryId, category) {
   map.on("contextmenu", `category-layer-${categoryId}`, (e) => {
     e.preventDefault();
     const feature = e.features[0];
-    changeMarkerIgnoreState(feature.id);
-    setIgnoreMarkerOnLayer(feature.id);
-    setIgnoreCheckBoxState(feature.id);
+    const marker = globalMarkers.get(feature.id);
+    changeMarkerIgnoreState(marker);
+    setIgnoreMarkerOnLayer(marker);
+    popupContent.setIgnoreCheckBoxState(marker);
     updateCategoryCountShow(categoryId, true);
   });
 
@@ -446,19 +447,17 @@ function initLayerMarkers(categoryId, category) {
   });
 }
 
-function setIgnoreMarkerOnLayer(markerId) {
-  const marker = globalMarkers.get(markerId);
+function setIgnoreMarkerOnLayer(marker) {
   map.setFeatureState(
     {
       source: `category-${marker.categoryId}`,
-      id: markerId,
+      id: marker.id,
     },
     { transparent: marker.ignore }
   );
 }
 
-function changeMarkerIgnoreState(markerId) {
-  const marker = globalMarkers.get(markerId);
+function changeMarkerIgnoreState(marker) {
   const ignore = !marker.ignore;
   marker.ignore = ignore;
   globalCategories
@@ -470,6 +469,7 @@ function changeMarkerIgnoreState(markerId) {
 
 function InitIgnoreMarker(categoryId) {
   for (markerId of globalCategories.get(categoryId).ignoredMarkers) {
-    setIgnoreMarkerOnLayer(markerId);
+    const marker = globalMarkers.get(markerId);
+    setIgnoreMarkerOnLayer(marker);
   }
 }

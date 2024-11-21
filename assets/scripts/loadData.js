@@ -76,7 +76,6 @@ function saveEditedMarkersToStorage() {
   try {
     const markersArray = Array.from(localEditedMarkers.entries());
     localStorage.setItem("localEditedMarkers", JSON.stringify(markersArray));
-    console.log("保存编辑记录成功");
   } catch (error) {
     console.error("保存编辑记录失败:", error);
   }
