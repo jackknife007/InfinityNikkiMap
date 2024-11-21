@@ -135,10 +135,16 @@ function createEditForm() {
       id: nextMarkerId,
       lng: Number(contextMenu.dataset.lng),
       lat: Number(contextMenu.dataset.lat),
+      ignore: false,
       ...getFormData(),
     };
     nextMarkerId += 1;
     globalMarkers.set(newMarker.id, newMarker);
+
+    // 保存到localStorage
+    localEditedMarkers.set(newMarker.id, newMarker);
+    saveEditedMarkersToStorage();
+
     addMarkerToCategorySource(newMarker, newMarker.categoryId);
     hideformOverlay();
   });
@@ -152,10 +158,15 @@ function createEditForm() {
     };
     globalMarkers.set(markerId, updatedMarker);
 
+    // 保存到localStorage
+    localEditedMarkers.set(markerId, updatedMarker);
+    saveEditedMarkersToStorage();
+
     // 如果category发生变化
     if (marker.category !== updatedMarker.categoryId) {
       deleteMarkerFromCategorySource(marker, marker.categoryId);
       addMarkerToCategorySource(updatedMarker, updatedMarker.categoryId);
+      setIgnoreMarkerOnLayer(markerId);
     }
 
     hideformOverlay();
@@ -166,6 +177,16 @@ function createEditForm() {
     const marker = globalMarkers.get(markerId);
     deleteMarkerFromCategorySource(marker, marker.categoryId);
     globalMarkers.delete(markerId);
+
+    // 保存到localStorage
+    localEditedMarkers.delete(markerId);
+    localDeletedMarkers.add(markerId);
+    if (localEditedMarkers.has(markerId)) {
+      localEditedMarkers.delete(markerId);
+    }
+    saveDeletedMarkersToStorage();
+    saveEditedMarkersToStorage();
+
     hideformOverlay();
   });
 
@@ -185,7 +206,6 @@ function getFormData() {
     author: document.getElementById("edit-author").value,
     authorLink: document.getElementById("edit-author-link").value,
     categoryId: Number(document.getElementById("edit-category").value),
-    ignore: false,
     updateTime: new Date()
       .toLocaleString("zh-cn", {
         year: "numeric",
@@ -202,7 +222,6 @@ function getFormData() {
 
 function hideformOverlay() {
   formOverlay.style.visibility = "hidden";
-  console.log(globalMarkers);
 }
 
 function addMarkerToCategorySource(marker, categoryId) {

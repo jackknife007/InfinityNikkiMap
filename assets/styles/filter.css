@@ -8,36 +8,6 @@
   z-index: 1;
 }
 
-.filter-panel__fold {
-  position: absolute;
-  right: -0.4rem;
-  width: 0.6rem;
-  height: 0.4rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  cursor: pointer;
-  top: 0.3rem;
-  background: linear-gradient(to right, rgb(89, 111, 109), #878787b2);
-  padding: 0.1rem;
-  border-radius: 0rem 0.12rem 0.12rem 0rem;
-}
-.filter-panel__fold-icon {
-  width: 0.5rem;
-  height: 0.5rem;
-  background-image: url("../../assets/icons/arrow-left.png");
-  background-position: 20%;
-  background-repeat: no-repeat;
-  background-size: 0.3rem 0.3rem;
-}
-.filter-panel__fold--active {
-  left: 0.6rem;
-  right: auto;
-  top: 0.26rem;
-}
 .filter-panel--hidden {
   width: 0;
   height: 0;
@@ -52,22 +22,7 @@
 .filter-panel--hidden .filter-panel__footer {
   visibility: hidden;
 }
-.filter-panel__icon {
-  display: none;
-  width: 0.67rem;
-  height: 0.67rem;
-  position: absolute;
-  cursor: pointer;
-}
-.filter-panel__icon--active {
-  display: inline-block;
-  top: -0.08rem;
-}
-.filter-panel__fold--active .filter-panel__fold-icon {
-  -webkit-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
+
 .filter-panel__content {
   position: relative;
   display: -webkit-box;
@@ -264,7 +219,7 @@
   color: #d3bc8e;
 }
 
-.save-markers-btn {
+.filter-footer-develop-btn {
   background-image: url("../../assets/icons/nikki.png");
   width: 24px;
   height: 24px;
@@ -275,22 +230,84 @@
   cursor: pointer;
 }
 
-.save-markers-btn:hover {
+.filter-footer-develop-btn:hover {
   transform: scale(1.1);
 }
 
-.filter-location--folded {
+.filter-panel__icon {
+  display: none;
+  width: 0.7rem;
+  height: 0.7rem;
+  position: absolute;
+  cursor: pointer;
+}
+.filter-panel__icon--active {
+  display: inline-block;
+  top: -0.06rem;
+}
+
+.filter-panel-sider {
+  position: absolute;
+  right: -0.4rem;
+  width: 0.6rem;
+  height: 0.4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* 元素之间的间距 */
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  top: 0.3rem;
+}
+
+.filter-panel__fold {
+  width: 0.6rem;
+  height: 0.4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  background: linear-gradient(to right, rgb(89, 111, 109), #878787b2);
+  padding: 0.1rem;
+  border-radius: 0rem 0.12rem 0.12rem 0rem;
+}
+.filter-panel__fold-icon {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-image: url("../../assets/icons/arrow-left.png");
+  background-position: 20%;
+  background-repeat: no-repeat;
+  background-size: 0.3rem 0.3rem;
+}
+
+.filter-panel__fold--active {
+  position: absolute;
+  left: 0.5rem;
+  right: auto;
+}
+
+.filter-panel__fold--active .filter-panel__fold-icon {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.filter-sider-container--folded {
   display: none;
 }
 
-.filter-location-container {
-  position: absolute;
-  left: 4.07rem;
-  top: 0.84rem;
+.filter-sider-container {
+  position: relative;
+  margin-left: 0.05rem;
   z-index: 1;
 }
 
-.filter-location-icon {
+.filter-sider-icon {
   width: 0.4rem;
   height: 0.4rem;
   background-color: rgba(89, 111, 109, 0.795);
@@ -299,6 +316,8 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  justify-content: center;
+  align-items: center;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -307,12 +326,12 @@
   align-items: center;
 }
 
-.filter-location-icon-img {
+.filter-sider-icon-img {
   width: 0.25rem;
   height: 0.25rem;
 }
 
-.filter-location-popup {
+.filter-sider-popup {
   position: absolute;
   top: 0;
   left: 100%;
@@ -325,19 +344,19 @@
 }
 
 @media only screen and (min-width: 900px) {
-  .location-popup {
+  .filter-sider-popup {
     padding-left: 0.12rem;
   }
 }
 
-.filter-location-list {
+.filter-sider-popup-list {
   background: rgb(66, 77, 76);
   border-radius: 0.12rem;
   box-shadow: 0 0.06rem 0.12rem rgba(0, 0, 0, 0.1);
   padding: 0.1rem;
 }
 
-.filter-location-list-title {
+.filter-sider-popup-list-title {
   font-size: 0.14rem;
   color: rgb(209, 207, 184);
   padding-bottom: 0.05rem;
@@ -347,16 +366,16 @@
 }
 
 @media only screen and (min-width: 900px) {
-  .location-list-title {
+  .filter-sider-popup-list-title {
     font-size: 0.16rem;
   }
 }
 
-.filter-location-container:hover .filter-location-popup {
+.filter-sider-container:hover .filter-sider-popup {
   display: block;
 }
 
-.filter-location-list-container {
+.filter-sider-popup-list-container {
   position: relative;
   z-index: 2;
   font-size: 0.14rem;
@@ -371,21 +390,21 @@
 }
 
 /* 美化滚动条 */
-.filter-location-list::-webkit-scrollbar {
+.filter-sider-popup-list::-webkit-scrollbar {
   width: 6px;
 }
 
-.filter-location-list::-webkit-scrollbar-track {
+.filter-sider-popup-list::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.filter-location-list::-webkit-scrollbar-thumb {
+.filter-sider-popup-list::-webkit-scrollbar-thumb {
   background-color: #d3bc8e;
   border-radius: 0.12rem;
 }
 
 /* 列表项样式 */
-.filter-location-list-item {
+.filter-sider-popup-list-item {
   color: rgb(209, 207, 184);
   padding: 12px 12px;
   white-space: nowrap; /* 文本不换行 */
@@ -395,6 +414,6 @@
   border-radius: 6px;
 }
 
-.filter-location-list-item:hover {
+.filter-sider-popup-list-item:hover {
   background: rgba(211, 188, 142, 0.1);
 }

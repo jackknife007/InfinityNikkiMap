@@ -37,7 +37,7 @@
     <script src="./assets/scripts/editMarkers.js"></script>
     <script src="./assets/scripts/renderMarkers.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", async () => {
+      document.addEventListener("DOMContentLoaded", () => {
         const root = document.getElementById("root");
         const formOverlay = createEditForm();
         const contextMenu = initContextMenu();
@@ -45,9 +45,6 @@
         root.appendChild(contextMenu);
 
         try {
-          // 等待数据加载完成
-          await loadData();
-
           if (map.loaded()) {
             initAfterMapLoad();
           } else {
@@ -60,7 +57,10 @@
         }
       });
 
-      function initAfterMapLoad() {
+      async function initAfterMapLoad() {
+        // 等待数据加载完成
+        await loadData();
+
         renderMarkers();
         renderFilterPanel();
         const url = new URL(window.location.href);

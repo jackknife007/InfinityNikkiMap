@@ -1,3 +1,5 @@
+let developmentMode = false;
+
 function loadBackgroundImage(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -23,8 +25,10 @@ async function renderFilterPanel() {
 
     const filterFoldBtn = renderFilterFoldBtn();
     const filterLocationBtn = renderFilterLocationBtn();
+    const filterDevelopmentBtn = renderFilterDevelopmentBtn();
     filterPanelSider.appendChild(filterFoldBtn);
     filterPanelSider.appendChild(filterLocationBtn);
+    filterPanelSider.appendChild(filterDevelopmentBtn);
     filterPanel.appendChild(filterPanelSider);
 
     // 创建 filter-panel__content
@@ -247,12 +251,17 @@ async function renderFilterPanel() {
     footerLeftButtons.appendChild(showAllControl);
     footerLeftButtons.appendChild(ignoreControl);
 
-    const saveButton = document.createElement("div");
-    saveButton.className = "save-markers-btn";
-    saveButton.onclick = saveMarkersData;
+    const developToggle = document.createElement("div");
+    developToggle.className = "filter-footer-develop-btn";
+    developToggle.title = "开发模式"; // 添加提示文本
+    developToggle.onclick = () => {
+      filterDevelopmentBtn.classList.toggle("develop-inactive");
+      developmentMode = !developmentMode;
+      popupContent.toggleEditBtnState();
+    };
 
     footerContainer.appendChild(footerLeftButtons);
-    footerContainer.appendChild(saveButton);
+    footerContainer.appendChild(developToggle);
 
     filterPanelFooter.appendChild(footerContainer);
 
@@ -270,7 +279,8 @@ async function renderFilterPanel() {
       filterPanel.classList.toggle("filter-panel--hidden");
 
       filterPanelIcon.classList.toggle("filter-panel__icon--active");
-      filterLocationBtn.classList.toggle("filter-location--folded");
+      filterLocationBtn.classList.toggle("filter-sider-container--folded");
+      filterDevelopmentBtn.classList.toggle("filter-sider-container--folded");
     });
 
     document.querySelector(".map-container").appendChild(filterPanel);
@@ -292,37 +302,37 @@ function toggleCategoryLayer(categoryId, visible) {
 function renderFilterLocationBtn() {
   // 创建 filter-location-container
   const filterLocationContainer = document.createElement("div");
-  filterLocationContainer.className = "filter-location-container";
+  filterLocationContainer.className = "filter-sider-container";
 
   // 创建 filter-location-icon
   const filterLocationIcon = document.createElement("div");
-  filterLocationIcon.className = "filter-location-icon";
+  filterLocationIcon.className = "filter-sider-icon";
   const filterLocationIconImg = document.createElement("img");
   filterLocationIconImg.src = "./assets/icons/location.png";
-  filterLocationIconImg.className = "filter-location-icon-img";
+  filterLocationIconImg.className = "filter-sider-icon-img";
   filterLocationIcon.appendChild(filterLocationIconImg);
 
   // 创建 filter-location-popup
   const filterLocationPopup = document.createElement("div");
-  filterLocationPopup.className = "filter-location-popup";
+  filterLocationPopup.className = "filter-sider-popup";
 
   // 创建 filter-location-list
   const filterLocationList = document.createElement("div");
-  filterLocationList.className = "filter-location-list";
+  filterLocationList.className = "filter-sider-popup-list";
 
   // 创建 filter-location-list-title
   const filterLocationListTitle = document.createElement("h3");
-  filterLocationListTitle.className = "filter-location-list-title";
+  filterLocationListTitle.className = "filter-sider-popup-list-title";
   filterLocationListTitle.textContent = "快速定位";
 
   // 创建 filter-location-list-container
   const filterLocationListContainer = document.createElement("div");
-  filterLocationListContainer.className = "filter-location-list-container";
+  filterLocationListContainer.className = "filter-sider-popup-list-container";
 
   // 创建 filter-location-list-item
   globalQuickPositions.forEach((location) => {
     const item = document.createElement("div");
-    item.className = "filter-location-list-item";
+    item.className = "filter-sider-popup-list-item";
     item.dataset.lat = location.lat;
     item.dataset.lng = location.lng;
     item.dataset.zoom = location.zoom;
@@ -437,4 +447,74 @@ function updateCategoryCountShow(categoryId, onlyChangeIgnore = false) {
     countElement.textContent = category.markersId.size;
     categoryElement.style.background = ""; // 恢复默认背景
   }
+}
+
+function renderFilterDevelopmentBtn() {
+  // 创建 filter-Development-container
+  const filterDevelopmentContainer = document.createElement("div");
+  filterDevelopmentContainer.className = "filter-sider-container";
+  filterDevelopmentContainer.classList.add("develop-inactive");
+
+  // 创建 filter-Development-icon
+  const filterDevelopmentIcon = document.createElement("div");
+  filterDevelopmentIcon.className = "filter-sider-icon";
+  const filterDevelopmentIconImg = document.createElement("img");
+  filterDevelopmentIconImg.src = "./assets/icons/development.png";
+  filterDevelopmentIconImg.className = "filter-sider-icon-img";
+  filterDevelopmentIcon.appendChild(filterDevelopmentIconImg);
+
+  // 创建 filter-Development-popup
+  const filterDevelopmentPopup = document.createElement("div");
+  filterDevelopmentPopup.className = "filter-sider-popup";
+
+  // 创建 filter-Development-list
+  const filterDevelopmentList = document.createElement("div");
+  filterDevelopmentList.className = "filter-sider-popup-list";
+
+  // 创建 filter-Development-list-title
+  const filterDevelopmentListTitle = document.createElement("h3");
+  filterDevelopmentListTitle.className = "filter-sider-popup-list-title";
+  filterDevelopmentListTitle.textContent = "开发者功能";
+
+  // 创建 filter-Development-list-container
+  const filterDevelopmentListContainer = document.createElement("div");
+  filterDevelopmentListContainer.className =
+    "filter-sider-popup-list-container";
+
+  // 下载所有markers数据
+  const downloadMarkersData = document.createElement("div");
+  downloadMarkersData.className = "filter-sider-popup-list-item";
+  downloadMarkersData.textContent = "下载完整位置数据";
+  downloadMarkersData.onclick = DownloadMarkersData;
+  filterDevelopmentListContainer.appendChild(downloadMarkersData);
+
+  //下载LocalStorageMarkers
+  const downloadLocalStorageMarkers = document.createElement("div");
+  downloadLocalStorageMarkers.className = "filter-sider-popup-list-item";
+  downloadLocalStorageMarkers.textContent = "下载修改数据";
+  downloadLocalStorageMarkers.onclick = DownloadLocalStorageMarkers;
+  filterDevelopmentListContainer.appendChild(downloadLocalStorageMarkers);
+
+  //导入markers数据
+  const uploadMarkersData = document.createElement("div");
+  uploadMarkersData.className = "filter-sider-popup-list-item";
+  uploadMarkersData.textContent = "导入修改数据";
+  uploadMarkersData.onclick = UploadLocalStorageMarkers;
+  filterDevelopmentListContainer.appendChild(uploadMarkersData);
+
+  // 清理LocalStorageMarkers
+  const clearLocalStorageMarkersBtn = document.createElement("div");
+  clearLocalStorageMarkersBtn.className = "filter-sider-popup-list-item";
+  clearLocalStorageMarkersBtn.textContent = "清理所有修改";
+  clearLocalStorageMarkersBtn.onclick = ClearLocalStorageMarkers;
+  filterDevelopmentListContainer.appendChild(clearLocalStorageMarkersBtn);
+
+  // 组装 DOM 结构
+  filterDevelopmentList.appendChild(filterDevelopmentListTitle);
+  filterDevelopmentList.appendChild(filterDevelopmentListContainer);
+  filterDevelopmentPopup.appendChild(filterDevelopmentList);
+  filterDevelopmentContainer.appendChild(filterDevelopmentIcon);
+  filterDevelopmentContainer.appendChild(filterDevelopmentPopup);
+
+  return filterDevelopmentContainer;
 }
