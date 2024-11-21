@@ -193,3 +193,13 @@ html {
 .develop-inactive {
   display: none;
 }
+
+.temp-qq-group-info {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 15px;
+  color: white;
+  padding: 10px;
+
+}
