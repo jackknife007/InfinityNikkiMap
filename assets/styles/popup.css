@@ -6,7 +6,7 @@
 .mapboxgl-popup-content {
   min-width: 400px;
   height: 500px;
-  background: url("../../assets/backgrounds/shenhu.png");
+  background: url("../../assets/backgrounds/shenhu.jpg");
   border-radius: 8px;
   border: 2px ridge #d3bc8e92;
   padding: 15px;

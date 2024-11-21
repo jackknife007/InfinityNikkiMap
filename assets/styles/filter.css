@@ -29,7 +29,7 @@
   display: -ms-flexbox;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  background: url("../../assets/backgrounds/shenhu.png");
+  background: url("../../assets/backgrounds/shenhu.jpg");
   background-repeat: no-repeat; /* 防止图片重复 */
   background-position: center; /* 图片居中显示 */
   background-size: cover;
