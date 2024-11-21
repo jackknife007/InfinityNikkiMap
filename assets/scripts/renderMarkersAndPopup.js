@@ -462,8 +462,8 @@ function changeMarkerIgnoreState(marker) {
   marker.ignore = ignore;
   globalCategories
     .get(marker.categoryId)
-    .ignoredMarkers[ignore ? "add" : "delete"](markerId);
-  localEditedMarkers.set(markerId, marker);
+    .ignoredMarkers[ignore ? "add" : "delete"](marker.id);
+  localEditedMarkers.set(marker.id, marker);
   saveEditedMarkersToStorage();
 }
 
