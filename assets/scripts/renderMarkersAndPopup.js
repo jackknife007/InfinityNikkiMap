@@ -118,7 +118,7 @@ class PopupContent {
   updateHeader(marker) {
     this.title.textContent = marker.name;
 
-    const location_url = `${window.location.origin}${window.location.pathname}?locationId=${markerId}`;
+    const location_url = `${window.location.origin}${window.location.pathname}?locationId=${marker.id}`;
     this.copyBtn.setAttribute("data-clipboard-text", location_url);
 
     this.editBtn.setAttribute("data-marker-id", marker.id);
