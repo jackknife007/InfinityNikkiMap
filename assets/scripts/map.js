@@ -35,8 +35,8 @@ const map = new mapboxgl.Map({
   minZoom: 1,
   maxZoom: 6,
   maxBounds: [
-    [-360, -85], // 西南角坐标 [经度, 纬度]
-    [360, 85], // 东北角坐标 [经度, 纬度]
+    [-360, -90], // 西南角坐标 [经度, 纬度]
+    [360, 90], // 东北角坐标 [经度, 纬度]
   ],
   renderWorldCopies: false, // 关闭地图重复
   doubleClickZoom: false, // 禁用双击缩放

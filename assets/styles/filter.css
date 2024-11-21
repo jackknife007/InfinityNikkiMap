@@ -321,6 +321,7 @@
   -ms-user-select: none;
   user-select: none;
   display: none;
+  padding-left: 0.15rem;
 }
 
 @media only screen and (min-width: 900px) {
