@@ -13,17 +13,17 @@
   height: 0;
 }
 
-.filter-panel--hidden .filter-panel__content {
+.filter-panel--hidden .filter-panel-content {
   border: none;
 }
 
-.filter-panel--hidden .filter-panel__body,
-.filter-panel--hidden .filter-panel__header,
-.filter-panel--hidden .filter-panel__footer {
+.filter-panel--hidden .filter-panel-body,
+.filter-panel--hidden .filter-panel-header,
+.filter-panel--hidden .filter-panel-footer {
   visibility: hidden;
 }
 
-.filter-panel__content {
+.filter-panel-content {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -39,7 +39,8 @@
   border: 2px ridge #d3bc8e92;
   visibility: visible;
 }
-.filter-panel__header__img {
+
+.filter-panel-header-img {
   height: 1.2rem;
   background: url("../../assets/backgrounds/wxnn-logo5.png");
   background-size: 70%;
@@ -48,7 +49,7 @@
   background-repeat: no-repeat; /* 防止图片重复 */
 }
 
-.filter-panel__header__toolbar {
+.filter-panel-header-toolbar {
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -56,7 +57,7 @@
   margin: 6px;
 }
 
-.filter-panel__header__toolbar_btn {
+.filter-panel-header-toolbar-btn {
   font-size: 14px;
   color: rgb(209, 207, 184);
   cursor: pointer;
@@ -65,11 +66,11 @@
   border-radius: 0.12rem;
 }
 
-.filter-panel__header__toolbar_btn:hover {
+.filter-panel-header-toolbar-btn:hover {
   background: rgb(88, 110, 108);
 }
 
-.filter-panel__body {
+.filter-panel-body {
   display: -webkit-box;
 
   display: -ms-flexbox;
@@ -86,40 +87,33 @@
   min-width: 0.97rem;
   scrollbar-width: none;
 }
-.filter-panel__footer {
-  bottom: 0;
-  width: 100%;
-  height: 0.56rem;
-  line-height: 0.16rem;
-  z-index: 2;
-}
-/* 添加样式 */
-.filter-groups {
+
+.filter-panel-groups {
   width: 100%;
   padding: 0.05rem 0.05rem 0.05rem 0.05rem;
 }
 
-.filter-group {
+.filter-panel-group {
   margin-bottom: 0.2rem;
 }
 
-.filter-group__title {
+.filter-panel-group-title {
   font-size: 0.18rem;
   font-weight: bold;
   color: rgb(209, 207, 184);
   margin-bottom: 0.03rem;
 }
 
-.filter-group__categories {
+.filter-panel-categories {
   display: flex;
   flex-wrap: wrap;
 }
 
-.filter-group__categories.active {
+.filter-panel-categories.active {
   display: block;
 }
 
-.filter-category {
+.filter-panel-category {
   opacity: 0.3;
   /* 添加固定宽度，使每行显示两个 */
   flex: 0 0 calc(50% - 0.1rem); /* 50%减去间隔的一半 */
@@ -138,15 +132,15 @@
   margin: 0.02rem 0.05rem 0.02rem 0.05rem;
 }
 
-.filter-category.active {
+.filter-panel-category.active {
   opacity: 1;
 }
 
-.filter-category:hover {
+.filter-panel-category:hover {
   background: rgba(26, 26, 26, 0.414);
 }
 
-.filter-category__title {
+.filter-panel-category-title {
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
@@ -155,13 +149,13 @@
   color: rgb(219, 218, 198);
 }
 
-.filter-category__icon {
+.filter-panel-category-icon {
   width: 0.2rem;
   height: 0.2rem;
   margin-right: 0.06rem;
 }
 
-.filter-category__count {
+.filter-panel-category-count {
   color: rgb(219, 218, 198);
   padding: 2px 6px;
   border-radius: 10px;
@@ -170,23 +164,27 @@
   text-align: center;
 }
 
-.filter-footer-container {
+.filter-panel-footer {
+  bottom: 0;
+  width: 100%;
+  height: 0.56rem;
+  line-height: 0.16rem;
   display: flex;
   justify-content: space-between;
   flex-flow: wrap;
   align-items: center; /* 垂直居中 */
-  height: 100%; /* 确保有高度 */
   padding: 10px;
+  z-index: 2;
 }
 
-.filter-footer-left {
+.filter-panel-footer-left {
   display: flex;
   justify-content: first baseline;
   gap: 20px;
   flex: 1;
 }
 
-.filter-footer-ignore-control {
+.filter-footer-control {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -195,27 +193,27 @@
   cursor: pointer;
 }
 
-.filter-footer-ignore-control:hover {
+.filter-footer-control:hover {
   background: rgba(211, 188, 142, 0.1);
   border-color: rgba(211, 188, 142, 0.5);
 }
 
 /* 复选框样式 */
-.filter-footer-ignore-checkbox {
+.filter-footer-control-checkbox {
   margin: 0;
   cursor: pointer;
   accent-color: #d3bc8e;
 }
 
 /* 文本样式 */
-.filter-footer-ignore-control span {
+.filter-footer-control span {
   color: rgb(209, 207, 184);
   font-size: 14px;
   user-select: none;
 }
 
 /* 选中状态 */
-.filter-footer-ignore-control input:checked + span {
+.filter-footer-control input:checked + span {
   color: #d3bc8e;
 }
 
@@ -234,14 +232,16 @@
   transform: scale(1.1);
 }
 
-.filter-panel__icon {
+.filter-panel-icon {
   display: none;
   width: 0.7rem;
   height: 0.7rem;
   position: absolute;
-  cursor: pointer;
+  background-image: url("../../assets/icons/nikki.png");
+  background-size: contain;
 }
-.filter-panel__icon--active {
+
+.filter-panel-icon--active {
   display: inline-block;
   top: -0.06rem;
 }
@@ -297,14 +297,14 @@
   transform: rotate(180deg);
 }
 
-.filter-sider-container--folded {
-  display: none;
-}
-
 .filter-sider-container {
   position: relative;
   margin-left: 0.05rem;
   z-index: 1;
+}
+
+.filter-sider-container--folded {
+  display: none;
 }
 
 .filter-sider-icon {
@@ -375,7 +375,7 @@
   display: block;
 }
 
-.filter-sider-popup-list-container {
+.filter-sider-popup-list-item-container {
   position: relative;
   z-index: 2;
   font-size: 0.14rem;

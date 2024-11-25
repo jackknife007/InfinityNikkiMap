@@ -79,7 +79,7 @@
   {
     "id": "12",
     "title": "唱诗蓝龙·基洛",
-    "icon": "npc_dragon",
+    "icon": "npc_dragon_jiluo",
     "groupId": 2,
     "groupTitle": "NPC"
   },
@@ -175,10 +175,10 @@
     "groupTitle": "任务"
   },
   {
-    "id": "26",
+    "id": "900",
     "title": "自定义",
     "icon": "other_default",
-    "groupId": 5,
+    "groupId": 99,
     "groupTitle": "其他"
   }
 ]

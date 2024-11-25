@@ -267,8 +267,8 @@
 
 .video-close-btn {
   position: absolute;
-  top: 0px;
-  right: 15px;
+  top: -40px;
+  right: -40px;
   color: white;
   font-size: 30px;
   cursor: pointer;

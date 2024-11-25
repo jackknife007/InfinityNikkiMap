@@ -16,6 +16,10 @@
       href="./assets/icons/favicon.png"
       type="image/x-icon"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400&display=swap" rel="stylesheet">
+
     <script src="./libs/mapbox-gl/mapbox-gl.js"></script>
     <link href="./libs/mapbox-gl/mapbox-gl.css" rel="stylesheet" />
     <script src="./libs/clipboard/clipboard.min.js"></script>
@@ -31,21 +35,16 @@
         <div id="map" class="map"></div>
         <div class="temp-qq-group-info">反馈Q群：1002614248</div>
       </div>
-      
     </div>
     <script src="./assets/scripts/map.js"></script>
     <script src="./assets/scripts/loadData.js"></script>
-    <script src="./assets/scripts/renderFilterPanel.js"></script>
-    <script src="./assets/scripts/editMarkers.js"></script>
-    <script src="./assets/scripts/renderMarkersAndPopup.js"></script>
+    <script src="./assets/scripts/filterPanel.js"></script>
+    <script src="./assets/scripts/editForm.js"></script>
+    <script src="./assets/scripts/popup.js"></script>
+    <script src="./assets/scripts/markers.js"></script>
+    <script src="./assets/scripts/contextMenu.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const root = document.getElementById("root");
-        const formOverlay = createEditForm();
-        const contextMenu = initContextMenu();
-        root.appendChild(formOverlay);
-        root.appendChild(contextMenu);
-
         try {
           if (map.loaded()) {
             initAfterMapLoad();
@@ -63,8 +62,12 @@
         // 等待数据加载完成
         await loadData();
 
+        editForm.render();
+        contextMenu.render();
         renderMarkers();
-        renderFilterPanel();
+        filterPanel.render();
+
+        // 解析url中的坐标参数并跳转
         const url = new URL(window.location.href);
         const locationId = url.searchParams.get("locationId");
         if (locationId) {
@@ -75,20 +78,12 @@
         }
         const newUrl = window.location.pathname;
         history.replaceState(null, "", newUrl);
-        const categorySelect = document.getElementById("edit-category");
-
-        // 添加分类选项
-        for (const [id, category] of globalCategories) {
-          const option = document.createElement("option");
-          option.value = id;
-          option.textContent = category.title;
-          categorySelect.appendChild(option);
-        }
       }
 
       var clipboardBtn = new ClipboardJS(".marker-popup-copy-location-btn");
       clipboardBtn.on("success", function (e) {
         e.clearSelection();
+        
         //showTooltip(e.trigger, "复制成功!");
       });
       clipboardBtn.on("error", function (e) {

@@ -172,6 +172,7 @@ html {
   -ms-user-select: none;
   user-select: none;
 }
+
 .reflow-hacker {
   width: 0;
   height: 0;
@@ -201,4 +202,8 @@ html {
   font-size: 15px;
   color: white;
   padding: 10px;
+}
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
 }

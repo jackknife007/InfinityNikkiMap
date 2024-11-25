@@ -12,12 +12,14 @@ const map = new mapboxgl.Map({
     sources: {
       "custom-tiles": {
         type: "raster",
-        tiles: ["./assets/tiles/{z}/{x}/{y}.jpg"],
+        tiles: ["./assets/tiles/xyyy/{z}/{x}/{y}.jpg"],
         tileSize: 256,
         attributionControl: false,
         minZoom: 1,
         maxZoom: 6,
         keepBuffer: 8,
+
+        bounds: [-112.45, -70.58, 108.93, 68.36], // 全球范围
       },
     },
     layers: [
