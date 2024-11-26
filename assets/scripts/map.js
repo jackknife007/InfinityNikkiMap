@@ -119,7 +119,7 @@ class ZoomSliderControl {
       const percentage =
         (zoom - map.getMinZoom()) / (map.getMaxZoom() - map.getMinZoom());
       const y = percentage * 130;
-      this._sliderThumb.style.bottom = `${y - 20}px`;
+      this._sliderThumb.style.bottom = `${y - 25}px`;
     });
 
     // 组装控件
@@ -134,7 +134,7 @@ class ZoomSliderControl {
     const initialPercentage =
       (initialZoom - map.getMinZoom()) / (map.getMaxZoom() - map.getMinZoom());
     const initialY = initialPercentage * 130;
-    this._sliderThumb.style.bottom = `${initialY - 20}px`;
+    this._sliderThumb.style.bottom = `${initialY - 25}px`;
 
     return this._container;
   }

@@ -3,21 +3,35 @@ let contextMenu = {
     // 创建菜单元素
     this.element = document.createElement("div");
     this.element.className = "context-menu";
-    this.addItem("添加新标记", () => {
+    this.close();
+
+    addNewMarkerBtn = this.addItem("添加新标记");
+    addNewMarkerBtn.addEventListener("click", () => {
       this.close();
       editForm.open(0, 0, "add");
     });
 
-    this.close();
+    copyLocationUrlBtn = this.addItem("复制坐标url");
+    copyLocationUrlBtn.classList.add("clipboard-btn");
+    copyLocationUrlBtn.addEventListener("click", () => {
+      this.close();
+      copyLocationUrlBtn.setAttribute(
+        "data-clipboard-text",
+        `${window.location.origin}${window.location.pathname}?lng=${
+          this.getLngLat().lng
+        }&lat=${this.getLngLat().lat}&zoom=${map.getZoom().toFixed(0)}`
+      );
+    });
+
     document.body.appendChild(this.element);
   },
 
-  addItem: function (title, callback) {
+  addItem: function (title) {
     const item = document.createElement("div");
     item.className = "context-menu-item";
     item.textContent = title;
-    item.addEventListener("click", callback);
     this.element.appendChild(item);
+    return item;
   },
 
   open: function (x, y) {

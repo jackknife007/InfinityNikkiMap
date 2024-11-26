@@ -89,8 +89,8 @@ let filterPanel = {
       filterPanelSider.className = "filter-panel-sider";
 
       filterPanelSider.appendChild(this.foldBtn.render());
-      filterPanelSider.appendChild(this.locationBtn.render());
       filterPanelSider.appendChild(this.personalDataBtn.render());
+      filterPanelSider.appendChild(this.locationBtn.render());
       filterPanelSider.appendChild(this.developmentBtn.render());
       this.dom = filterPanelSider;
 

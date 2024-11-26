@@ -19,6 +19,7 @@ class MarkerPopupContent {
     // 创建复制按钮
     const copyBtn = document.createElement("div");
     copyBtn.className = "marker-popup-copy-location-btn";
+    copyBtn.classList.add("clipboard-btn");
     copyBtn.title = "复制位置链接";
     leftContainer.appendChild(copyBtn);
 
