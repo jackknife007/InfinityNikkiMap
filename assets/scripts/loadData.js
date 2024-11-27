@@ -184,7 +184,111 @@ class IndexStorage {
 let allDatas = {
   groups: new Map(),
   categories: new Map(),
-  quickPositions: new Array(),
+  quickPositions: {
+    defaultData: new Map(),
+    personalData: new Map(),
+    nextPositionId: 1,
+    upperBoungd: 100,
+    load: function (dataArray) {
+      dataArray.forEach((data) => {
+        this.defaultData.set(data.id, data);
+      });
+      const stored = localStorage.getItem(this._item_key());
+      if (stored) {
+        const quickPositionsArray = JSON.parse(stored);
+        quickPositionsArray.forEach((data) => {
+          this.personalData.set(data.id, data);
+        });
+      }
+      let positionsId = [
+        ...Array.from(this.defaultData.keys()),
+        ...Array.from(this.personalData.keys()),
+      ];
+      positionsId.sort();
+      let i = 0;
+      while (i < positionsId.length && positionsId[i] == i + 1) {
+        i++;
+      }
+      this.nextPositionId = i + 1;
+    },
+
+    getAllPositions: function () {
+      const positions = {};
+
+      // 获取默认数据
+      this.defaultData.forEach((value, key) => {
+        positions[key] = value;
+      });
+
+      // 获取个人数据
+      this.personalData.forEach((value, key) => {
+        positions[key] = value;
+      });
+
+      return positions;
+    },
+
+    add: function (position) {
+      position.id = this.getNextPositionId();
+      if (position.id) {
+        this.personalData.set(position.id, position);
+        this.saveToLocalStorage();
+      }
+      return position.id;
+    },
+
+    delete: function (positionId) {
+      this.nextPositionId = Math.min(this.nextPositionId, positionId);
+      this.personalData.delete(positionId);
+      this.saveToLocalStorage();
+    },
+
+    getNextPositionId: function () {
+      let nextPositionId = this.nextPositionId;
+      if (nextPositionId > this.upperBoungd) {
+        tips.show("快速定位已达上限", "请删除部分快速定位后再添加");
+        return null;
+      } else {
+        this.nextPositionId += 1;
+        // 确保nextPositionId是未使用的
+        while (this.personalData.has(this.nextPositionId)) {
+          this.nextPositionId += 1;
+        }
+        return nextPositionId;
+      }
+    },
+
+    saveToLocalStorage: function () {
+      try {
+        const quickPositionsArray = Array.from(this.personalData.values());
+        if (quickPositionsArray.length === 0) {
+          localStorage.removeItem(this._item_key());
+        } else {
+          localStorage.setItem(
+            this._item_key(),
+            JSON.stringify(quickPositionsArray)
+          );
+        }
+      } catch (error) {
+        console.error("保存快速定位失败:", error);
+      }
+    },
+
+    clear: function () {
+      localStorage.removeItem(this._item_key());
+      location.reload();
+    },
+
+    save: function (data) {
+      this.personalData = new Map(data);
+      // 保存到localStorage
+      this.saveToLocalStorage();
+    },
+
+    _item_key: function () {
+      return `${resourceControl.getRegionName()}-quickPositions`;
+    },
+  },
 
   serverMarkers: new Map(),
   maxMarkerId: NormalMarkerIdLowerBound - 1,
@@ -523,7 +627,7 @@ let allDatas = {
       ]);
 
       this.dataTimestamp = markers.timestamp;
-      this.quickPositions = qkPos;
+      this.quickPositions.load(qkPos);
 
       groups.forEach((group) => {
         group.categoriesInfo = [];
@@ -646,6 +750,7 @@ let allDatas = {
         ([categoryId, markerSet]) => [categoryId, Array.from(markerSet)]
       ),
       personalMarkers: Array.from(this.personalMarkers.data.entries()),
+      quickPositions: Array.from(this.quickPositions.personalData.entries()),
     };
     this.downloadDataJson(data, "个人数据备份");
   },
@@ -671,6 +776,11 @@ let allDatas = {
       // 恢复 ignoreMarkers
       if (data.ignoreMarkers) {
         this.ignoreMarkers.save(data.ignoreMarkers);
+      }
+
+      // 恢复 quickPositions
+      if (data.quickPositions) {
+        this.quickPositions.save(data.quickPositions);
       }
 
       location.reload();

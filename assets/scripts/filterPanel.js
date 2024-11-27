@@ -119,7 +119,7 @@ let filterPanel = {
       render: function () {
         const btn = new SiderBtn("location");
         btn.addPopup("快速定位");
-        allDatas.quickPositions.forEach((location) => {
+        allDatas.quickPositions.defaultData.forEach((location) => {
           btn.addListItem(location.text, () => {
             map.flyTo({
               center: [location.lng, location.lat],
@@ -128,8 +128,73 @@ let filterPanel = {
             });
           });
         });
+
         this.element = btn;
+
+        allDatas.quickPositions.personalData.forEach((location) => {
+          this.addLocation(location);
+        });
         return btn.container;
+      },
+
+      addLocation: function (location) {
+        const newItem = this.element.addListItem(location.text, () => {
+          map.flyTo({
+            center: [location.lng, location.lat],
+            zoom: location.zoom,
+            duration: 2000, // 飞行时间(毫秒)
+          });
+        });
+
+        newItem.dataset.locationId = location.id;
+
+        // 添加右键事件监听, 删除快速定位
+        newItem.addEventListener("contextmenu", (e) => {
+          e.preventDefault(); // 阻止默认右键菜单
+
+          // 创建遮罩层
+          const overlay = document.createElement("div");
+          overlay.className = "quick-position-form-overlay";
+
+          // 创建表单容器
+          const container = document.createElement("div");
+          container.className = "quick-position-form-container";
+
+          // 创建标题
+          const title = document.createElement("div");
+          title.innerHTML = `删除快速定位: ${location.text}`;
+          title.className = "quick-position-form-title";
+          container.appendChild(title);
+
+          // 创建按钮容器
+          const buttonContainer = document.createElement("div");
+          buttonContainer.className = "quick-position-form-buttons";
+
+          // 创建取消按钮
+          const cancelButton = document.createElement("button");
+          cancelButton.textContent = "取消";
+          cancelButton.className = "cancel-btn";
+          cancelButton.onclick = () => {
+            overlay.remove();
+          };
+          buttonContainer.appendChild(cancelButton);
+
+          // 创建保存按钮
+          const saveButton = document.createElement("button");
+          saveButton.textContent = "删除";
+          saveButton.className = "save-btn";
+          saveButton.onclick = () => {
+            const locationId = parseInt(newItem.dataset.locationId);
+            allDatas.quickPositions.delete(locationId);
+            newItem.remove();
+            overlay.remove();
+          };
+          buttonContainer.appendChild(saveButton);
+
+          container.appendChild(buttonContainer);
+          overlay.appendChild(container);
+          document.body.appendChild(overlay);
+        });
       },
     },
 
@@ -156,6 +221,12 @@ let filterPanel = {
           showConfirmation(
             "确定要清理当前区域所有自定义标记吗？",
             allDatas.personalMarkers.clear.bind(allDatas.personalMarkers)
+          )
+        );
+        btn.addListItem("清理快速定位", () =>
+          showConfirmation(
+            "确定要清理当前区域所有自定义快速定位吗？",
+            allDatas.quickPositions.clear.bind(allDatas.quickPositions)
           )
         );
         this.element = btn;
@@ -537,6 +608,7 @@ class SiderBtn {
     item.textContent = text;
     item.onclick = callback;
     this.popupListItemContainer.appendChild(item);
+    return item;
   }
 
   toggleFolded() {

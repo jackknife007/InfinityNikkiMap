@@ -11,6 +11,12 @@ let contextMenu = {
       editForm.open(0, 0, "add");
     });
 
+    addQuickPositionBtn = this.addItem("添加快速定位");
+    addQuickPositionBtn.addEventListener("click", () => {
+      this.close();
+      quickPositionForm.open(this.getLngLat().lng, this.getLngLat().lat);
+    });
+
     copyLocationUrlBtn = this.addItem("复制坐标url");
     copyLocationUrlBtn.classList.add("clipboard-btn");
     copyLocationUrlBtn.addEventListener("click", () => {

@@ -146,8 +146,8 @@ class MarkerPopupContent {
       var imgUrl = image;
       if ((image.match(/\./g)?.length || 0) === 1) {
         imgUrl = resourceControl.getMarkerImageFilePath(image);
-      } else if (image.startsWith("http")) {
-        img.crossOrigin = "anonymous";
+      } else if (!image.startsWith("https://image.nikkimomo.cc")) {
+        img.crossOrigin = "Anonymous";
       }
       img.src = imgUrl;
       img.className = "marker-popup-image";
