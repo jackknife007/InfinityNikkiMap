@@ -65,6 +65,7 @@ let editForm = {
     this.deleteBtn.addEventListener("click", () => {
       allDatas.deleteMarker(this.markerId, this.categoryId);
       deleteMarkerFromCategorySource(this.markerId, this.categoryId);
+      tips.show("删除成功", this.name.getValue());
       this.close();
     });
     buttonContainer.appendChild(this.deleteBtn);
@@ -81,16 +82,25 @@ let editForm = {
         ...allDatas.getMarker(this.markerId),
         ...this.getFormData(),
       };
-      if (this.categoryId === updatedMarker.categoryId) {
-        allDatas.editMarker(updatedMarker);
+
+      // 不能在默认分类和自定义分类之间移动标记
+      if (
+        allDatas.isPersonalCategory(this.categoryId) !==
+        allDatas.isPersonalCategory(updatedMarker.categoryId)
+      ) {
+        tips.show("保存失败", "不能在默认分类和自定义分类之间移动标记");
       } else {
-        allDatas.deleteMarker(this.markerId, this.categoryId);
-        deleteMarkerFromCategorySource(this.markerId, this.categoryId);
+        if (this.categoryId === updatedMarker.categoryId) {
+          allDatas.editMarker(updatedMarker);
+        } else {
+          allDatas.deleteMarker(this.markerId, this.categoryId);
+          deleteMarkerFromCategorySource(this.markerId, this.categoryId);
 
-        allDatas.addMarker(updatedMarker);
-        addMarkerToCategorySource(updatedMarker);
+          allDatas.addMarker(updatedMarker);
+          addMarkerToCategorySource(updatedMarker);
+        }
+        tips.show("保存成功", updatedMarker.name);
       }
-
       this.close();
     });
     buttonContainer.appendChild(this.saveBtn);
@@ -101,8 +111,11 @@ let editForm = {
         ...contextMenu.getLngLat(),
         ...this.getFormData(),
       };
-      allDatas.addMarker(newMarker);
-      addMarkerToCategorySource(newMarker);
+      let isSuccess = allDatas.addMarker(newMarker);
+      if(isSuccess) {
+        addMarkerToCategorySource(newMarker);
+        tips.show("新增成功", newMarker.name);
+      }
       this.close();
     });
     buttonContainer.appendChild(this.addBtn);
@@ -125,8 +138,8 @@ let editForm = {
       description: this.description.getValue(),
       image: this.image.getValue(),
       video: this.video.getValue(),
-      author: this.author.getValue(),
-      authorLink: this.authorLink.getValue(),
+      author: this.author.getValue().trim(),
+      authorLink: this.authorLink.getValue().trim(),
       categoryId: parseInt(this.category.getValue()),
       updateTime: new Date()
         .toLocaleString("zh-cn", {
@@ -142,7 +155,7 @@ let editForm = {
     };
   },
 
-  setCategoryOptions: function () {
+  setCategoryOptions: function (selectedCategoryId) {
     // 清空现有选项
     while (this.category.element.firstChild) {
       this.category.element.removeChild(this.category.element.firstChild);
@@ -150,9 +163,23 @@ let editForm = {
 
     // 添加分类选项
     for (const [categoryId, category] of allDatas.categories.entries()) {
-      if (!developmentMode && !allDatas.isDefaultCategory(categoryId)) {
-        continue;
+      if (allDatas.isPersonalCategory(categoryId)) {
+        if (
+          developmentMode &&
+          selectedCategoryId &&
+          !allDatas.isPersonalCategory(selectedCategoryId)
+        ) {
+          continue;
+        }
+      } else {
+        if (
+          !developmentMode ||
+          (developmentMode && allDatas.isPersonalCategory(selectedCategoryId))
+        ) {
+          continue;
+        }
       }
+
       const option = document.createElement("option");
       option.value = categoryId;
       option.textContent = category.title;
@@ -168,10 +195,11 @@ let editForm = {
     this.description.setValue(marker?.description || "");
     this.image.setValue(marker?.image || "");
     this.video.setValue(marker?.video || "");
-    this.author.setValue(marker?.author || "黄大胖不胖");
+    this.author.setValue(marker?.author || "default");
     this.authorLink.setValue(
-      marker?.authorLink || "https://space.bilibili.com/619196/"
+      marker?.authorLink || ""
     );
+    this.setCategoryOptions(categoryId);
     const firstValue = this.category.element.options[0]?.value;
     this.category.setValue(categoryId || firstValue);
 

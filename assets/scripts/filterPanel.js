@@ -74,7 +74,6 @@ let filterPanel = {
         this.sider.developmentBtn.toggleDevelopMode();
         developmentMode = !developmentMode;
         markerPopup.setEditBtnState();
-        editForm.setCategoryOptions();
       });
     } catch (error) {
       console.error("加载面板失败:", error);
@@ -147,16 +146,16 @@ let filterPanel = {
           "导入用户数据",
           allDatas.uploadPersonalData.bind(allDatas)
         );
-        btn.addListItem("重置所有进度", () =>
+        btn.addListItem("重置进度", () =>
           showConfirmation(
-            "确定要重置所有进度吗？",
+            "确定要重置当前区域所有进度吗？",
             allDatas.ignoreMarkers.clear.bind(allDatas.ignoreMarkers)
           )
         );
         btn.addListItem("清理自定义标记", () =>
           showConfirmation(
-            "确定要清理自定义标记吗？",
-            allDatas.defaultMarkers.clear.bind(allDatas.defaultMarkers)
+            "确定要清理当前区域所有自定义标记吗？",
+            allDatas.personalMarkers.clear.bind(allDatas.personalMarkers)
           )
         );
         this.element = btn;
@@ -178,12 +177,14 @@ let filterPanel = {
           allDatas.downloadNewAddMarkers.bind(allDatas)
         );
         btn.addListItem(
-          "导入新增坐标数据",
+          "覆盖新增坐标数据",
           allDatas.uploadNewAddMarkers.bind(allDatas)
         );
-        btn.addListItem(
-          "清理所有修改",
-          allDatas.clearDevelopMarkers.bind(allDatas)
+        btn.addListItem("清理所有修改", () =>
+          showConfirmation(
+            "确定要清理当前区域所有修改(不含自定义)吗？",
+            allDatas.clearDevelopMarkers.bind(allDatas)
+          )
         );
         this.element = btn;
         this.toggleDevelopMode();
@@ -516,7 +517,7 @@ class SiderBtn {
     // 创建 popup-list-title
     const popupListTitle = document.createElement("h3");
     popupListTitle.className = "filter-sider-popup-list-title";
-    popupListTitle.textContent = title;
+    popupListTitle.innerHTML = `${title}<br>(${resourceControl.getRegionNameZh()})`;
 
     // 创建 popup-list-item-container
     this.popupListItemContainer = document.createElement("div");

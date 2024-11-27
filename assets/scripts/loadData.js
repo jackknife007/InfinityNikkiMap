@@ -1,106 +1,312 @@
 "use strict";
 
-let allDatas = {
-  maxMarkerId: 0,
-  dataTimestamp: 0,
+const PersonalMarkerIdUpperBound = 31 * 10;
+const NormalMarkerIdLowerBound = 31 * 400 + 1;
+const newAddMarkerIdLowerBound = 31 * 10000 + 1;
 
+class IgnoreStateStorage {
+  constructor(name, offset = 1, shardSize = 100) {
+    this.name = `${name}-ignore`;
+    this.offset = offset;
+    this.indexStorage = new IndexStorage(this.name, shardSize);
+  }
+
+  load() {
+    const indexes = this.indexStorage.getAllindexes();
+    let datas = new Set();
+    indexes.forEach((index) => {
+      let ignoreState = this.getIgnoreState(index);
+      while (ignoreState > 0) {
+        const mask = ignoreState & -ignoreState;
+        let markerId = index * 31 + this.offset + Math.log2(mask);
+        datas.add(markerId);
+        ignoreState &= ~mask;
+      }
+    });
+    return datas;
+  }
+
+  save(datas) {
+    this.clear();
+
+    const stateMap = new Map();
+
+    // 批量处理markerId
+    datas.forEach((markerId) => {
+      const [index, mask] = this.getIndexAndMask(markerId);
+
+      let state = stateMap.get(index) || 0;
+      // 设置对应位为1
+      state |= mask;
+      stateMap.set(index, state);
+    });
+
+    stateMap.forEach((state, index) => {
+      this.indexStorage.add(index);
+      localStorage.setItem(this._ignoreStateKey(index), state.toString());
+    });
+  }
+
+  clear() {
+    this.indexStorage.getAllindexes().forEach((index) => {
+      localStorage.removeItem(this._ignoreStateKey(index));
+      this.indexStorage.delete(index);
+    });
+  }
+
+  set(markerId, ignore) {
+    const [index, mask] = this.getIndexAndMask(markerId);
+    let ignoreState = this.getIgnoreState(index);
+
+    // ignore为true则设置对应bit为1,否则为0
+    if (ignore) {
+      ignoreState |= mask;
+    } else {
+      ignoreState &= ~mask;
+    }
+    if (ignoreState === 0) {
+      localStorage.removeItem(this._ignoreStateKey(index));
+      this.indexStorage.delete(index);
+    } else {
+      localStorage.setItem(this._ignoreStateKey(index), ignoreState);
+    }
+  }
+
+  getIgnoreState(index) {
+    let ignoreState = 0;
+    if (localStorage.getItem(this._ignoreStateKey(index)) !== null) {
+      ignoreState = parseInt(localStorage.getItem(this._ignoreStateKey(index)));
+    } else {
+      this.indexStorage.add(index);
+    }
+    return ignoreState;
+  }
+
+  getIndexAndMask(markerId) {
+    const index = markerId - this.offset;
+    const mask = 1 << index % 31;
+    return [Math.floor(index / 31), mask];
+  }
+
+  _ignoreStateKey(index) {
+    return `${this.name}-${index}`;
+  }
+}
+
+class IndexStorage {
+  constructor(name, shardSize = 100) {
+    this.name = name;
+    this.shardSize = shardSize;
+    this.indexShardNumsKey = `${name}-index-shard-nums`;
+    this.shardDatas = new Map();
+
+    this.load();
+  }
+
+  load() {
+    const shardNums = localStorage.getItem(this.indexShardNumsKey);
+    if (shardNums) {
+      shardNums
+        .split(",")
+        .map(Number)
+        .forEach((shardNum) => {
+          const shard = localStorage.getItem(this._shardKey(shardNum));
+          if (shard) {
+            this.shardDatas.set(
+              shardNum,
+              new Set(shard.split(",").map(Number))
+            );
+          }
+        });
+    }
+  }
+
+  getAllindexes() {
+    const indexes = [];
+    this.shardDatas.forEach((shardData) => {
+      shardData.forEach((index) => {
+        indexes.push(index);
+      });
+    });
+    return indexes;
+  }
+
+  add(index) {
+    const shardNum = Math.floor(index / this.shardSize);
+    let shardData = this.shardDatas.get(shardNum);
+    if (!shardData) {
+      shardData = new Set();
+      this.shardDatas.set(shardNum, shardData);
+      this.saveIndexShardNums();
+    }
+    shardData.add(index);
+    this.saveIndexShardValue(shardNum, shardData);
+  }
+
+  delete(index) {
+    const shardNum = Math.floor(index / this.shardSize);
+    const shardData = this.shardDatas.get(shardNum);
+    if (shardData) {
+      shardData.delete(index);
+      if (shardData.size === 0) {
+        this.shardDatas.delete(shardNum);
+        this.saveIndexShardNums();
+        localStorage.removeItem(this._shardKey(shardNum));
+      } else {
+        this.saveIndexShardValue(shardNum, shardData);
+      }
+    }
+  }
+
+  saveIndexShardNums() {
+    if (this.shardDatas.size === 0) {
+      localStorage.removeItem(this.indexShardNumsKey);
+    } else {
+      localStorage.setItem(
+        this.indexShardNumsKey,
+        Array.from(this.shardDatas.keys()).join(",")
+      );
+    }
+  }
+
+  saveIndexShardValue(shardNum, shardData) {
+    localStorage.setItem(
+      this._shardKey(shardNum),
+      Array.from(shardData).join(",")
+    );
+  }
+
+  _shardKey(shardNum) {
+    return `${this.name}-index-shard-${shardNum}`;
+  }
+}
+
+let allDatas = {
   groups: new Map(),
   categories: new Map(),
   quickPositions: new Array(),
 
   serverMarkers: new Map(),
+  maxMarkerId: NormalMarkerIdLowerBound - 1,
+  nextMarkerId: newAddMarkerIdLowerBound - 1,
+  dataTimestamp: 0,
 
   ignoreMarkers: {
     data: new Map(),
+    personalIgnoreState: new IgnoreStateStorage(
+      `${resourceControl.getRegionName()}-personal`,
+      1,
+      100
+    ),
+    normalIgnoreState: new IgnoreStateStorage(
+      `${resourceControl.getRegionName()}-normal`,
+      NormalMarkerIdLowerBound,
+      100
+    ),
 
-    loadFromLocalStorage: function (categorysId) {
+    loadFromLocalStorage: function () {
       try {
-        for (const categoryId of categorysId) {
-          const stored = localStorage.getItem(this._item_key(categoryId));
-          if (stored) {
-            const markersArray = JSON.parse(stored);
-            this.data.set(categoryId, new Set(markersArray));
-          }
-        }
+        this.personalIgnoreState.load().forEach((markerId) => {
+          const marker = allDatas.getMarker(markerId);
+          this.data.get(marker.categoryId).add(markerId);
+        });
+
+        this.normalIgnoreState.load().forEach((markerId) => {
+          const marker = allDatas.getMarker(markerId);
+          this.data.get(marker.categoryId).add(markerId);
+        });
       } catch (error) {
         console.error("读取已标记坐标失败:", error);
       }
     },
 
-    has: function (markerId, categorysId) {
-      return this.data.get(categorysId)?.has(markerId) || false;
+    has: function (markerId) {
+      return this.data.has(markerId);
     },
 
-    delete: function (markerId, categorysId) {
-      const ignoreMarkersId = this.data.get(categorysId);
-      if (ignoreMarkersId && ignoreMarkersId.has(markerId)) {
-        ignoreMarkersId.delete(markerId);
-        this.saveToLocalStorage(categorysId);
+    delete: function (markerId, categoryId) {
+      const ignoreSet = this.data.get(categoryId);
+      if (ignoreSet.has(markerId)) {
+        ignoreSet.delete(markerId);
+        if (allDatas.isPersonalCategory(categoryId)) {
+          this.personalIgnoreState.set(markerId, false);
+        } else {
+          this.normalIgnoreState.set(markerId, false);
+        }
       }
     },
 
     changeState: function (markerId, categoryId) {
-      let ignoreMarkersId = this.data.get(categoryId);
-      if (!ignoreMarkersId) {
-        ignoreMarkersId = new Set();
-        this.data.set(categoryId, ignoreMarkersId);
-      }
-      const ignore = ignoreMarkersId.has(markerId);
+      const ignoreSet = this.data.get(categoryId);
+      const ignore = ignoreSet.has(markerId);
       if (ignore) {
-        ignoreMarkersId.delete(markerId);
+        ignoreSet.delete(markerId);
       } else {
-        ignoreMarkersId.add(markerId);
+        ignoreSet.add(markerId);
       }
-      this.saveToLocalStorage(categoryId);
+      if (allDatas.isPersonalCategory(categoryId)) {
+        this.personalIgnoreState.set(markerId, !ignore);
+      } else {
+        this.normalIgnoreState.set(markerId, !ignore);
+      }
       return !ignore;
     },
 
-    saveToLocalStorage: function (categoryId) {
-      try {
-        const ignoreMarkersArray = Array.from(this.data.get(categoryId));
-        localStorage.setItem(
-          this._item_key(categoryId),
-          JSON.stringify(ignoreMarkersArray)
-        );
-      } catch (error) {
-        console.error("保存已标记坐标失败:", error);
+    clear: function (persional = true, normal = true, reload = true) {
+      if (persional) {
+        this.personalIgnoreState.clear();
+      }
+      if (normal) {
+        this.normalIgnoreState.clear();
+      }
+      if (reload) {
+        location.reload();
       }
     },
 
-    clear: function () {
-      for (const categoryId of this.data.keys()) {
-        localStorage.removeItem(this._item_key(categoryId));
-      }
-      location.reload();
-    },
+    save(datas) {
+      // 遍历并保存个人分类的标记
+      let personalMarkers = new Set();
+      let normalMarkers = new Set();
 
-    loadFromFileData: function (data) {
-      for (const categoryId of this.data.keys()) {
-        localStorage.removeItem(this._item_key(categoryId));
+      // 遍历Map，收集个人分类的markers
+      for (const [categoryId, markerSet] of datas) {
+        markerSet.forEach((markerId) => {
+          if (allDatas.getMarker(markerId)) {
+            if (allDatas.isPersonalCategory(categoryId)) {
+              personalMarkers.add(markerId);
+            } else {
+              normalMarkers.add(markerId);
+            }
+          }
+        });
       }
-      this.data = new Map(
-        data.map(([categoryId, markers]) => [categoryId, new Set(markers)])
-      );
-      for (const categoryId of this.data.keys()) {
-        this.saveToLocalStorage(categoryId);
-      }
-    },
 
-    _item_key: function (categoryId) {
-      return `ignoreMarkers-category-${categoryId}`;
+      // 保存收集到的markers
+      this.personalIgnoreState.save(personalMarkers);
+      this.normalIgnoreState.save(normalMarkers);
     },
   },
 
-  defaultMarkers: {
+  personalMarkers: {
     data: new Map(),
+    nextMarkerId: 1,
 
     loadFromLocalStorage: function () {
       try {
         const stored = localStorage.getItem(this._item_key());
         if (stored) {
-          const defaultMarkersArray = JSON.parse(stored);
-          this.data = new Map(defaultMarkersArray);
+          const personalMarkersArray = JSON.parse(stored);
+          this.data = new Map(personalMarkersArray);
         }
+
+        let markersId = Array.from(this.data.keys());
+        markersId.sort();
+        let i = 0;
+        while (i < markersId.length && markersId[i] == i + 1) {
+          i++;
+        }
+        this.nextMarkerId = i + 1;
       } catch (error) {
         console.error("读取自定义坐标失败:", error);
       }
@@ -110,23 +316,44 @@ let allDatas = {
       return this.data.get(markerId);
     },
 
+    getNextMarkerId: function () {
+      let nextMarkerId = this.nextMarkerId;
+      if (nextMarkerId > PersonalMarkerIdUpperBound) {
+        tips.show("自定义坐标已达上限", "请删除部分自定义坐标后再添加");
+        return null;
+      } else {
+        this.nextMarkerId += 1;
+        // 确保nextMarkerId是未使用的
+        while (this.data.has(this.nextMarkerId)) {
+          this.nextMarkerId += 1;
+        }
+        return nextMarkerId;
+      }
+    },
+
     set: function (markerId, marker) {
       this.data.set(markerId, marker);
       this.saveToLocalStorage();
     },
 
     delete: function (markerId) {
+      // 如果删除的markerId小于nextMarkerId,则更新nextMarkerId
+      this.nextMarkerId = Math.min(this.nextMarkerId, markerId);
       this.data.delete(markerId);
       this.saveToLocalStorage();
     },
 
     saveToLocalStorage: function () {
       try {
-        const defaultMarkersArray = Array.from(this.data.entries());
-        localStorage.setItem(
-          this._item_key(),
-          JSON.stringify(defaultMarkersArray)
-        );
+        const personalMarkersArray = Array.from(this.data.entries());
+        if (personalMarkersArray.length === 0) {
+          localStorage.removeItem(this._item_key());
+        } else {
+          localStorage.setItem(
+            this._item_key(),
+            JSON.stringify(personalMarkersArray)
+          );
+        }
       } catch (error) {
         console.error("保存自定义坐标失败:", error);
       }
@@ -134,29 +361,33 @@ let allDatas = {
 
     clear: function () {
       localStorage.removeItem(this._item_key());
+      allDatas.ignoreMarkers.personalIgnoreState.clear();
       location.reload();
     },
 
-    loadFromFileData: function (data) {
+    save: function (data) {
       this.data = new Map(data);
       // 保存到localStorage
       this.saveToLocalStorage();
     },
 
     _item_key: function () {
-      return "defaultMarkers";
+      return `${resourceControl.getRegionName()}-personalMarkers`;
     },
   },
 
   newAddMarkers: {
     data: new Map(),
 
-    load: function () {
+    loadFromLocalStorage: function () {
       try {
         const stored = localStorage.getItem(this._item_key());
         if (stored) {
           const markersArray = JSON.parse(stored);
-          this.data = new Map(markersArray);
+          markersArray.forEach((marker) => {
+            this.data.set(parseInt(marker.id), marker);
+            allDatas.serverMarkers.set(parseInt(marker.id), marker);
+          });
         }
       } catch (error) {
         console.error("读取新增坐标失败:", error);
@@ -175,27 +406,34 @@ let allDatas = {
 
     saveToLocalStorage: function () {
       try {
-        const markersArray = Array.from(this.data.entries());
-        localStorage.setItem(this._item_key(), JSON.stringify(markersArray));
+        const markersArray = Array.from(this.data.values());
+        if (markersArray.length === 0) {
+          localStorage.removeItem(this._item_key());
+        } else {
+          localStorage.setItem(this._item_key(), JSON.stringify(markersArray));
+        }
       } catch (error) {
         console.error("保存新增坐标失败:", error);
       }
     },
 
     _item_key: function () {
-      return "newAddMarkers";
+      return `${resourceControl.getRegionName()}-newAddMarkers`;
     },
   },
 
   editedMarkers: {
     data: new Map(),
 
-    load: function () {
+    loadFromLocalStorage: function () {
       try {
         const stored = localStorage.getItem(this._item_key());
         if (stored) {
           const markersArray = JSON.parse(stored);
-          this.data = new Map(markersArray);
+          markersArray.forEach((marker) => {
+            this.data.set(parseInt(marker.id), marker);
+            allDatas.serverMarkers.set(parseInt(marker.id), marker);
+          });
         }
       } catch (error) {
         console.error("读取已编辑坐标失败:", error);
@@ -214,27 +452,34 @@ let allDatas = {
 
     saveToLocalStorage: function () {
       try {
-        const markersArray = Array.from(this.data.entries());
-        localStorage.setItem(this._item_key(), JSON.stringify(markersArray));
+        const markersArray = Array.from(this.data.values());
+        if (markersArray.length === 0) {
+          localStorage.removeItem(this._item_key());
+        } else {
+          localStorage.setItem(this._item_key(), JSON.stringify(markersArray));
+        }
       } catch (error) {
         console.error("保存已编辑坐标失败:", error);
       }
     },
 
     _item_key: function () {
-      return "editedMarkers";
+      return `${resourceControl.getRegionName()}-editedMarkers`;
     },
   },
 
   deletedMarkers: {
     data: new Set(),
 
-    load: function () {
+    loadFromLocalStorage: function () {
       try {
         const stored = localStorage.getItem(this._item_key());
         if (stored) {
           const deletedArray = JSON.parse(stored);
-          this.data = new Set(deletedArray);
+          deletedArray.forEach((markerId) => {
+            this.data.add(markerId);
+            allDatas.serverMarkers.delete(parseInt(markerId));
+          });
         }
       } catch (error) {
         console.error("读取已删除坐标失败:", error);
@@ -256,47 +501,125 @@ let allDatas = {
     },
 
     _item_key: function () {
-      return "deletedMarkers";
+      return `${resourceControl.getRegionName()}-deletedMarkers`;
     },
   },
 
+  load: async function () {
+    try {
+      const [groups, categories, markers, qkPos] = await Promise.all([
+        fetch(resourceControl.getGroupsJsonFilePath()).then((res) =>
+          res.json()
+        ),
+        fetch(resourceControl.getCategoriesJsonFilePath()).then((res) =>
+          res.json()
+        ),
+        fetch(resourceControl.getMarkersJsonFilePath()).then((res) =>
+          res.json()
+        ),
+        fetch(resourceControl.getQuickPositionsJsonFilePath()).then((res) =>
+          res.json()
+        ),
+      ]);
+
+      this.dataTimestamp = markers.timestamp;
+      this.quickPositions = qkPos;
+
+      groups.forEach((group) => {
+        group.categoriesInfo = [];
+        this.groups.set(group.id, group);
+      });
+
+      categories.forEach((category) => {
+        const categoryId = parseInt(category.id);
+        this.ignoreMarkers.data.set(categoryId, new Set());
+        category.markersId = new Set();
+        this.categories.set(categoryId, category);
+        const group = this.groups.get(category.groupId);
+        if (group) {
+          group.categoriesInfo.push(categoryId);
+        }
+      });
+
+      markers.data.forEach((marker) => {
+        this.serverMarkers.set(parseInt(marker.id), marker);
+        this.maxMarkerId = Math.max(this.maxMarkerId, marker.id);
+      });
+
+      // 加载localStorage数据
+      this.newAddMarkers.loadFromLocalStorage();
+      this.editedMarkers.loadFromLocalStorage();
+      this.deletedMarkers.loadFromLocalStorage();
+
+      // 设定serverMarkers的分类
+      this.serverMarkers.forEach((marker) => {
+        const category = this.categories.get(marker.categoryId);
+        if (category) {
+          category.markersId.add(marker.id);
+        }
+      });
+
+      // 设定personalMarkers的分类
+      this.personalMarkers.loadFromLocalStorage();
+      for (const marker of this.personalMarkers.data.values()) {
+        const category = this.categories.get(marker.categoryId);
+        if (category) {
+          category.markersId.add(marker.id);
+        }
+      }
+
+      this.ignoreMarkers.loadFromLocalStorage();
+    } catch (error) {
+      console.error("加载数据失败:", error);
+    }
+  },
+
   getNextMarkerId: function () {
-    this.maxMarkerId += 1;
-    return this.maxMarkerId;
+    this.nextMarkerId += 1;
+    return this.nextMarkerId;
   },
 
   getMarker: function (markerId) {
     return (
-      this.serverMarkers.get(markerId) || this.defaultMarkers.get(markerId)
+      this.serverMarkers.get(markerId) || this.personalMarkers.get(markerId)
     );
   },
 
   addMarker: function (marker) {
-    marker.id = this.getNextMarkerId();
-    if (this.isDefaultCategory(marker.categoryId)) {
-      this.defaultMarkers.set(marker.id, marker);
+    if (this.isPersonalCategory(marker.categoryId)) {
+      let markerId = this.personalMarkers.getNextMarkerId();
+      if (markerId) {
+        marker.id = markerId;
+        this.personalMarkers.set(markerId, marker);
+        return true;
+      } else {
+        return false;
+      }
     } else {
+      marker.id = this.getNextMarkerId();
+      this.serverMarkers.set(marker.id, marker);
       this.newAddMarkers.set(marker.id, marker);
+      return true;
     }
-    this.serverMarkers.set(marker.id, marker);
   },
 
   editMarker: function (marker) {
-    if (this.newAddMarkers.data.has(marker.id)) {
+    if (this.personalMarkers.data.has(marker.id)) {
+      this.personalMarkers.set(marker.id, marker);
+    } else if (this.newAddMarkers.data.has(marker.id)) {
+      this.serverMarkers.set(marker.id, marker);
       this.newAddMarkers.set(marker.id, marker);
-    } else if (this.defaultMarkers.data.has(marker.id)) {
-      this.defaultMarkers.set(marker.id, marker);
     } else {
+      this.serverMarkers.set(marker.id, marker);
       this.editedMarkers.set(marker.id, marker);
     }
-    this.serverMarkers.set(marker.id, marker);
   },
 
   deleteMarker: function (markerId, categoryId) {
     if (this.newAddMarkers.data.has(markerId)) {
       this.newAddMarkers.delete(markerId);
-    } else if (this.defaultMarkers.data.has(markerId)) {
-      this.defaultMarkers.delete(markerId);
+    } else if (this.personalMarkers.data.has(markerId)) {
+      this.personalMarkers.delete(markerId);
     } else if (this.editedMarkers.data.has(markerId)) {
       this.editedMarkers.delete(markerId);
       this.deletedMarkers.add(markerId);
@@ -311,18 +634,18 @@ let allDatas = {
     localStorage.removeItem(this.editedMarkers._item_key());
     localStorage.removeItem(this.deletedMarkers._item_key());
     localStorage.removeItem(this.newAddMarkers._item_key());
+    this.newAddMarkers.data.forEach((marker, markerId) => {
+      this.ignoreMarkers.delete(markerId, marker.categoryId);
+    });
     location.reload();
   },
 
   downloadPersonalData: function () {
     const data = {
       ignoreMarkers: Array.from(this.ignoreMarkers.data.entries()).map(
-        ([categoryId, markerSet]) => [
-          categoryId,
-          Array.from(markerSet), // 将 Set 转换为数组
-        ]
+        ([categoryId, markerSet]) => [categoryId, Array.from(markerSet)]
       ),
-      defaultMarkers: Array.from(this.defaultMarkers.data.entries()),
+      personalMarkers: Array.from(this.personalMarkers.data.entries()),
     };
     this.downloadDataJson(data, "个人数据备份");
   },
@@ -340,14 +663,14 @@ let allDatas = {
       const text = await file.text();
       const data = JSON.parse(text);
 
-      // 恢复 ignoreMarkers
-      if (data.ignoreMarkers) {
-        this.ignoreMarkers.loadFromFileData(data.ignoreMarkers);
+      // 恢复 personalMarkers
+      if (data.personalMarkers) {
+        this.personalMarkers.save(data.personalMarkers);
       }
 
-      // 恢复 defaultMarkers
-      if (data.defaultMarkers) {
-        this.defaultMarkers.loadFromFileData(data.defaultMarkers);
+      // 恢复 ignoreMarkers
+      if (data.ignoreMarkers) {
+        this.ignoreMarkers.save(data.ignoreMarkers);
       }
 
       location.reload();
@@ -356,13 +679,24 @@ let allDatas = {
   },
 
   downloadServerMrkers: function () {
-    const data = Array.from(this.serverMarkers.values());
-    this.downloadDataJson(data, "所有坐标备份");
+    let serverMarkersCopy = new Map(this.serverMarkers);
+    let nextMarkerId = this.maxMarkerId + 1;
+    this.newAddMarkers.data.forEach((marker, markerId) => {
+      marker.id = nextMarkerId;
+      serverMarkersCopy.set(nextMarkerId, marker);
+      serverMarkersCopy.delete(markerId);
+      nextMarkerId += 1;
+    });
+    let downloadData = {
+      timestamp: Date.now(),
+      data: Array.from(serverMarkersCopy.values()),
+    };
+    this.downloadDataJson(downloadData, "所有坐标备份(不含自定义)");
   },
 
   downloadNewAddMarkers: function () {
     const data = Array.from(this.newAddMarkers.data.values());
-    this.downloadDataJson(data, "新增数据备份");
+    this.downloadDataJson(data, "新增数据备份(不含自定义)");
   },
 
   uploadNewAddMarkers: function () {
@@ -390,61 +724,6 @@ let allDatas = {
     input.click();
   },
 
-  load: function (groups, categories, markers, qkPos) {
-    this.dataTimestamp = markers.timestamp;
-    this.quickPositions = qkPos;
-
-    groups.forEach((group) => {
-      group.categoriesInfo = [];
-      this.groups.set(group.id, group);
-    });
-
-    categories.forEach((category) => {
-      category.markersId = new Set();
-      const categoryId = parseInt(category.id);
-      this.categories.set(categoryId, category);
-      const group = this.groups.get(category.groupId);
-      if (group) {
-        group.categoriesInfo.push(categoryId);
-      }
-    });
-
-    markers.data.forEach((marker) => {
-      this.serverMarkers.set(parseInt(marker.id), marker);
-    });
-
-    this.editedMarkers.load();
-
-    this.editedMarkers.data.forEach((marker) => {
-      this.serverMarkers.set(parseInt(marker.id), marker);
-    });
-
-    this.deletedMarkers.load();
-    this.deletedMarkers.data.forEach((markerId) => {
-      this.serverMarkers.delete(parseInt(markerId));
-    });
-
-    this.newAddMarkers.load();
-    this.newAddMarkers.data.forEach((marker) => {
-      this.serverMarkers.set(parseInt(marker.id), marker);
-    });
-
-    this.defaultMarkers.loadFromLocalStorage();
-    this.defaultMarkers.data.forEach((marker) => {
-      this.serverMarkers.set(parseInt(marker.id), marker);
-    });
-
-    this.serverMarkers.forEach((marker) => {
-      this.maxMarkerId = Math.max(this.maxMarkerId, marker.id);
-      const category = this.categories.get(marker.categoryId);
-      if (category) {
-        category.markersId.add(marker.id);
-      }
-    });
-
-    this.ignoreMarkers.loadFromLocalStorage(this.categories.keys());
-  },
-
   downloadDataJson: function (dataToJsonStringData, fileName) {
     // 创建 Blob
     const blob = new Blob([JSON.stringify(dataToJsonStringData, null, 2)], {
@@ -455,7 +734,7 @@ let allDatas = {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `${fileName}.json`;
+    link.download = `${resourceControl.getRegionNameZh()}-${fileName}.json`;
 
     // 触发下载
     document.body.appendChild(link);
@@ -464,22 +743,7 @@ let allDatas = {
     URL.revokeObjectURL(url);
   },
 
-  isDefaultCategory: function (categoryId) {
-    return categoryId >= 900;
+  isPersonalCategory: function (categoryId) {
+    return categoryId > 900;
   },
 };
-
-async function loadData() {
-  try {
-    const [groups, categories, markers, qkPos] = await Promise.all([
-      fetch("./assets/data/groups.json").then((res) => res.json()),
-      fetch("./assets/data/categories.json").then((res) => res.json()),
-      fetch("./assets/data/markers.json").then((res) => res.json()),
-      fetch("./assets/data/quickPositions.json").then((res) => res.json()),
-    ]);
-
-    allDatas.load(groups, categories, markers, qkPos);
-  } catch (error) {
-    console.error("加载数据失败:", error);
-  }
-}

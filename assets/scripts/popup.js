@@ -124,7 +124,7 @@ class MarkerPopupContent {
   }
 
   updateHeader(name, updateTime, markerId, categoryId) {
-    this.title.textContent = name;
+    this.title.textContent = name || `Marker ${markerId}`;
 
     const location_url = `${window.location.origin}${window.location.pathname}?locationId=${markerId}`;
     this.copyBtn.setAttribute("data-clipboard-text", location_url);
@@ -145,7 +145,7 @@ class MarkerPopupContent {
       const img = new Image();
       var imgUrl = image;
       if ((image.match(/\./g)?.length || 0) === 1) {
-        imgUrl = "./assets/images/markers/" + image;
+        imgUrl = resourceControl.getMarkerImageFilePath(image);
       } else if (image.startsWith("http")) {
         img.crossOrigin = "anonymous";
       }
@@ -203,7 +203,7 @@ class MarkerPopupContent {
   }
 
   updateDescription(description) {
-    this.description.textContent = description;
+    this.description.textContent = description || "暂无描述";
   }
 
   updateVideo(video) {
@@ -259,32 +259,38 @@ class MarkerPopupContent {
   }
 
   updateAuthor(author, authorLink) {
-    if (author && authorLink) {
-      // 创建链接元素
+    let authorWrapper = author
+      ? author === "default"
+        ? "黄大胖不胖"
+        : author
+      : "佚名";
+    if (author === "default" || authorLink) {
       const authorLinkElement = document.createElement("a");
-      authorLinkElement.href = authorLink;
       authorLinkElement.target = "_blank"; // 新窗口打开
-      authorLinkElement.textContent = author;
+      authorLinkElement.href =
+        author === "default"
+          ? "https://space.bilibili.com/619196/"
+          : authorLink;
+
+      authorLinkElement.textContent = authorWrapper;
 
       // 组装作者信息
       this.author.textContent = "贡献者： ";
       this.author.appendChild(authorLinkElement);
-    } else if (author) {
-      // 无链接时只显示作者名
-      this.author.textContent = "贡献者： " + author;
     } else {
-      this.author.textContent = ""; // 无作者信息时清空
+      this.author.textContent = "贡献者： " + authorWrapper;
     }
   }
 
   setIgnoreCheckBoxState(markerId, categoryId) {
-    const ignore = allDatas.ignoreMarkers.has(markerId, categoryId);
+    const ignore =
+      allDatas.ignoreMarkers.data.get(categoryId)?.has(markerId) || false;
     this.checkbox.checked = ignore;
   }
 
   setEditBtnState() {
     const categoryId = this.editBtn.dataset.categoryId;
-    if (!developmentMode && !allDatas.isDefaultCategory(categoryId)) {
+    if (!developmentMode && !allDatas.isPersonalCategory(categoryId)) {
       this.editBtn.classList.add("develop-inactive");
     } else {
       this.editBtn.classList.remove("develop-inactive");

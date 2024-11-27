@@ -79,7 +79,7 @@
   {
     "id": "12",
     "title": "唱诗蓝龙·基洛",
-    "icon": "npc_dragon_jiluo",
+    "icon": "npc_dragon",
     "groupId": 2,
     "groupTitle": "NPC"
   },
@@ -93,7 +93,7 @@
   {
     "id": "14",
     "title": "搭配挑战NPC",
-    "icon": "npc_fightnpc",
+    "icon": "npc_battle",
     "groupId": 2,
     "groupTitle": "NPC"
   },
@@ -163,22 +163,36 @@
   {
     "id": "24",
     "title": "拍照打卡点",
-    "icon": "custom_photo",
+    "icon": "camera",
     "groupId": 4,
     "groupTitle": "任务"
   },
   {
     "id": "25",
     "title": "民俗游戏",
-    "icon": "custom_puzzle",
+    "icon": "minsu-game",
     "groupId": 4,
     "groupTitle": "任务"
   },
   {
-    "id": "900",
-    "title": "自定义",
+    "id": "26",
+    "title": "笔记",
     "icon": "other_default",
-    "groupId": 99,
+    "groupId": 5,
     "groupTitle": "其他"
+  },
+  {
+    "id": "901",
+    "title": "自定义-默认",
+    "icon": "custom_default",
+    "groupId": 99,
+    "groupTitle": "自定义"
+  },
+  {
+    "id": "902",
+    "title": "自定义-谜题",
+    "icon": "custom_puzzle",
+    "groupId": 99,
+    "groupTitle": "自定义"
   }
 ]

@@ -1,50 +1,61 @@
 // 初始化地图
-const map = new mapboxgl.Map({
-  container: "map",
-  style: {
-    version: 8,
-    background: {
-      type: "background",
-      paint: {
-        "background-color": "#000000",
-      },
-    },
-    sources: {
-      "custom-tiles": {
-        type: "raster",
-        tiles: ["./assets/tiles/xyyy/{z}/{x}/{y}.jpg"],
-        tileSize: 256,
-        attributionControl: false,
-        minZoom: 1,
-        maxZoom: 6,
-        keepBuffer: 8,
+let map;
 
-        bounds: [-112.45, -70.58, 108.93, 68.36], // 全球范围
-      },
-    },
-    layers: [
-      {
-        id: "custom-layer",
-        type: "raster",
-        source: "custom-tiles",
+function InitMap() {
+  map = new mapboxgl.Map({
+    container: "map",
+    style: {
+      version: 8,
+      background: {
+        type: "background",
         paint: {
-          "raster-fade-duration": 100,
+          "background-color": "#000000",
         },
       },
+      sources: {
+        "custom-tiles": {
+          type: "raster",
+          tiles: [resourceControl.getTilesFilePath()],
+          tileSize: 256,
+          attributionControl: false,
+          minZoom: 1,
+          maxZoom: 6,
+          keepBuffer: 8,
+
+          bounds: [-112.45, -70.58, 108.93, 68.36], // 全球范围
+        },
+      },
+      layers: [
+        {
+          id: "custom-layer",
+          type: "raster",
+          source: "custom-tiles",
+          paint: {
+            "raster-fade-duration": 100,
+          },
+        },
+      ],
+    },
+    zoom: 2,
+    minZoom: 1,
+    maxZoom: 6,
+    maxBounds: [
+      [-360, -90], // 西南角坐标 [经度, 纬度]
+      [360, 90], // 东北角坐标 [经度, 纬度]
     ],
-  },
-  zoom: 2,
-  minZoom: 1,
-  maxZoom: 6,
-  maxBounds: [
-    [-360, -90], // 西南角坐标 [经度, 纬度]
-    [360, 90], // 东北角坐标 [经度, 纬度]
-  ],
-  renderWorldCopies: false, // 关闭地图重复
-  doubleClickZoom: false, // 禁用双击缩放
-  dragRotate: false, // 禁用拖拽旋转
-  touchRotate: false, // 禁用触摸缩放旋转
-});
+    renderWorldCopies: false, // 关闭地图重复
+    doubleClickZoom: false, // 禁用双击缩放
+    dragRotate: true,
+    touchPitch: false,
+    touchZoomRotate: true,
+  });
+
+  // 添加缩放控件到地图
+  map.addControl(new ZoomSliderControl(), "bottom-right");
+
+  // 添加全屏控件到地图
+  map.addControl(new FullscreenControl(), "top-right");
+}
 
 // 创建自定义滑块控件
 class ZoomSliderControl {
@@ -145,9 +156,6 @@ class ZoomSliderControl {
   }
 }
 
-// 添加控件到地图
-map.addControl(new ZoomSliderControl(), "bottom-right");
-
 // 创建全屏控件
 class FullscreenControl {
   onAdd(map) {
@@ -191,5 +199,3 @@ class FullscreenControl {
   }
 }
 
-// 添加到地图
-map.addControl(new FullscreenControl(), "top-right");

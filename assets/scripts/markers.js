@@ -135,18 +135,19 @@ function initLayerMarkers(categoryId, category) {
 
     markerPopup.open(markerId);
     //移动会产生popup抖动 先注释掉
-    //map.easeTo({
-    //  center: [marker.lng, marker.lat],
-    //  offset: [0, -400 * (map.getZoom() / map.getMaxZoom())], // 根据缩放比例调整偏移
-    //  duration: 400,
-    //});
+    const marker = allDatas.getMarker(markerId);
+    map.easeTo({
+      center: [marker.lng, marker.lat],
+      offset: [0, -300 * (map.getZoom() / map.getMaxZoom())], // 根据缩放比例调整偏移
+      duration: 400,
+    });
   });
 
   map.on("contextmenu", `category-layer-${categoryId}`, (e) => {
     e.preventDefault();
     const markerId = e.features[0].id;
-    markerPopup.setIgnore(markerId, categoryId);
     doAfterIgnoreClick(markerId, categoryId);
+    markerPopup.setIgnore(markerId, categoryId);
   });
 
   map.on("mouseenter", `category-layer-${categoryId}`, () => {
@@ -212,11 +213,10 @@ function toggleCategoryLayer(categoryId, visible) {
 }
 
 function showIgnoredMarkers() {
-  for (const [categoryId, ignoreSet] of allDatas.ignoreMarkers.data) {
+  for (const [categoryId, ignoreSet] of allDatas.ignoreMarkers.data.entries()) {
     // 获取数据源
     const source = map.getSource(`category-${categoryId}`);
     if (source) {
-      //const currentFeatures = [...source._data.features];
       const currentFeatures = source._data.features;
 
       // 为每个被忽略的标记创建新的特征
@@ -244,7 +244,7 @@ function showIgnoredMarkers() {
 }
 
 function hiddenIgnoredMarkers() {
-  for (const [categoryId, ignoreSet] of allDatas.ignoreMarkers.data) {
+  for (const [categoryId, ignoreSet] of allDatas.ignoreMarkers.data.entries()) {
     const oldSource = map.getSource(`category-${categoryId}`);
     if (oldSource) {
       const oldFeatures = oldSource._data.features.filter(

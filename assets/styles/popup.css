@@ -19,9 +19,8 @@
 }
 
 .marker-popup-header {
-  display: flex;
+  display: block;
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 10px;
   flex-shrink: 0;
 }
@@ -30,16 +29,20 @@
   display: flex;
   align-items: baseline;
   gap: 6px;
+  padding-right: 20px;
 }
 
 .marker-popup-header-left span {
   font-size: 25px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: rgb(209, 207, 184);
 }
 
 .marker-popup-copy-location-btn {
   height: 15px;
   width: 15px;
+  min-width: 15px;
   background: url("../../assets/icons/copy.png") no-repeat;
   background-size: contain;
   cursor: pointer;
@@ -48,6 +51,7 @@
 .marker-popup-edit-marker-btn {
   height: 15px;
   width: 15px;
+  min-width: 15px;
   background: url("../../assets/icons/edit.png") no-repeat;
   background-size: contain;
   cursor: pointer;
@@ -57,7 +61,7 @@
   font-size: 11px;
   color: rgb(209, 207, 184);
   opacity: 0.8;
-  padding-right: 10px;
+  padding-top: 5px;
 }
 
 .marker-popup-body {

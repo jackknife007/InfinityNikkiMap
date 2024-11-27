@@ -39,6 +39,7 @@
         <div class="temp-qq-group-info">反馈Q群：1002614248</div>
       </div>
     </div>
+    <script src="./assets/scripts/utils.js"></script>
     <script src="./assets/scripts/map.js"></script>
     <script src="./assets/scripts/loadData.js"></script>
     <script src="./assets/scripts/filterPanel.js"></script>
@@ -49,52 +50,42 @@
     <script src="./assets/scripts/clip.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        try {
-          if (map.loaded()) {
-            initAfterMapLoad();
-          } else {
-            map.on("load", () => {
-              initAfterMapLoad();
-            });
-          }
-        } catch (error) {
-          console.error("初始化失败:", error);
-        }
-      });
+        resourceControl.loadRegionName();
+        InitMap();
+        map.on("load", async () => {
+          // 等待数据加载完成
+          await allDatas.load(resourceControl.getRegionName());
 
-      async function initAfterMapLoad() {
-        // 等待数据加载完成
-        await loadData();
+          editForm.render();
+          contextMenu.render();
+          renderMarkers();
+          filterPanel.render();
+          tips.render();
 
-        editForm.render();
-        contextMenu.render();
-        renderMarkers();
-        filterPanel.render();
-        tips.render();
-
-        // 解析url中的坐标参数并跳转
-        const url = new URL(window.location.href);
-        const locationId = url.searchParams.get("locationId");
-        const lng = url.searchParams.get("lng");
-        const lat = url.searchParams.get("lat");
-        const zoom = url.searchParams.get("zoom");
-        if (lng && lat && zoom) {
-          map.flyTo({
-            center: [parseFloat(lng), parseFloat(lat)],
-            zoom: parseFloat(zoom),
-          });
-        } else if (locationId) {
-          const marker = allDatas.getMarker(parseInt(locationId));
-          if (marker) {
+          // 解析url中的坐标参数并跳转
+          const url = new URL(window.location.href);
+          const locationId = url.searchParams.get("locationId");
+          const lng = url.searchParams.get("lng");
+          const lat = url.searchParams.get("lat");
+          const zoom = url.searchParams.get("zoom");
+          if (lng && lat && zoom) {
             map.flyTo({
-              center: [marker.lng, marker.lat], 
-              zoom: 5 
+              center: [parseFloat(lng), parseFloat(lat)],
+              zoom: parseFloat(zoom),
             });
+          } else if (locationId) {
+            const marker = allDatas.getMarker(parseInt(locationId));
+            if (marker) {
+              map.flyTo({
+                center: [marker.lng, marker.lat],
+                zoom: 5,
+              });
+            }
           }
-        }
-        const newUrl = window.location.pathname;
-        history.replaceState(null, "", newUrl);
-      }
+          const newUrl = window.location.pathname;
+          history.replaceState(null, "", newUrl);
+        });
+      });
     </script>
   </body>
 </html>
