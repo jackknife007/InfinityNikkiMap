@@ -6,24 +6,49 @@ let markerPopup = {
     anchor: "left",
   }),
 
+  _popup_up: new mapboxgl.Popup({
+    offset: [0, -20],
+    closeButton: true,
+    closeOnClick: false,
+    anchor: "bottom",
+  }),
+
   _content: new MarkerPopupContent(),
   _popupMarkerId: 0,
 
+  choosePopup: function () {
+    if (resourceControl.isMobilePortrait()) {
+      return this._popup_up;
+    } else {
+      return this._popup;
+    }
+  },
+
+  _opened_popup: null,
+
   open: function (markerId) {
-    this._popupMarkerId = markerId;
-    this._popup.remove();
+    this.close();
 
     const marker = allDatas.getMarker(markerId);
     this._content.update(marker);
-    this._popup
+    let popup;
+    if (resourceControl.isMobilePortrait()) {
+      popup = this._popup_up;
+    } else {
+      popup = this._popup;
+    }
+    popup
       .setLngLat([marker.lng, marker.lat])
       .setDOMContent(this._content.container)
       .addTo(map);
     this._popupMarkerId = markerId;
+    this._opened_popup = popup;
   },
 
   close: function () {
-    this._popup.remove();
+    if (this._opened_popup) {
+      this._opened_popup.remove();
+    }
     this._popupMarkerId = 0;
   },
 
@@ -135,12 +160,11 @@ function initLayerMarkers(categoryId, category) {
 
     markerPopup.open(markerId);
     //移动会产生popup抖动 先注释掉
-    //const marker = allDatas.getMarker(markerId);
-    //map.easeTo({
-    //  center: [marker.lng, marker.lat],
-    //  offset: [0, -300 * (map.getZoom() / map.getMaxZoom())], // 根据缩放比例调整偏移
-    //  duration: 400,
-    //});
+    const marker = allDatas.getMarker(markerId);
+    map.easeTo({
+      center: [marker.lng, marker.lat],
+      duration: 400,
+    });
   });
 
   map.on("contextmenu", `category-layer-${categoryId}`, (e) => {

@@ -1,5 +1,13 @@
 var clipboardBtn = new ClipboardJS(".clipboard-btn");
 
+// 处理触摸事件
+document.querySelectorAll('.clipboard-btn').forEach(function(btn) {
+  btn.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    clipboardBtn.onClick(e);
+  });
+});
+
 clipboardBtn.on("success", function (e) {
   e.clearSelection();
 

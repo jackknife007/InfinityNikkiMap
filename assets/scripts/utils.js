@@ -53,4 +53,8 @@ let resourceControl = {
   isMobile: function () {
     return window.innerWidth <= 768 || window.innerHeight <= 768;
   },
+
+  isMobilePortrait: function () {
+    return window.innerWidth <= 768;
+  },
 };

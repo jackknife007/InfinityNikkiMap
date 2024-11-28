@@ -11,10 +11,17 @@
   .filter-panel {
     padding: 0;
     width: 100%;
-    height: 60%;
+    height: 50%;
     bottom: 0;
     top: auto;
     margin-top: 0.6rem;
+  }
+}
+
+@media only screen and (max-width: 900px) and (min-aspect-ratio: 13 / 9) and (max-device-width: 920px) {
+  .filter-panel {
+    padding: 0.06rem;
+    width: 3.5rem;
   }
 }
 
@@ -113,6 +120,7 @@
   font-weight: bold;
   color: rgb(209, 207, 184);
   margin-bottom: 0.03rem;
+  cursor: pointer;
 }
 
 .filter-panel-categories {
@@ -275,6 +283,12 @@
   z-index: 10;
 }
 
+@media only screen and (max-width: 900px) and (min-aspect-ratio: 13 / 9) and (max-device-width: 920px) {
+  .filter-panel-sider {
+    right: -0.5rem;
+  }
+}
+
 .filter-panel__fold {
   width: 0.53rem;
   height: 0.4rem;
@@ -387,10 +401,10 @@
   .filter-sider-popup-list-title {
     font-size: 0.16rem;
   }
-}
 
-.filter-sider-container:hover .filter-sider-popup {
-  display: block;
+  .filter-sider-container:hover .filter-sider-popup {
+    display: block;
+  }
 }
 
 .filter-sider-popup-list-item-container {
@@ -463,9 +477,8 @@
   }
 
   .filter-sider-container {
-    margin: 0.07rem
+    margin: 0.07rem;
   }
-
 
   .filter-sider-container--folded {
     display: block;
@@ -476,9 +489,19 @@
     height: 0.3rem;
   }
 
-  .filter-panel-sider-mobile-filter-active .filter-sider-icon {
+  .filter-panel-sider-mobile-btn-active .filter-sider-icon {
     filter: brightness(75%);
   }
+
+  .filter-panel-sider-mobile-popup-btn-active .filter-sider-icon {
+    filter: brightness(75%);
+  }
+
+  .filter-panel-sider-mobile-popup-btn-active .filter-sider-popup {
+    display: block;
+  }
+
+
 }
 
 /* 适配手机横屏 */
@@ -493,6 +516,10 @@
 
   .filter-sider-popup {
     top: -0.25rem;
+  }
+
+  .filter-sider-container:hover .filter-sider-popup {
+    display: block;
   }
 }
 

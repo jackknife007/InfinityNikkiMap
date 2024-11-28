@@ -1,6 +1,3 @@
-.mapboxgl-popup-tip {
-  border-right-color: #e5e0d4 !important ; /* 当tip朝下时 */
-}
 
 .mapboxgl-popup-content {
   min-width: 400px;

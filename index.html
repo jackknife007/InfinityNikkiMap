@@ -83,6 +83,7 @@
                 center: [marker.lng, marker.lat],
                 zoom: 5,
               });
+              markerPopup.open(marker.id);
             }
           }
           const newUrl = window.location.pathname;

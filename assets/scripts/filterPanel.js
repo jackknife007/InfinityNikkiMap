@@ -2,6 +2,7 @@ let developmentMode = false;
 
 let filterPanel = {
   element: null,
+  mobilePopupAtiveBtn: null,
   // 创建 filter-panel
   render: async function () {
     try {
@@ -27,6 +28,15 @@ let filterPanel = {
         this.sider.locationBtn.element.toggleFolded();
         this.sider.personalDataBtn.element.toggleFolded();
         this.sider.developmentBtn.element.toggleFolded();
+
+        if (
+          resourceControl.isMobile() &&
+          this.sider.mobileFilterFoldBtn.element !== null
+        ) {
+          this.sider.mobileFilterFoldBtn.element.container.classList.toggle(
+            "filter-panel-sider-mobile-btn-active"
+          );
+        }
       });
 
       this.content.header.allShowBtn.element.addEventListener("click", () => {
@@ -71,13 +81,84 @@ let filterPanel = {
 
       if (resourceControl.isMobile()) {
         this.sider.foldBtn.element.click();
+        this.sider.mobileFilterFoldBtn.element.container.classList.toggle(
+          "filter-panel-sider-mobile-btn-active"
+        );
         this.sider.mobileFilterFoldBtn.element.container.addEventListener(
           "click",
           () => {
             this.sider.foldBtn.element.click();
-            this.sider.mobileFilterFoldBtn.element.container.classList.toggle(
-              "filter-panel-sider-mobile-filter-active"
-            );
+          }
+        );
+        this.sider.personalDataBtn.element.container.addEventListener(
+          "click",
+          () => {
+            if (this.mobilePopupAtiveBtn !== null) {
+              this.mobilePopupAtiveBtn.classList.remove(
+                "filter-panel-sider-mobile-popup-btn-active"
+              );
+            }
+            if (
+              this.mobilePopupAtiveBtn ===
+              this.sider.personalDataBtn.element.container
+            ) {
+              this.mobilePopupAtiveBtn = null;
+              return;
+            } else {
+              this.sider.personalDataBtn.element.container.classList.toggle(
+                "filter-panel-sider-mobile-popup-btn-active"
+              );
+              this.mobilePopupAtiveBtn =
+                this.sider.personalDataBtn.element.container;
+            }
+          }
+        );
+
+        this.sider.locationBtn.element.container.addEventListener(
+          "click",
+          () => {
+            if (this.mobilePopupAtiveBtn !== null) {
+              this.mobilePopupAtiveBtn.classList.remove(
+                "filter-panel-sider-mobile-popup-btn-active"
+              );
+            }
+            if (
+              this.mobilePopupAtiveBtn ===
+              this.sider.locationBtn.element.container
+            ) {
+              this.mobilePopupAtiveBtn = null;
+              return;
+            } else {
+              this.sider.locationBtn.element.container.classList.toggle(
+                "filter-panel-sider-mobile-popup-btn-active"
+              );
+              this.mobilePopupAtiveBtn =
+                this.sider.locationBtn.element.container;
+            }
+          }
+        );
+
+        this.sider.developmentBtn.element.container.addEventListener(
+          "click",
+          () => {
+            if (this.mobilePopupAtiveBtn !== null) {
+              this.mobilePopupAtiveBtn.classList.remove(
+                "filter-panel-sider-mobile-popup-btn-active"
+              );
+            }
+            if (
+              this.mobilePopupAtiveBtn ===
+              this.sider.developmentBtn.element.container
+            ) {
+              this.mobilePopupAtiveBtn = null;
+              return;
+            } else {
+              this.sider.developmentBtn.element.container.classList.toggle(
+                "filter-panel-sider-mobile-popup-btn-active"
+              );
+              this.mobilePopupAtiveBtn =
+                this.sider.developmentBtn.element.container;
+            }
           }
         );
       }
@@ -145,7 +226,8 @@ let filterPanel = {
             map.flyTo({
               center: [location.lng, location.lat],
               zoom: location.zoom,
-              duration: 2000, // 飞行时间(毫秒)
+              duration: 1500, // 飞行时间(毫秒)
+              curve: 1.1, // 飞行曲线
             });
           });
         });
@@ -356,8 +438,9 @@ let filterPanel = {
     },
 
     body: {
-      categoriesContainer: [],
+      categoriesContainer: new Map(),
       categoriesList: [],
+      groupsList: [],
 
       render: function () {
         // 创建 filter-panel__body
@@ -368,6 +451,7 @@ let filterPanel = {
         bodyContainer.className = "filter-panel-groups";
 
         for (const group of allDatas.groups.values()) {
+          this.categoriesContainer.set(group.id, []); // 初始化空数组
           const groupDiv = document.createElement("div");
           groupDiv.className = "filter-panel-group";
 
@@ -375,6 +459,7 @@ let filterPanel = {
           const groupTitle = document.createElement("div");
           groupTitle.className = "filter-panel-group-title";
           groupTitle.textContent = group.title;
+          groupTitle.dataset.groupId = group.id;
           groupDiv.appendChild(groupTitle);
 
           // 添加该分组下的类别
@@ -419,12 +504,51 @@ let filterPanel = {
 
             categoryList.appendChild(categoryDiv);
             this.categoriesList.push(categoryDiv);
+            this.categoriesContainer.get(group.id).push(categoryDiv);
           });
 
-          this.categoriesContainer.push(categoryList);
+          groupTitle.addEventListener("click", () => {
+            const categoryList = this.categoriesContainer.get(group.id);
+            const isActive = categoryList.every((category) =>
+              category.classList.contains("active")
+            );
+
+            categoryList.forEach((category) => {
+              category.classList.toggle("active", !isActive);
+              toggleCategoryLayer(category.dataset.categoryId, !isActive);
+            });
+          });
+
+          this.groupsList.push(groupTitle);
           groupDiv.appendChild(categoryList);
           bodyContainer.appendChild(groupDiv);
         }
+
+        // 添加右键事件监听
+        this.groupsList.forEach((group) => {
+          group.addEventListener("contextmenu", (e) => {
+            e.preventDefault(); // 阻止默认右键菜单
+
+            const groupId = parseInt(group.dataset.groupId);
+
+            // 遍历所有 category
+            this.categoriesContainer.forEach((categories, id) => {
+              if (id === groupId) {
+                // 当前分组设为激活
+                categories.forEach((category) => {
+                  category.classList.add("active");
+                  toggleCategoryLayer(category.dataset.categoryId, true);
+                });
+              } else {
+                // 其他分组设为非激活
+                categories.forEach((category) => {
+                  category.classList.remove("active");
+                  toggleCategoryLayer(category.dataset.categoryId, false);
+                });
+              }
+            });
+          });
+        });
 
         this.categoriesList.forEach((category) => {
           // 添加右键事件监听
