@@ -49,4 +49,8 @@ let resourceControl = {
   getMarkerImageFilePath: function (image) {
     return `./assets/images/${this.regionName}/markers/${image}`;
   },
+
+  isMobile: function () {
+    return window.innerWidth <= 768 || window.innerHeight <= 768;
+  },
 };

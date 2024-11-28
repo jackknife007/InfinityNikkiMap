@@ -196,7 +196,7 @@ body {
 }
 
 .develop-inactive {
-  display: none;
+  display: none !important;
 }
 
 .temp-qq-group-info {
@@ -206,6 +206,7 @@ body {
   font-size: 15px;
   color: white;
   padding: 10px;
+  display: none;
 }
 
 .tips {

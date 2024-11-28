@@ -27,7 +27,7 @@
 }
 
 .mapboxgl-ctrl-bottom-right .costom-ctrl {
-  margin: 0 30px 40px 0;
+  margin: 0 20px 30px 0;
   float: right;
 }
 
@@ -38,7 +38,7 @@
   background-color: white;
   cursor: pointer;
   border-radius: 10px;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .mapboxgl-ctrl-zoom-in:hover,
@@ -59,7 +59,7 @@
 /* 滑块容器样式 */
 .mapboxgl-ctrl-slider-container {
   position: relative;
-  height: 170px;
+  height: 150px;
   padding: 20px 0;
   display: flex;
   justify-content: center;
@@ -71,7 +71,7 @@
   height: 100%;
   background: rgb(223, 159, 169);
   border-radius: 5px;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
   position: relative;
 }
 
@@ -101,4 +101,213 @@
   outline: none;
   background-image: url("../../assets/icons/elf.png");
   background-size: cover;
+}
+
+/* 地图右上角按钮容器 */
+.map-action-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
+
+.map-action-buttons button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4caf50; /* 绿色 */
+  color: white;
+  cursor: pointer;
+}
+
+.map-action-buttons button:hover {
+  background-color: #45a049;
+}
+
+/* 更新说明对话框的遮罩层 */
+.update-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 更新说明对话框 */
+.update-dialog {
+  background-color: #fff;
+  width: 500px;
+  max-width: 90%;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 关闭按钮 */
+.dialog-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* 标签栏容器 */
+.tab-container {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.tab-button.active {
+  background-color: #fff;
+  border-bottom: 2px solid #4caf50;
+}
+
+.tab-button:not(:last-child) {
+  border-right: 1px solid #ddd;
+}
+
+/* 内容区域 */
+.tab-content {
+  padding: 20px;
+  font-size: 14px;
+  color: #333;
+}
+
+.map-action-btn {
+  position: relative;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-bottom: 0.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.map-action-btn img {
+  width: 0.3rem;
+  height: 0.3rem;
+}
+
+.map-action-btn-tip-container {
+  right: 100%;
+  top: 50%;
+  -webkit-transform: translate(-0.1rem, -50%);
+  -ms-transform: translate(-0.1rem, -50%);
+  transform: translate(-0.1rem, -50%);
+  padding: 0.06rem 0.1rem;
+  border-radius: 0.04rem;
+  position: absolute;
+  color: #ece5d8;
+  background: #323947;
+  white-space: nowrap;
+  font-size: 0.1rem;
+  display: none;
+}
+
+.map-action-btn-tip {
+  left: 100%;
+  top: 50%;
+  -webkit-transform: translate(-1px, -50%);
+  -ms-transform: translate(-1px, -50%);
+  transform: translate(-1px, -50%);
+  border-left: 0.07rem solid #323947;
+  border-top: 0.05rem solid transparent;
+  border-bottom: 0.05rem solid transparent;
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  display: block;
+}
+
+.map-action-btn:hover .map-action-btn-tip-container {
+  display: block;
+}
+
+.screen-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.screen-popup-container {
+  background-color: #fff;
+  width: 500px;
+  max-width: 90%;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen-popup-header {
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-box-flex: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+}
+
+.screen-popup-header h3 {
+  margin: 0;
+  padding: 20px;
+  font-size: 20px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  color: #d3bc8e;
+}
+
+.screen-popup-close-btn {
+  cursor: pointer;
+  position: absolute;
+  top: .13rem;
+  right: .2rem;
+  width: .24rem;
+  height: .24rem;
+  font-size: .24rem;
+}
+
+.screen-popup-content {
+  height: 100%;
+  width: 100%;
+}
+.map-action-content-container {
+  background-color: #ece5d8;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }

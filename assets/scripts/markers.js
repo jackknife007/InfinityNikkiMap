@@ -1,6 +1,6 @@
 let markerPopup = {
   _popup: new mapboxgl.Popup({
-    offset: [19, 230],
+    offset: [19, 0],
     closeButton: true,
     closeOnClick: false,
     anchor: "left",
@@ -135,12 +135,12 @@ function initLayerMarkers(categoryId, category) {
 
     markerPopup.open(markerId);
     //移动会产生popup抖动 先注释掉
-    const marker = allDatas.getMarker(markerId);
-    map.easeTo({
-      center: [marker.lng, marker.lat],
-      offset: [0, -300 * (map.getZoom() / map.getMaxZoom())], // 根据缩放比例调整偏移
-      duration: 400,
-    });
+    //const marker = allDatas.getMarker(markerId);
+    //map.easeTo({
+    //  center: [marker.lng, marker.lat],
+    //  offset: [0, -300 * (map.getZoom() / map.getMaxZoom())], // 根据缩放比例调整偏移
+    //  duration: 400,
+    //});
   });
 
   map.on("contextmenu", `category-layer-${categoryId}`, (e) => {

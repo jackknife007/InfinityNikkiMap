@@ -1,15 +1,7 @@
 let developmentMode = false;
 
-function loadBackgroundImage(url) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.src = url;
-    img.onload = () => resolve();
-    img.onerror = () => reject(new Error("背景图片加载失败"));
-  });
-}
-
 let filterPanel = {
+  element: null,
   // 创建 filter-panel
   render: async function () {
     try {
@@ -19,16 +11,17 @@ let filterPanel = {
       const filterPanel = document.createElement("div");
       filterPanel.className = "filter-panel";
       filterPanel.style.visibility = "hidden"; // 先隐藏
+      this.filterPanel = filterPanel;
 
       filterPanel.appendChild(this.sider.render());
+      filterPanel.appendChild(this.icon.render());
       filterPanel.appendChild(this.content.render());
 
       document.querySelector(".map-container").appendChild(filterPanel);
-      filterPanel.style.visibility = "visible";
 
       this.sider.foldBtn.element.addEventListener("click", () => {
         filterPanel.classList.toggle("filter-panel--hidden");
-        this.content.icon.toggle();
+        this.icon.toggle();
 
         this.sider.foldBtn.toggle();
         this.sider.locationBtn.element.toggleFolded();
@@ -75,6 +68,21 @@ let filterPanel = {
         developmentMode = !developmentMode;
         markerPopup.setEditBtnState();
       });
+
+      if (resourceControl.isMobile()) {
+        this.sider.foldBtn.element.click();
+        this.sider.mobileFilterFoldBtn.element.container.addEventListener(
+          "click",
+          () => {
+            this.sider.foldBtn.element.click();
+            this.sider.mobileFilterFoldBtn.element.container.classList.toggle(
+              "filter-panel-sider-mobile-filter-active"
+            );
+          }
+        );
+      }
+
+      filterPanel.style.visibility = "visible";
     } catch (error) {
       console.error("加载面板失败:", error);
     }
@@ -88,12 +96,25 @@ let filterPanel = {
       filterPanelSider.className = "filter-panel-sider";
 
       filterPanelSider.appendChild(this.foldBtn.render());
+      if (resourceControl.isMobile()) {
+        filterPanelSider.appendChild(this.mobileFilterFoldBtn.render());
+      }
       filterPanelSider.appendChild(this.personalDataBtn.render());
       filterPanelSider.appendChild(this.locationBtn.render());
       filterPanelSider.appendChild(this.developmentBtn.render());
       this.dom = filterPanelSider;
 
       return filterPanelSider;
+    },
+
+    mobileFilterFoldBtn: {
+      element: null,
+      render: function () {
+        const btn = new SiderBtn("filter");
+        this.element = btn;
+        btn.container.classList.add("filter-panel-sider-mobile-filter");
+        return btn.container;
+      },
     },
 
     foldBtn: {
@@ -202,13 +223,13 @@ let filterPanel = {
       element: null,
       render: function () {
         const btn = new SiderBtn("user");
-        btn.addPopup("用户数据操作");
+        btn.addPopup("个人数据操作");
         btn.addListItem(
-          "下载用户数据",
+          "下载个人数据",
           allDatas.downloadPersonalData.bind(allDatas)
         );
         btn.addListItem(
-          "导入用户数据",
+          "导入个人数据",
           allDatas.uploadPersonalData.bind(allDatas)
         );
         btn.addListItem("重置进度", () =>
@@ -223,9 +244,9 @@ let filterPanel = {
             allDatas.personalMarkers.clear.bind(allDatas.personalMarkers)
           )
         );
-        btn.addListItem("清理快速定位", () =>
+        btn.addListItem("清理个人快速定位", () =>
           showConfirmation(
-            "确定要清理当前区域所有自定义快速定位吗？",
+            "确定要清理当前区域所有个人快速定位吗？",
             allDatas.quickPositions.clear.bind(allDatas.quickPositions)
           )
         );
@@ -268,6 +289,20 @@ let filterPanel = {
     },
   },
 
+  icon: {
+    render: function () {
+      // 创建 filter-panel__icon
+      const filterPanelIcon = document.createElement("div");
+      filterPanelIcon.className = "filter-panel-icon";
+      this.container = filterPanelIcon;
+      return filterPanelIcon;
+    },
+
+    toggle: function () {
+      this.container.classList.toggle("filter-panel-icon--active");
+    },
+  },
+
   content: {
     render: function () {
       // 创建 filter-panel__content
@@ -275,25 +310,10 @@ let filterPanel = {
       filterPanelContent.className = "filter-panel-content";
 
       // 组装 DOM 结构
-      filterPanelContent.appendChild(this.icon.render());
       filterPanelContent.appendChild(this.header.render());
       filterPanelContent.appendChild(this.body.render());
       filterPanelContent.appendChild(this.footer.render());
       return filterPanelContent;
-    },
-
-    icon: {
-      render: function () {
-        // 创建 filter-panel__icon
-        const filterPanelIcon = document.createElement("div");
-        filterPanelIcon.className = "filter-panel-icon";
-        this.container = filterPanelIcon;
-        return filterPanelIcon;
-      },
-
-      toggle: function () {
-        this.container.classList.toggle("filter-panel-icon--active");
-      },
     },
 
     header: {
@@ -501,7 +521,7 @@ let filterPanel = {
           // 创建 checkbox
           this.checkbox = document.createElement("input");
           this.checkbox.type = "checkbox";
-          this.checkbox.className = "filter-footer-checkbox";
+          this.checkbox.className = "filter-footer-control-checkbox";
 
           const textSpan = document.createElement("span");
           textSpan.textContent = "隐藏已找到的坐标";
@@ -538,6 +558,15 @@ let filterPanel = {
     },
   },
 };
+
+function loadBackgroundImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = url;
+    img.onload = () => resolve();
+    img.onerror = () => reject(new Error("背景图片加载失败"));
+  });
+}
 
 function UpdateCategoryCountShow(categoryId, onlyChangeIgnore = false) {
   const countElement = document.getElementById(`category-count-${categoryId}`);
