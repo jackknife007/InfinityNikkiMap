@@ -73,6 +73,10 @@ let resourceControl = {
     return `${this._assetsHost()}/images/${this.regionName}/markers/${image}`;
   },
 
+  _assetsHost: function () {
+    return this.env === "prod" ? "https://map-assets.nikkimomo.cc" : "./assets";
+  },
+
   isMobile: function () {
     return window.innerWidth <= 768 || window.innerHeight <= 768;
   },
