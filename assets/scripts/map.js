@@ -52,9 +52,6 @@ function InitMap() {
 
   // 添加缩放控件到地图
   map.addControl(new ZoomSliderControl(), "bottom-right");
-
-  // 添加全屏控件到地图
-  map.addControl(new FullscreenControl(), "top-right");
 }
 
 // 创建自定义滑块控件
@@ -100,6 +97,12 @@ class ZoomSliderControl {
       document.addEventListener("mouseup", onMouseUp);
     });
 
+    this._sliderThumb.addEventListener("touchstart", (e) => {
+      isDragging = true;
+      document.addEventListener("touchmove", onTouchMove);
+      document.addEventListener("touchend", onTouchEnd);
+    });
+
     const onMouseMove = (e) => {
       if (!isDragging) return;
 
@@ -118,10 +121,34 @@ class ZoomSliderControl {
       //this._sliderThumb.style.bottom = `${y}px`;
     };
 
+    const onTouchMove = (e) => {
+      if (!isDragging) return;
+
+      const trackRect = this._sliderTrack.getBoundingClientRect();
+      const touch = e.touches[0];
+      const y = Math.max(
+        0,
+        Math.min(trackRect.bottom - touch.clientY, trackRect.height)
+      );
+
+      const percentage = y / trackRect.height;
+
+      const zoom =
+        this._map.getMinZoom() +
+        percentage * (this._map.getMaxZoom() - this._map.getMinZoom());
+      this._map.setZoom(zoom);
+    };
+
     const onMouseUp = () => {
       isDragging = false;
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", onMouseUp);
+    };
+
+    const onTouchEnd = () => {
+      isDragging = false;
+      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchend", onTouchEnd);
     };
 
     // 监听地图缩放更新滑块位置
@@ -129,7 +156,7 @@ class ZoomSliderControl {
       const zoom = map.getZoom();
       const percentage =
         (zoom - map.getMinZoom()) / (map.getMaxZoom() - map.getMinZoom());
-      const y = percentage * 130;
+      const y = percentage * 110;
       this._sliderThumb.style.bottom = `${y - 25}px`;
     });
 
@@ -144,7 +171,7 @@ class ZoomSliderControl {
     const initialZoom = map.getZoom();
     const initialPercentage =
       (initialZoom - map.getMinZoom()) / (map.getMaxZoom() - map.getMinZoom());
-    const initialY = initialPercentage * 130;
+    const initialY = initialPercentage * 110;
     this._sliderThumb.style.bottom = `${initialY - 25}px`;
 
     return this._container;
@@ -156,46 +183,180 @@ class ZoomSliderControl {
   }
 }
 
-// 创建全屏控件
-class FullscreenControl {
-  onAdd(map) {
-    this._map = map;
-    this._container = document.createElement("div");
-    this._container.className = "mapboxgl-ctrl";
+class MapActionBtn {
+  renderBtn(name, iconImgSrc) {
+    this.btn = document.createElement("div");
+    this.btn.className = "map-action-btn";
+    this.btn.onclick = () => {
+      this.openPopup();
+    };
 
-    this._fullscreenButton = document.createElement("div");
-    this._fullscreenButton.className = "mapboxgl-ctrl-fullscreen";
+    const iconImg = document.createElement("img");
+    iconImg.src = `./assets/icons/${iconImgSrc}.png`;
+    iconImg.className = "map-action-btn-icon";
+    this.btn.appendChild(iconImg);
 
-    this._fullscreenButton.addEventListener("click", () => {
-      if (!document.fullscreenElement) {
-        // 进入全屏
-        const mapContainer = document.getElementById("map");
-        if (mapContainer.requestFullscreen) {
-          mapContainer.requestFullscreen();
-        } else if (mapContainer.webkitRequestFullscreen) {
-          mapContainer.webkitRequestFullscreen();
-        } else if (mapContainer.msRequestFullscreen) {
-          mapContainer.msRequestFullscreen();
-        }
-      } else {
-        // 退出全屏
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-          document.msExitFullscreen();
-        }
+    const tipContainer = document.createElement("div");
+    tipContainer.className = "map-action-btn-tip-container";
+
+    const tip = document.createElement("div");
+    tip.className = "map-action-btn-tip";
+
+    const tipText = document.createElement("span");
+    tipText.textContent = name;
+
+    tipContainer.appendChild(tip);
+    tipContainer.appendChild(tipText);
+    this.btn.appendChild(tipContainer);
+
+    return this.btn;
+  }
+
+  renderPopup(header) {
+    this.overlay = document.createElement("div");
+    this.overlay.className = "screen-popup-overlay";
+
+    this.container = document.createElement("div");
+    this.container.className = "screen-popup-container";
+
+    this.header = document.createElement("div");
+    this.header.className = "screen-popup-header";
+
+    this.title = document.createElement("h3");
+    this.title.textContent = header;
+
+    this.closeBtn = document.createElement("div");
+    this.closeBtn.className = "screen-popup-close-btn";
+    this.closeBtn.innerHTML = "×";
+
+    this.header.appendChild(this.title);
+    this.header.appendChild(this.closeBtn);
+
+    this.content = document.createElement("div");
+    this.content.className = "screen-popup-content";
+
+    this.footer = document.createElement("div");
+    this.footer.className = "screen-popup-footer";
+
+    const footerText = document.createElement("span");
+    footerText.textContent = "可以转载，请注明出处哟";
+    this.footer.appendChild(footerText);
+
+    this.container.appendChild(this.header);
+    this.container.appendChild(this.content);
+    this.container.appendChild(this.footer);
+
+    this.overlay.appendChild(this.container);
+
+    this.overlay.addEventListener("click", (e) => {
+      if (e.target === this.overlay) {
+        this.closePopup();
       }
     });
 
-    this._container.appendChild(this._fullscreenButton);
-    return this._container;
+    this.closeBtn.addEventListener("click", () => {
+      this.closePopup();
+    });
+
+    this.overlay.style.visibility = "hidden";
+    document.getElementById("root").appendChild(this.overlay);
   }
 
-  onRemove() {
-    this._container.parentNode.removeChild(this._container);
-    this._map = undefined;
+  setPopupContent(content) {
+    this.content.innerHTML = "";
+    this.content.appendChild(content);
+  }
+
+  openPopup() {
+    this.overlay.style.visibility = "visible";
+  }
+
+  closePopup() {
+    this.overlay.style.visibility = "hidden";
   }
 }
 
+// 创建按钮容器
+let mapActionBtns = {
+  announcements: [],
+  functionalUpdates: [],
+
+  init: async function () {
+    try {
+      const [announcements, functionalUpdates] = await Promise.all([
+        fetch(resourceControl.getAnouncementsJsonFilePath()).then((res) =>
+          res.json()
+        ),
+        fetch(resourceControl.getFunctionalUpdatesJsonFilePath()).then((res) =>
+          res.json()
+        ),
+      ]);
+
+      this.announcements = announcements;
+      this.functionalUpdates = functionalUpdates;
+    } catch (error) {
+      console.error("加载数据失败:", error);
+    }
+
+    const btnContainer = document.createElement("div");
+    btnContainer.className = "map-action-buttons";
+
+    // pc加载全屏按钮
+    if (!resourceControl.isMobile()) {
+      btnContainer.appendChild(this.fullScreenBtn.render());
+    }
+
+    // 更新说明按钮
+    btnContainer.appendChild(this.updateDialogBtn.render());
+
+    // 将按钮容器添加到地图容器
+    document.querySelector(".map-container").appendChild(btnContainer);
+  },
+
+  fullScreenBtn: {
+    render: function () {
+      this.element = new MapActionBtn();
+      const btn = this.element.renderBtn("全屏", "elf");
+      btn.onclick = () => {
+        if (!document.fullscreenElement) {
+          // 进入全屏
+          const mapContainer = document.getElementById("root");
+          if (mapContainer.requestFullscreen) {
+            mapContainer.requestFullscreen();
+          } else if (mapContainer.webkitRequestFullscreen) {
+            mapContainer.webkitRequestFullscreen();
+          } else if (mapContainer.msRequestFullscreen) {
+            mapContainer.msRequestFullscreen();
+          }
+        } else {
+          // 退出全屏
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+          }
+        }
+      };
+      return btn;
+    },
+  },
+
+  updateDialogBtn: {
+    render: function () {
+      this.element = new MapActionBtn();
+      const btn = this.element.renderBtn("公告板", "board");
+
+      this.element.renderPopup("公告板");
+      this.element.setPopupContent(this.content.render());
+      return btn;
+    },
+
+    content: {
+      render: function () {
+        return updateLogPopup.render();
+      },
+    },
+  },
+};

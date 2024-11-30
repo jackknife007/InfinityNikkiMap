@@ -296,7 +296,7 @@ let filterPanel = {
 
           container.appendChild(buttonContainer);
           overlay.appendChild(container);
-          document.body.appendChild(overlay);
+          document.getElementById("root").appendChild(overlay);
         });
       },
     },

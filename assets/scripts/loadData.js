@@ -200,10 +200,7 @@ let allDatas = {
           this.personalData.set(data.id, data);
         });
       }
-      let positionsId = [
-        ...Array.from(this.defaultData.keys()),
-        ...Array.from(this.personalData.keys()),
-      ];
+      let positionsId = Array.from(this.personalData.keys());
       positionsId.sort();
       let i = 0;
       while (i < positionsId.length && positionsId[i] == i + 1) {

@@ -90,7 +90,6 @@
 
 .filter-panel-body {
   display: -webkit-box;
-
   display: -ms-flexbox;
   display: flex;
   -webkit-box-flex: 1;
@@ -104,6 +103,20 @@
   border-radius: 0 0 0.12rem 0.12rem;
   min-width: 0.97rem;
   scrollbar-width: none;
+}
+
+.filter-panel-body::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-panel-body::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5); /* 滚动条颜色 */
+  border-radius: 6px; /* 滚动条圆角 */
+}
+
+.filter-panel-body::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1); /* 滚动条轨道颜色 */
+  border-radius: 6px;
 }
 
 .filter-panel-groups {
@@ -416,20 +429,21 @@
   width: 1.5rem; /* 固定宽度 */
   max-height: 400px; /* 最大高度 */
   overflow-y: auto;
-  scrollbar-width: none;
+  scrollbar-width: thin;
   -ms-overflow-style: none;
+  scrollbar-color: #d3bc8e rgba(0, 0, 0, 0);
 }
 
 /* 美化滚动条 */
-.filter-sider-popup-list::-webkit-scrollbar {
-  width: 6px;
+.filter-sider-popup-list-item-container::-webkit-scrollbar {
+  width: 4px;
 }
 
-.filter-sider-popup-list::-webkit-scrollbar-track {
+.filter-sider-popup-list-item-container::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.filter-sider-popup-list::-webkit-scrollbar-thumb {
+.filter-sider-popup-list-item-container::-webkit-scrollbar-thumb {
   background-color: #d3bc8e;
   border-radius: 0.12rem;
 }

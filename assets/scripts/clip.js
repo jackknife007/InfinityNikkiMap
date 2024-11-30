@@ -32,7 +32,7 @@ let tips = {
     this.className = "tips-content";
     this.element.appendChild(this.content);
 
-    document.body.appendChild(this.element);
+    document.getElementById("root").appendChild(this.element);
   },
 
   show(title, content) {

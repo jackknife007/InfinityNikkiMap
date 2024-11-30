@@ -10,7 +10,10 @@
       content="无限暖暖在线地图,由黄大胖不胖制作,确保最新最全的地图信息。B站、小红书:黄大胖不胖"
       name="description"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewprot-fit=cover">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewprot-fit=cover"
+    />
     <link rel="icon" href="./assets/icons/favicon.png" type="image/x-icon" />
     <link
       rel="shortcut icon"
@@ -33,6 +36,7 @@
     <link rel="stylesheet" href="./assets/styles/popup.css" />
     <link rel="stylesheet" href="./assets/styles/edit-marker.css" />
     <link rel="stylesheet" href="./assets/styles/qkPositionForm.css" />
+    <link rel="stylesheet" href="./assets/styles/updatelog.css" />
   </head>
   <body>
     <div id="root" class>
@@ -42,6 +46,7 @@
       </div>
     </div>
     <script src="./assets/scripts/utils.js"></script>
+    <script src="./assets/scripts/updatelog.js"></script>
     <script src="./assets/scripts/map.js"></script>
     <script src="./assets/scripts/loadData.js"></script>
     <script src="./assets/scripts/filterPanel.js"></script>
@@ -51,10 +56,12 @@
     <script src="./assets/scripts/contextMenu.js"></script>
     <script src="./assets/scripts/clip.js"></script>
     <script src="./assets/scripts/quickPositionForm.js"></script>
+
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        resourceControl.loadRegionName();
+        resourceControl.init();
         InitMap();
+        mapActionBtns.init();
         map.on("load", async () => {
           // 等待数据加载完成
           await allDatas.load(resourceControl.getRegionName());

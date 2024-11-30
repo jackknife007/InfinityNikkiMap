@@ -29,7 +29,7 @@ let contextMenu = {
       );
     });
 
-    document.body.appendChild(this.element);
+    document.getElementById("root").appendChild(this.element);
 
     map.on("contextmenu", (e) => {
       e.preventDefault();
