@@ -70,7 +70,7 @@ let resourceControl = {
   },
 
   getMarkerImageFilePath: function (image) {
-    return `./assets/images/${this.regionName}/markers/${image}`;
+    return `${this._assetsHost()}/images/${this.regionName}/markers/${image}`;
   },
 
   isMobile: function () {
