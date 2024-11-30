@@ -70,11 +70,7 @@ let resourceControl = {
   },
 
   getMarkerImageFilePath: function (image) {
-    return `${this._assetsHost()}/images/${this.regionName}/markers/${image}`;
-  },
-
-  _assetsHost: function () {
-    return this.env === "prod" ? "https://map-assets.nikkimomo.cc" : "./assets";
+    return `./assets/images/${this.regionName}/markers/${image}`;
   },
 
   isMobile: function () {
