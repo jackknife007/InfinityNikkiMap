@@ -122,7 +122,7 @@ let editForm = {
 
     this.container.appendChild(buttonContainer);
     this.overlay.appendChild(this.container);
-    document.body.appendChild(this.overlay);
+    document.getElementById("root").appendChild(this.overlay);
   },
 
   createBtn: function (text, className) {

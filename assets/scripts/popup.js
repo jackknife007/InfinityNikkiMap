@@ -146,7 +146,7 @@ class MarkerPopupContent {
       var imgUrl = image;
       if ((image.match(/\./g)?.length || 0) === 1) {
         imgUrl = resourceControl.getMarkerImageFilePath(image);
-      } else if (!image.startsWith("https://image.nikkimomo.cc")) {
+      } else if (!image.startsWith("https://map-.nikkimomo.cc")) {
         img.crossOrigin = "Anonymous";
       }
       img.src = imgUrl;
@@ -190,7 +190,7 @@ class MarkerPopupContent {
           largeImgContainer.appendChild(largeImg);
           largeImgContainer.appendChild(closeBtn);
           overlay.appendChild(largeImgContainer);
-          document.body.appendChild(overlay);
+          document.getElementById("root").appendChild(overlay);
         });
       };
 
@@ -253,7 +253,7 @@ class MarkerPopupContent {
         fullVideoContainer.appendChild(videoIframe);
         fullVideoContainer.appendChild(closeBtn);
         overlay.appendChild(fullVideoContainer);
-        document.body.appendChild(overlay);
+        document.getElementById("root").appendChild(overlay);
       });
     }
   }

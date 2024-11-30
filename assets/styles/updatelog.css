@@ -1,0 +1,74 @@
+
+.update-dialog-tab {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0.1rem 0.7rem;
+  gap: .25rem;
+  width: 100%;
+  height: 0.5rem;
+}
+
+.update-dialog-tab-button {
+  width: 1.8rem;
+  height: .3rem;
+  cursor: pointer;
+  align-content: center;
+  text-align: center;
+  border: 1px solid #dbd1bf;
+  background: #f4efe8;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  font-size: .14rem;
+  color: #4a5266;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.update-dialog-tab .active {
+  background: #dbd1bfa8;
+}
+
+.update-dialog-text * {
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.update-dialog-text p {
+  white-space: pre-wrap;
+  line-height: 1.7;
+}
+
+.update-dialog-text p span {
+  font-size: 14px;
+}
+
+.update-dialog-text {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  color: #474c51;
+  font-size: .14rem;
+  line-height: 2;
+  padding: .1rem .2rem;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-overflow-style: none;
+  scrollbar-width: this;
+}
+
+
+.update-dialog-text {
+  width: 100%;
+  padding: .1rem .26rem;
+  height: calc(100% - 0.5rem);
+}

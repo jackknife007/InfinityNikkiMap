@@ -160,6 +160,9 @@ html {
 
 * {
   margin: 0;
+  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 }
 
 * {

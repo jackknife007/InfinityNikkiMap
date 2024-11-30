@@ -54,7 +54,7 @@ class QuickPositionForm {
   open(lng, lat) {
     this.lng = lng;
     this.lat = lat;
-    document.body.appendChild(this.overlay);
+    document.getElementById("root").appendChild(this.overlay);
     this.titleInput.focus();
   }
 
