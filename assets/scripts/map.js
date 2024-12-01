@@ -239,7 +239,7 @@ class MapActionBtn {
     this.footer.className = "screen-popup-footer";
 
     const footerText = document.createElement("span");
-    footerText.textContent = "可以转载，请注明出处哟";
+    footerText.textContent = "可以转载，请注明出处哟 @黄大胖不胖";
     this.footer.appendChild(footerText);
 
     this.container.appendChild(this.header);
@@ -277,23 +277,37 @@ class MapActionBtn {
 }
 
 // 创建按钮容器
-let mapActionBtns = {
+let mapAction = {
   announcements: [],
   functionalUpdates: [],
+  gameEvents: new Map(),
+  gameExplorations: new Map(),
 
   init: async function () {
     try {
-      const [announcements, functionalUpdates] = await Promise.all([
-        fetch(resourceControl.getAnouncementsJsonFilePath()).then((res) =>
-          res.json()
-        ),
-        fetch(resourceControl.getFunctionalUpdatesJsonFilePath()).then((res) =>
-          res.json()
-        ),
-      ]);
+      const [announcements, functionalUpdates, gameEvents, gameExplorations] =
+        await Promise.all([
+          fetch(resourceControl.getAnouncementsJsonFilePath()).then((res) =>
+            res.json()
+          ),
+          fetch(resourceControl.getFunctionalUpdatesJsonFilePath()).then(
+            (res) => res.json()
+          ),
+          fetch(resourceControl.getGameEventsJsonFilePath()).then((res) =>
+            res.json()
+          ),
+          fetch(resourceControl.getGameExplorationsJsonFilePath()).then((res) =>
+            res.json()
+          ),
+        ]);
 
       this.announcements = announcements;
       this.functionalUpdates = functionalUpdates;
+
+      this.gameEvents = new Map(gameEvents.map((event) => [event.id, event]));
+      this.gameExplorations = new Map(
+        gameExplorations.map((event) => [event.id, event])
+      );
     } catch (error) {
       console.error("加载数据失败:", error);
     }
@@ -308,6 +322,9 @@ let mapActionBtns = {
 
     // 更新说明按钮
     btnContainer.appendChild(this.updateDialogBtn.render());
+
+    // 白嫖介绍按钮
+    btnContainer.appendChild(this.giftBtn.render());
 
     // 将按钮容器添加到地图容器
     document.querySelector(".map-container").appendChild(btnContainer);
@@ -356,6 +373,23 @@ let mapActionBtns = {
     content: {
       render: function () {
         return updateLogPopup.render();
+      },
+    },
+  },
+
+  giftBtn: {
+    render: function () {
+      this.element = new MapActionBtn();
+      const btn = this.element.renderBtn("福利", "gift");
+
+      this.element.renderPopup("福利");
+      this.element.setPopupContent(this.content.render());
+      return btn;
+    },
+
+    content: {
+      render: function () {
+        return giftCollectionPopup.render();
       },
     },
   },

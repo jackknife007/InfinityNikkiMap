@@ -12,7 +12,7 @@
     />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, viewprot-fit=cover"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <link rel="icon" href="./assets/icons/favicon.png" type="image/x-icon" />
     <link
@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="./assets/styles/edit-marker.css" />
     <link rel="stylesheet" href="./assets/styles/qkPositionForm.css" />
     <link rel="stylesheet" href="./assets/styles/updatelog.css" />
+    <link rel="stylesheet" href="./assets/styles/giftCollection.css" />
   </head>
   <body>
     <div id="root" class>
@@ -47,6 +48,7 @@
     </div>
     <script src="./assets/scripts/utils.js"></script>
     <script src="./assets/scripts/updatelog.js"></script>
+    <script src="./assets/scripts/giftCollection.js"></script>
     <script src="./assets/scripts/map.js"></script>
     <script src="./assets/scripts/loadData.js"></script>
     <script src="./assets/scripts/filterPanel.js"></script>
@@ -61,7 +63,7 @@
       document.addEventListener("DOMContentLoaded", () => {
         resourceControl.init();
         InitMap();
-        mapActionBtns.init();
+        mapAction.init();
         map.on("load", async () => {
           // 等待数据加载完成
           await allDatas.load(resourceControl.getRegionName());

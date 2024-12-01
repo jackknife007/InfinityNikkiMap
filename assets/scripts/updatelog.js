@@ -2,15 +2,13 @@ let updateLogPopup = {
   render: function () {
     const contentContainer = document.createElement("div");
     contentContainer.className = "map-action-content-container";
+
     // 创建标签栏
     const tabContainer = document.createElement("div");
     tabContainer.className = "update-dialog-tab";
 
     const tabs = ["说明", "功能更新"];
-    this.tabContents = [
-      mapActionBtns.announcements,
-      mapActionBtns.functionalUpdates,
-    ];
+    this.tabContents = [mapAction.announcements, mapAction.functionalUpdates];
 
     this.activeTab = 0;
     this.tabButtons = [];

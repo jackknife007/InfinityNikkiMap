@@ -76,7 +76,6 @@ class QuickPositionForm {
       lat: this.lat,
       zoom: map.getZoom(),
     };
-    console.log(allDatas.quickPositions);
     allDatas.quickPositions.add(position);
     filterPanel.sider.locationBtn.addLocation(position);
     this.close();

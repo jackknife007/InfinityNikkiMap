@@ -186,9 +186,9 @@
 
 .screen-popup-container {
   background-color: #ece5d8;
-  width: 400px;
+  width: 5rem;
   max-width: 90%;
-  height: 500px;
+  height: 5rem;
   max-height: 90%;
   border-radius: 8px;
   position: relative;
@@ -229,6 +229,7 @@
 
 .screen-popup-content {
   width: 100%;
+  height: calc(100% - 1rem);
   overflow: hidden;
 }
 

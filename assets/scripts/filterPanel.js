@@ -291,6 +291,7 @@ let filterPanel = {
             allDatas.quickPositions.delete(locationId);
             newItem.remove();
             overlay.remove();
+            tips.show("删除成功", `快速定位{${location.text}}已删除`);
           };
           buttonContainer.appendChild(saveButton);
 

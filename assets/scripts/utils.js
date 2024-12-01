@@ -11,7 +11,6 @@ let resourceControl = {
   },
 
   loadEnv: function () {
-    console.log(location.hostname);
     if (location.hostname === "map.nikkimomo.cc") {
       this.env = "prod";
     } else if (location.hostname === "map2.nikkimomo.cc") {
@@ -63,6 +62,14 @@ let resourceControl = {
 
   getFunctionalUpdatesJsonFilePath: function () {
     return `${this._assetsHost()}/datas/common/functionalUpdates.json`;
+  },
+
+  getGameEventsJsonFilePath: function () {
+    return `${this._assetsHost()}/datas/common/gameEvents.json`;
+  },
+
+  getGameExplorationsJsonFilePath: function () {
+    return `${this._assetsHost()}/datas/common/gameExplorations.json`;
   },
 
   getTilesFilePath: function () {

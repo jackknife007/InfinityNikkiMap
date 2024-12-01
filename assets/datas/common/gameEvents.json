@@ -1,0 +1,200 @@
+[
+  {
+    "id": 20,
+    "name": "公测定档福利活动",
+    "beginDate": "2024-11-14 00:00:00",
+    "endDate": "2024-12-15 23:59:59",
+    "method": "官网活动页",
+    "description": "完成任务累计心愿值，可领取不同挡位的奖励。需要在官网活动页点击领取，公测后直接发放到创建的第一个游戏角色账户内。预下载开启后无法再通过【预约、邀请好友预约】获得心愿值。2025-02-16 00:00:00前创建角色才能领到，逾期无法补发。",
+    "otherGift": [
+      "4星祝福闪光【雪绒融】",
+      "噗灵x50000",
+      "纯真丝线x150",
+      "闪亮泡泡x50",
+      "闪光粒子x20"
+    ]
+  },
+  {
+    "id": 19,
+    "name": "星愿绮幻夜·暖暖生日直播兑换码",
+    "beginDate": "2024-12-06 00:00:00",
+    "endDate": "2999-12-31",
+    "method": "游戏内兑换，兑换码",
+    "description": "待更新"
+  },
+  {
+    "id": 18,
+    "name": "无限暖暖小助手美鸭梨暖暖生日祝福兑换码",
+    "beginDate": "2024-12-06 00:00:00",
+    "endDate": "2999-12-31",
+    "method": "游戏内兑换，兑换码",
+    "description": "待更新",
+    "mainGift": [{ "type": "diamond", "amount": 126 }]
+  },
+  {
+    "id": 17,
+    "name": "无限暖暖搬砖工暖暖生日祝福兑换码",
+    "beginDate": "2024-12-06 00:00:00",
+    "endDate": "2999-12-31",
+    "method": "游戏内兑换，兑换码",
+    "description": "待更新",
+    "mainGift": [{ "type": "diamond", "amount": 126 }]
+  },
+  {
+    "id": 16,
+    "name": "暖暖庆生赠礼",
+    "beginDate": "2024-12-06 00:00:00",
+    "endDate": "2999-12-31",
+    "method": "未知",
+    "description": "待更新",
+    "mainGift": [{ "type": "diamond", "amount": 126 }]
+  },
+  {
+    "id": 15,
+    "name": "0点暖暖生日祝福赠礼",
+    "beginDate": "2024-12-06 00:00:00",
+    "endDate": "2999-12-31",
+    "method": "未知",
+    "description": "待更新",
+    "mainGift": [{ "type": "diamond", "amount": 500 }],
+    "otherGift": ["噗灵x12600", "能量结晶x2"]
+  },
+  {
+    "id": 14,
+    "name": "12月04日暖暖生日预热赠礼",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2999-12-31",
+    "method": "未知",
+    "description": "待更新",
+    "mainGift": [{ "type": "diamond", "amount": 90 }]
+  },
+  {
+    "id": 13,
+    "name": "12月03日暖暖生日预热赠礼",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2999-12-31",
+    "method": "未知",
+    "description": "待更新",
+    "mainGift": [{ "type": "diamond", "amount": 80 }]
+  },
+  {
+    "id": 12,
+    "name": "11月30日生日福利一览兑换码",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2024-12-31 23:59:59",
+    "method": "游戏内兑换，兑换码【暖暖生日惊喜速递】",
+    "description": "无限暖暖官方账号福利。",
+    "mainGift": [{ "type": "diamond", "amount": 126 }]
+  },
+  {
+    "id": 11,
+    "name": "祝福心语活动",
+    "beginDate": "2024-12-06 00:00:00",
+    "endDate": "2999-12-31",
+    "method": "未知",
+    "description": "还没说结束日期，待更新",
+    "otherGift": ["套装【星愿璨梦】", "拍照动作【惊喜绽放】", "纯真丝线x1206"]
+  },
+  {
+    "id": 10,
+    "name": "神秘礼物？？？",
+    "beginDate": "2024-12-06 00:00:00",
+    "endDate": "2999-12-31",
+    "method": "未知",
+    "description": "还没说结束日期，待更新。除了钻石还有一项。",
+    "mainGift": [{ "type": "diamond", "amount": 1206 }]
+  },
+  {
+    "id": 9,
+    "name": "制作组生日贺礼",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2999-12-31",
+    "method": "游戏内邮件",
+    "description": "上线立领生日贺礼。还没说结束日期，待更新",
+    "mainGift": [
+      { "type": "diamond", "amount": 500 },
+      { "type": "gongmingCrystal", "amount": 10 }
+    ],
+    "otherGift": ["噗灵x126000", "能量结晶x2"]
+  },
+  {
+    "id": 8,
+    "name": "搭配师名片分享",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2999-12-31",
+    "method": "游戏内分享",
+    "description": "在游戏中定制自己的搭配师名片并分享。是限时活动，但没说结束时间。",
+    "mainGift": [{ "type": "diamond", "amount": 80 }]
+  },
+  {
+    "id": 7,
+    "name": "搭配师协会赠礼",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2100-12-31",
+    "method": "游戏内商城",
+    "description": "达到对应等级，可在商城内免费领取搭配师协会赠礼。",
+    "mainGift": [{ "type": "gongmingCrystal", "amount": 10 }]
+  },
+  {
+    "id": 6,
+    "name": "心愿原野游记",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2024-12-30 03:49:59",
+    "method": "游戏内活动页",
+    "description": "达成心愿原野游记任务，即可获得游历心得，累计游历心得可以获得。",
+    "mainGift": [
+      { "type": "gongmingCrystal", "amount": 10 },
+      { "type": "qishiCrystal", "amount": 8 }
+    ],
+    "otherGift": ["限定名片背景【奇妙的旅行】"]
+  },
+  {
+    "id": 5,
+    "name": "公测前瞻直播特别兑换码",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2024-12-19 09:59:59",
+    "method": "游戏内兑换，兑换码【infinitynikki1205】",
+    "description": "有失效日期，尽快兑换！限时启示水晶！",
+    "mainGift": [{ "type": "qishiCrystal", "amount": 20 }]
+  },
+  {
+    "id": 4,
+    "name": "全球预约&关注里程碑达成奖励",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2100-12-31",
+    "method": "登录游戏&游戏内邮件",
+    "description": "预约人数达到3000w，官方社媒关注达到500w。",
+    "mainGift": [
+      { "type": "diamond", "amount": 120 },
+      { "type": "gongmingCrystal", "amount": 20 }
+    ],
+    "otherGift": ["套装【远方的遥想】", "噗灵x50000", "纯真丝线x300"]
+  },
+  {
+    "id": 3,
+    "name": "开启！搭配师新旅程",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2100-12-31",
+    "method": "游戏内活动页",
+    "description": "累计登录7天即可获得。",
+    "mainGift": [{ "type": "gongmingCrystal", "amount": 20 }]
+  },
+  {
+    "id": 2,
+    "name": "欢迎来到花愿镇",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2024-12-19 09:59:59",
+    "method": "游戏内活动页",
+    "description": "累计登录7天即可获得。限时启示水晶！",
+    "mainGift": [{ "type": "qishiCrystal", "amount": 20 }]
+  },
+  {
+    "id": 1,
+    "name": "成长之路",
+    "beginDate": "2024-12-05 10:00:00",
+    "endDate": "2024-12-19 09:59:59",
+    "method": "游戏内活动页",
+    "description": "搭配师完成【朝夕心愿】累计心愿之辉，达到目标数，累计可以获得。",
+    "mainGift": [{ "type": "gongmingCrystal", "amount": 18 }]
+  }
+]
