@@ -55,6 +55,18 @@ let giftCollectionPopup = {
     totalContainer: null,
     mainGifts: {},
 
+    eventTotal: {
+      diamond: 0,
+      gongmingCrystal: 0,
+      qishiCrystal: 0,
+    },
+
+    explorationTotal: {
+      diamond: 0,
+      gongmingCrystal: 0,
+      qishiCrystal: 0,
+    },
+
     render: function () {
       // 创建总数栏
       this.totalContainer = document.createElement("div");
@@ -77,7 +89,50 @@ let giftCollectionPopup = {
       );
       this.totalContainer.appendChild(this.mainGifts["qishiCrystal"].giftItem);
 
+      // 计算event总数
+      mapAction.gameEvents.forEach((event) => {
+        if (Array.isArray(event.mainGift)) {
+          event.mainGift.forEach((gift) => {
+            if (this.eventTotal[gift.type]) {
+              this.eventTotal[gift.type] += gift.amount;
+            } else {
+              this.eventTotal[gift.type] = gift.amount;
+            }
+          });
+        }
+      });
+
+      // 计算exploration总数
+      mapAction.gameExplorations.forEach((exploration) => {
+        exploration.items.forEach((item) => {
+          if (Array.isArray(item.mainGift)) {
+            item.mainGift.forEach((gift) => {
+              if (this.explorationTotal[gift.type]) {
+                this.explorationTotal[gift.type] += gift.amount * item.total;
+              } else {
+                this.explorationTotal[gift.type] = gift.amount * item.total;
+              }
+            });
+          }
+        });
+      });
+
       return this.totalContainer;
+    },
+
+    setTotal: function (tab) {
+      const totalMainGifts =
+        tab === "event" ? this.eventTotal : this.explorationTotal;
+
+      Object.keys(giftCollectionPopup.total.mainGifts).forEach((type) => {
+        if (totalMainGifts[type]) {
+          giftCollectionPopup.total.mainGifts[type].setAmount(
+            totalMainGifts[type]
+          );
+        } else {
+          giftCollectionPopup.total.mainGifts[type].setAmount(0, true);
+        }
+      });
     },
   },
 
@@ -98,71 +153,11 @@ let giftCollectionPopup = {
     if (index === 0) {
       this.right.renderEventsDetail();
       this.left.show("event");
-
-      // 计算总数
-      const totalMainGifts = {
-        diamond: 0,
-        gongmingCrystal: 0,
-        qishiCrystal: 0,
-      };
-
-      mapAction.gameEvents.forEach((event) => {
-        if (Array.isArray(event.mainGift)) {
-          event.mainGift.forEach((gift) => {
-            if (totalMainGifts[gift.type]) {
-              totalMainGifts[gift.type] += gift.amount;
-            } else {
-              totalMainGifts[gift.type] = gift.amount;
-            }
-          });
-        }
-      });
-
-      Object.keys(giftCollectionPopup.total.mainGifts).forEach((type) => {
-        if (totalMainGifts[type]) {
-          giftCollectionPopup.total.mainGifts[type].setAmount(
-            totalMainGifts[type]
-          );
-        } else {
-          giftCollectionPopup.total.mainGifts[type].setAmount(0, true);
-        }
-      });
+      this.total.setTotal("event");
     } else if (index === 1) {
       this.right.renderExplorationDetail();
       this.left.show("exploration");
-
-      // 计算总数
-      const totalMainGifts = {
-        diamond:
-          giftCollectionPopup._getGameOpenDays() *
-          giftCollectionPopup.everydayDiamondNum,
-        gongmingCrystal: 0,
-        qishiCrystal: 0,
-      };
-
-      mapAction.gameExplorations.forEach((exploration) => {
-        exploration.items.forEach((item) => {
-          if (Array.isArray(item.mainGift)) {
-            item.mainGift.forEach((gift) => {
-              if (totalMainGifts[gift.type]) {
-                totalMainGifts[gift.type] += gift.amount * item.total;
-              } else {
-                totalMainGifts[gift.type] = gift.amount * item.total;
-              }
-            });
-          }
-        });
-      });
-
-      Object.keys(giftCollectionPopup.total.mainGifts).forEach((type) => {
-        if (totalMainGifts[type]) {
-          giftCollectionPopup.total.mainGifts[type].setAmount(
-            totalMainGifts[type]
-          );
-        } else {
-          giftCollectionPopup.total.mainGifts[type].setAmount(0, true);
-        }
-      });
+      this.total.setTotal("exploration");
     } else if (index === 2) {
       this.right.renderEventsDetail();
       this.left.show("eventOther");
@@ -225,9 +220,11 @@ let giftCollectionPopup = {
         if (currentDate < beginDate) {
           // 添加“已结束”字样
           eventTitle.textContent = `${content.name}（未开始）`;
+          eventContainer.style.filter = "opacity(0.8)";
           notBeginEvent.push(eventContainer);
         } else if (endDate < currentDate) {
           eventTitle.textContent = `${content.name}（已结束）`;
+          eventContainer.style.filter = "opacity(0.5)";
           endEvent.push(eventContainer);
         } else {
           const timeDiff = endDate - currentDate;

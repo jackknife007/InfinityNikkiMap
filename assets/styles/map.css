@@ -171,6 +171,33 @@
   display: block;
 }
 
+/* 适配手机横屏 */
+@media only screen and (max-width: 900px) and (min-aspect-ratio: 13 / 9) and (max-device-width: 920px) {
+  .map-action-buttons {
+    flex-direction: row;
+  }
+
+  .map-action-btn-tip-container {
+    /* 将提示框显示在按钮下方 */
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 0.1rem); /* 调整垂直位置 */
+    right: auto; /* 移除右侧定位 */
+    bottom: auto; /* 移除底部定位 */
+  }
+
+  .map-action-btn-tip {
+    /* 调整箭头指向上方 */
+    top: -0.07rem; /* 与提示框顶部对齐 */
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 0.07rem solid transparent;
+    border-right: 0.07rem solid transparent;
+    border-bottom: 0.07rem solid #323947; /* 改为 border-bottom 指向上方 */
+    border-top: none; /* 移除原来的 border-top */
+  }
+}
+
 .screen-popup-overlay {
   position: fixed;
   top: 0;

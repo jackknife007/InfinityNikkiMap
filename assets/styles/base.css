@@ -160,16 +160,15 @@ html {
 
 * {
   margin: 0;
-  user-select: none;
   -ms-user-select: none;
   -webkit-user-select: none;
+  user-select: none;
 }
 
 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-
 
 .reflow-hacker {
   width: 0;

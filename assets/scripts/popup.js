@@ -229,7 +229,7 @@ class MarkerPopupContent {
         videoIframe.src = `//player.bilibili.com/player.html?bvid=${video}`;
         videoIframe.scrolling = "no";
         videoIframe.frameBorder = "no";
-        videoIframe.allowFullscreen = "";
+        videoIframe.allowFullscreen = "true";
         videoIframe.className = "video-iframe";
 
         // 创建关闭按钮

@@ -8,7 +8,7 @@ let markerPopup = {
 
   _popup_up: new mapboxgl.Popup({
     offset: [0, -20],
-    closeButton: true,
+    closeButton: false,
     closeOnClick: false,
     anchor: "bottom",
   }),
