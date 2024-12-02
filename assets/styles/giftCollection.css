@@ -31,16 +31,10 @@
   padding: 0.05rem 0.1rem;
 }
 
-.total-gift-icon {
+.total-gift-item img {
   width: 0.2rem;
   height: 0.2rem;
   margin-right: 0.05rem;
-}
-
-.total-gift-amount {
-  font-size: 0.14rem;
-  color: #ffffff;
-  font-weight: bold;
 }
 
 .gift-collection-detail {
@@ -110,7 +104,7 @@
   font-size: 13px;
   font-weight: 500;
   color: rgb(225, 208, 188);
-  padding: 0.1rem;
+  padding: 0.09rem;
   word-wrap: break-word; /* 允许长单词换行 */
   word-break: break-word; /* 强制在需要时断开单词 */
   white-space: normal; /* 允许文本正常换行 */
@@ -173,4 +167,22 @@
   padding-bottom: 0.05rem;
   text-indent: -5em;
   margin-left: 5em;
+}
+
+
+.gift-collection-detail-content-right-exploration {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(100, 85, 66);
+  padding-bottom: 0.05rem;
+}
+
+@media only screen and (max-width: 900px) {
+  .gift-collection-detail-element {
+    font-weight: 600;
+  }
+
+  .gift-collection-detail-content-right p {
+    font-weight: 600;
+  }
 }

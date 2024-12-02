@@ -48,6 +48,12 @@
   font-size: 14px;
 }
 
+@media only screen and (max-width: 900px) {
+  .update-dialog-text p span {
+    font-weight: 500;
+  }
+}
+
 .update-dialog-text {
   overflow-x: hidden;
   overflow-y: auto;

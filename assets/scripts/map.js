@@ -282,24 +282,33 @@ let mapAction = {
   functionalUpdates: [],
   gameEvents: new Map(),
   gameExplorations: new Map(),
+  gameEventsOther: new Map(),
 
   init: async function () {
     try {
-      const [announcements, functionalUpdates, gameEvents, gameExplorations] =
-        await Promise.all([
-          fetch(resourceControl.getAnouncementsJsonFilePath()).then((res) =>
-            res.json()
-          ),
-          fetch(resourceControl.getFunctionalUpdatesJsonFilePath()).then(
-            (res) => res.json()
-          ),
-          fetch(resourceControl.getGameEventsJsonFilePath()).then((res) =>
-            res.json()
-          ),
-          fetch(resourceControl.getGameExplorationsJsonFilePath()).then((res) =>
-            res.json()
-          ),
-        ]);
+      const [
+        announcements,
+        functionalUpdates,
+        gameEvents,
+        gameExplorations,
+        gameEventsOther,
+      ] = await Promise.all([
+        fetch(resourceControl.getAnouncementsJsonFilePath()).then((res) =>
+          res.json()
+        ),
+        fetch(resourceControl.getFunctionalUpdatesJsonFilePath()).then((res) =>
+          res.json()
+        ),
+        fetch(resourceControl.getGameEventsJsonFilePath()).then((res) =>
+          res.json()
+        ),
+        fetch(resourceControl.getGameExplorationsJsonFilePath()).then((res) =>
+          res.json()
+        ),
+        fetch(resourceControl.getGameEventsOtherJsonFilePath()).then((res) =>
+          res.json()
+        ),
+      ]);
 
       this.announcements = announcements;
       this.functionalUpdates = functionalUpdates;
@@ -307,6 +316,9 @@ let mapAction = {
       this.gameEvents = new Map(gameEvents.map((event) => [event.id, event]));
       this.gameExplorations = new Map(
         gameExplorations.map((event) => [event.id, event])
+      );
+      this.gameEventsOther = new Map(
+        gameEventsOther.map((event) => [event.id, event])
       );
     } catch (error) {
       console.error("加载数据失败:", error);
@@ -323,7 +335,7 @@ let mapAction = {
     // 更新说明按钮
     btnContainer.appendChild(this.updateDialogBtn.render());
 
-    // 白嫖介绍按钮
+    // 奖励介绍按钮
     btnContainer.appendChild(this.giftBtn.render());
 
     // 将按钮容器添加到地图容器
@@ -380,9 +392,9 @@ let mapAction = {
   giftBtn: {
     render: function () {
       this.element = new MapActionBtn();
-      const btn = this.element.renderBtn("福利", "gift");
+      const btn = this.element.renderBtn("福利&奖励", "gift");
 
-      this.element.renderPopup("福利");
+      this.element.renderPopup("福利 & 奖励");
       this.element.setPopupContent(this.content.render());
       return btn;
     },

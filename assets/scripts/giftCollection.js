@@ -1,16 +1,14 @@
 let giftCollectionPopup = {
   oneDay: 1000 * 60 * 60 * 24,
-  activeElement: null,
+  everydayDiamondNum: 90,
+
   render: function () {
     const contentContainer = document.createElement("div");
     contentContainer.className = "map-action-content-container";
     contentContainer.classList.add("gift-collection");
 
     // 创建总数栏
-    this.totalContainer = document.createElement("div");
-    this.totalContainer.className = "gift-collection-total";
-
-    this.displayTotalMainGifts();
+    contentContainer.appendChild(this.total.render());
 
     // 创建详情栏
     const detailContainer = document.createElement("div");
@@ -20,7 +18,7 @@ let giftCollectionPopup = {
     const detailTabContainer = document.createElement("div");
     detailTabContainer.className = "gift-collection-detail-tab";
 
-    const tabs = ["活动", "世界探索"];
+    const tabs = ["活动", "世界探索", "其他活动"];
     this.activeTab = 0;
     this.tabButtons = [];
     tabs.forEach((tabName, index) => {
@@ -41,91 +39,54 @@ let giftCollectionPopup = {
     this.detailContentArea = document.createElement("div");
     this.detailContentArea.className = "gift-collection-detail-content";
 
-    // 创建详情内容左侧区域
-    this.detailContentLeft = document.createElement("div");
-    this.detailContentLeft.className = "gift-collection-detail-content-left";
-
-    // 创建详情内容右侧区域
-    this.detailContentRight = document.createElement("div");
-    this.detailContentRight.className = "gift-collection-detail-content-right";
-
-    this.detailMainGift = document.createElement("div");
-    this.detailMainGift.className = "gift-collection-detail-main-gift";
-
-    this.detailDate = document.createElement("p");
-    this.detailMethod = document.createElement("p");
-    this.detailDescription = document.createElement("p");
-    this.detailOtherGift = document.createElement("p");
-
-    this.detailImg = document.createElement("img");
-    this.detailImg.className = "gift-collection-detail-img";
-
-    this.detailContentRight.appendChild(this.detailMainGift);
-    this.detailContentRight.appendChild(this.detailDate);
-    this.detailContentRight.appendChild(this.detailMethod);
-    this.detailContentRight.appendChild(this.detailDescription);
-    this.detailContentRight.appendChild(this.detailOtherGift);
-    this.detailContentRight.appendChild(this.detailImg);
-
-    this.detailContentArea.appendChild(this.detailContentLeft);
-    this.detailContentArea.appendChild(this.detailContentRight);
+    this.detailContentArea.appendChild(this.left.render());
+    this.detailContentArea.appendChild(this.right.render());
 
     detailContainer.appendChild(detailTabContainer);
     detailContainer.appendChild(this.detailContentArea);
 
-    contentContainer.appendChild(this.totalContainer);
     contentContainer.appendChild(detailContainer);
 
     this.setActiveTab(0);
     return contentContainer;
   },
 
-  displayTotalMainGifts: function () {
-    const totalMainGifts = {
-      diamond: 0,
-      gongmingCrystal: 0,
-      qishiCrystal: 0,
-    };
+  total: {
+    totalContainer: null,
+    mainGifts: {},
 
-    mapAction.gameEvents.forEach((event) => {
-      if (Array.isArray(event.mainGift)) {
-        event.mainGift.forEach((gift) => {
-          if (totalMainGifts[gift.type]) {
-            totalMainGifts[gift.type] += gift.amount;
-          } else {
-            totalMainGifts[gift.type] = gift.amount;
-          }
-        });
-      }
-    });
+    render: function () {
+      // 创建总数栏
+      this.totalContainer = document.createElement("div");
+      this.totalContainer.className = "gift-collection-total";
 
-    this.totalContainer.innerHTML = "<span>共计: </span>";
+      this.totalContainer.innerHTML = "<span>共计: </span>";
+      this.mainGifts["diamond"] = new MainGift("diamond", "total-gift-item");
+      this.mainGifts["gongmingCrystal"] = new MainGift(
+        "gongmingCrystal",
+        "total-gift-item"
+      );
+      this.mainGifts["qishiCrystal"] = new MainGift(
+        "qishiCrystal",
+        "total-gift-item"
+      );
 
-    const giftsContainer = document.createElement("div");
-    giftsContainer.className = "total-gifts-container";
+      this.totalContainer.appendChild(this.mainGifts["diamond"].giftItem);
+      this.totalContainer.appendChild(
+        this.mainGifts["gongmingCrystal"].giftItem
+      );
+      this.totalContainer.appendChild(this.mainGifts["qishiCrystal"].giftItem);
 
-    Object.keys(totalMainGifts).forEach((type) => {
-      const giftItem = document.createElement("div");
-      giftItem.className = "total-gift-item";
-
-      const giftIcon = document.createElement("img");
-      giftIcon.src = `./assets/icons/${type}.png`;
-      giftIcon.alt = type;
-      giftIcon.className = "total-gift-icon";
-
-      const giftAmount = document.createElement("span");
-      giftAmount.textContent = `x${totalMainGifts[type]}`;
-      giftAmount.className = "total-gift-amount";
-
-      giftItem.appendChild(giftIcon);
-      giftItem.appendChild(giftAmount);
-      giftsContainer.appendChild(giftItem);
-    });
-
-    this.totalContainer.appendChild(giftsContainer);
+      return this.totalContainer;
+    },
   },
 
   setActiveTab: function (index) {
+    if (index === 2) {
+      this.total.totalContainer.style.visibility = "hidden";
+    } else if (this.activeTab !== index) {
+      this.total.totalContainer.style.removeProperty("visibility");
+    }
     this.activeTab = index;
     this.tabButtons.forEach((btn, idx) => {
       if (idx === index) {
@@ -135,149 +96,426 @@ let giftCollectionPopup = {
       }
     });
     if (index === 0) {
-      this.showEventsDetailLeft();
+      this.right.renderEventsDetail();
+      this.left.show("event");
+
+      // 计算总数
+      const totalMainGifts = {
+        diamond: 0,
+        gongmingCrystal: 0,
+        qishiCrystal: 0,
+      };
+
+      mapAction.gameEvents.forEach((event) => {
+        if (Array.isArray(event.mainGift)) {
+          event.mainGift.forEach((gift) => {
+            if (totalMainGifts[gift.type]) {
+              totalMainGifts[gift.type] += gift.amount;
+            } else {
+              totalMainGifts[gift.type] = gift.amount;
+            }
+          });
+        }
+      });
+
+      Object.keys(giftCollectionPopup.total.mainGifts).forEach((type) => {
+        if (totalMainGifts[type]) {
+          giftCollectionPopup.total.mainGifts[type].setAmount(
+            totalMainGifts[type]
+          );
+        } else {
+          giftCollectionPopup.total.mainGifts[type].setAmount(0, true);
+        }
+      });
     } else if (index === 1) {
-      this.showExplorationsDetailLeft();
+      this.right.renderExplorationDetail();
+      this.left.show("exploration");
+
+      // 计算总数
+      const totalMainGifts = {
+        diamond:
+          giftCollectionPopup._getGameOpenDays() *
+          giftCollectionPopup.everydayDiamondNum,
+        gongmingCrystal: 0,
+        qishiCrystal: 0,
+      };
+
+      mapAction.gameExplorations.forEach((exploration) => {
+        exploration.items.forEach((item) => {
+          if (Array.isArray(item.mainGift)) {
+            item.mainGift.forEach((gift) => {
+              if (totalMainGifts[gift.type]) {
+                totalMainGifts[gift.type] += gift.amount * item.total;
+              } else {
+                totalMainGifts[gift.type] = gift.amount * item.total;
+              }
+            });
+          }
+        });
+      });
+
+      Object.keys(giftCollectionPopup.total.mainGifts).forEach((type) => {
+        if (totalMainGifts[type]) {
+          giftCollectionPopup.total.mainGifts[type].setAmount(
+            totalMainGifts[type]
+          );
+        } else {
+          giftCollectionPopup.total.mainGifts[type].setAmount(0, true);
+        }
+      });
+    } else if (index === 2) {
+      this.right.renderEventsDetail();
+      this.left.show("eventOther");
     }
-    if (this.detailContentLeft.firstChild) {
-      this.detailContentLeft.firstChild.click();
+    if (this.left.element.firstChild) {
+      this.left.element.firstChild.click();
     } else {
-      this.clearEventsDetailRight();
+      this.right.clear();
     }
   },
 
-  showEventsDetailLeft: function () {
-    while (this.detailContentLeft.firstChild) {
-      this.detailContentLeft.removeChild(this.detailContentLeft.firstChild);
-    }
+  left: {
+    element: null,
+    activeElement: null,
+    render: function () {
+      // 创建详情内容左侧区域
+      this.element = document.createElement("div");
+      this.element.className = "gift-collection-detail-content-left";
+      return this.element;
+    },
 
-    mapAction.gameEvents.forEach((content) => {
-      const eventContainer = document.createElement("div");
-      eventContainer.className = "gift-collection-detail-element";
+    show: function (type) {
+      this.clear();
+      if (type === "event") {
+        this.showEventsElements(mapAction.gameEvents);
+      } else if (type === "exploration") {
+        this.showExplorationsElements();
+      } else if (type === "eventOther") {
+        this.showEventsElements(mapAction.gameEventsOther);
+      }
+    },
 
-      const eventTitle = document.createElement("span");
-      eventContainer.appendChild(eventTitle);
+    showEventsElements: function (datas) {
+      datas.forEach((content) => {
+        const eventContainer = document.createElement("div");
+        eventContainer.className = "gift-collection-detail-element";
 
-      eventContainer.addEventListener("click", () => {
-        if (this.activeElement !== eventContainer) {
+        const eventTitle = document.createElement("span");
+        eventContainer.appendChild(eventTitle);
+
+        eventContainer.addEventListener("click", () => {
+          if (this.activeElement !== eventContainer) {
+            if (this.activeElement) {
+              this.activeElement.classList.remove("active");
+            }
+            giftCollectionPopup.right.showEventsDetailRight(datas, content.id);
+            eventContainer.classList.add("active");
+            this.activeElement = eventContainer;
+          }
+        });
+
+        const currentDate = new Date();
+        const beginDate = new Date(content.beginDate);
+        const endDate = new Date(content.endDate);
+        const notBeginEvent = [];
+        const ongoingEvent = [];
+        const endEvent = [];
+
+        // 检查当前日期是否在 beginDate 和 endDate 之间
+        if (currentDate < beginDate) {
+          // 添加“已结束”字样
+          eventTitle.textContent = `${content.name}（未开始）`;
+          notBeginEvent.push(eventContainer);
+        } else if (endDate < currentDate) {
+          eventTitle.textContent = `${content.name}（已结束）`;
+          endEvent.push(eventContainer);
+        } else {
+          const timeDiff = endDate - currentDate;
+          const daysDiff = Math.ceil(timeDiff / this.oneDay);
+
+          if (daysDiff <= 1) {
+            // 添加“最后一天”字样
+            eventTitle.textContent = `${content.name}（最后一天）`;
+          } else if (daysDiff <= 3) {
+            // 添加“即将结束”字样
+            eventTitle.textContent = `${content.name}（即将结束）`;
+          } else {
+            // 添加“进行中”字样
+            eventTitle.textContent = `${content.name}（进行中）`;
+          }
+          ongoingEvent.push(eventContainer);
+        }
+
+        ongoingEvent.forEach((event) => {
+          this.element.appendChild(event);
+        });
+
+        notBeginEvent.forEach((event) => {
+          this.element.appendChild(event);
+        });
+
+        endEvent.forEach((event) => {
+          this.element.appendChild(event);
+        });
+      });
+    },
+
+    showExplorationsElements: function () {
+      // 创建每日任务
+      const everydayContainer = document.createElement("div");
+      everydayContainer.className = "gift-collection-detail-element";
+
+      const everydayTitle = document.createElement("span");
+      everydayTitle.textContent = "【每日任务】朝夕心愿";
+      everydayContainer.appendChild(everydayTitle);
+
+      everydayContainer.addEventListener("click", () => {
+        if (this.activeElement !== everydayContainer) {
           if (this.activeElement) {
             this.activeElement.classList.remove("active");
           }
-          this.showEventsDetailRight(content.id);
-          eventContainer.classList.add("active");
-          this.activeElement = eventContainer;
+          giftCollectionPopup.right.showExplorationsEverydayDetailRight();
+          everydayContainer.classList.add("active");
+          this.activeElement = everydayContainer;
         }
       });
+      this.element.appendChild(everydayContainer);
 
-      const currentDate = new Date();
-      const beginDate = new Date(content.beginDate);
-      const endDate = new Date(content.endDate);
-      const notBeginEvent = [];
-      const ongoingEvent = [];
-      const endEvent = [];
+      // 创建世界探索
+      mapAction.gameExplorations.forEach((content) => {
+        const eventContainer = document.createElement("div");
+        eventContainer.className = "gift-collection-detail-element";
 
-      // 检查当前日期是否在 beginDate 和 endDate 之间
-      if (currentDate < beginDate) {
-        // 添加“已结束”字样
-        eventTitle.textContent = `${content.name}（未开始）`;
-        notBeginEvent.push(eventContainer);
-      } else if (endDate < currentDate) {
-        eventTitle.textContent = `${content.name}（已结束）`;
-        endEvent.push(eventContainer);
-      } else {
-        const timeDiff = endDate - currentDate;
-        const daysDiff = Math.ceil(timeDiff / this.oneDay);
+        const eventTitle = document.createElement("span");
+        eventTitle.textContent = content.name;
+        eventContainer.appendChild(eventTitle);
 
-        if (daysDiff <= 1) {
-          // 添加“最后一天”字样
-          eventTitle.textContent = `${content.name}（最后一天）`;
-        } else if (daysDiff <= 3) {
-          // 添加“即将结束”字样
-          eventTitle.textContent = `${content.name}（即将结束）`;
-        } else {
-          // 添加“进行中”字样
-          eventTitle.textContent = `${content.name}（进行中）`;
-        }
-        ongoingEvent.push(eventContainer);
+        eventContainer.addEventListener("click", () => {
+          if (this.activeElement !== eventContainer) {
+            if (this.activeElement) {
+              this.activeElement.classList.remove("active");
+            }
+            giftCollectionPopup.right.showExplorationsDetailRight(content.id);
+            eventContainer.classList.add("active");
+            this.activeElement = eventContainer;
+          }
+        });
+
+        this.element.appendChild(eventContainer);
+      });
+    },
+
+    clear: function () {
+      while (this.element.firstChild) {
+        this.element.removeChild(this.element.firstChild);
       }
+      this.activeElement = null;
+    },
+  },
 
-      ongoingEvent.forEach((event) => {
-        this.detailContentLeft.appendChild(event);
+  right: {
+    detailArea: null,
+    detailMainGiftItem: {},
+    render: function () {
+      // 创建详情内容右侧区域
+      const container = document.createElement("div");
+      container.className = "gift-collection-detail-content-right";
+
+      this.detailMainGift = document.createElement("div");
+      this.detailMainGift.className = "gift-collection-detail-main-gift";
+
+      this.detailMainGiftItem["diamond"] = new MainGift("diamond", "gift-item");
+      this.detailMainGiftItem["gongmingCrystal"] = new MainGift(
+        "gongmingCrystal",
+        "gift-item"
+      );
+      this.detailMainGiftItem["qishiCrystal"] = new MainGift(
+        "qishiCrystal",
+        "gift-item"
+      );
+      this.detailMainGift.appendChild(
+        this.detailMainGiftItem["diamond"].giftItem
+      );
+      this.detailMainGift.appendChild(
+        this.detailMainGiftItem["gongmingCrystal"].giftItem
+      );
+      this.detailMainGift.appendChild(
+        this.detailMainGiftItem["qishiCrystal"].giftItem
+      );
+
+      container.appendChild(this.detailMainGift);
+
+      this.detailArea = document.createElement("div");
+      this.detailArea.className = "gift-collection-detail-content-right-area";
+      container.appendChild(this.detailArea);
+
+      return container;
+    },
+
+    renderEventsDetail: function () {
+      this.clear();
+
+      this.detailDate = document.createElement("p");
+      this.detailMethod = document.createElement("p");
+      this.detailDescription = document.createElement("p");
+      this.detailOtherGift = document.createElement("p");
+
+      this.detailArea.appendChild(this.detailDate);
+      this.detailArea.appendChild(this.detailMethod);
+      this.detailArea.appendChild(this.detailDescription);
+      this.detailArea.appendChild(this.detailOtherGift);
+    },
+
+    showEventsDetailRight: function (datas, id_) {
+      const content = datas.get(id_);
+
+      const mainGiftsMap = new Map();
+      if (Array.isArray(content.mainGift)) {
+        content.mainGift.forEach((gift) => {
+          mainGiftsMap.set(gift.type, gift.amount);
+        });
+      }
+      this._showDetailMainGift(mainGiftsMap);
+
+      const endDateTextMap = {
+        "2100-12-31": "永久",
+        "2999-12-31": "未知",
+      };
+      const endDateDisplay = endDateTextMap[content.endDate] || content.endDate;
+      this.detailDate.textContent = `活动时间：${content.beginDate} 至 ${endDateDisplay}`;
+
+      this.detailMethod.textContent = `获取方式：${content.method}`;
+
+      this.detailDescription.textContent = `活动说明：${content.description}`;
+
+      if (content.otherGift) {
+        this.detailOtherGift.textContent = `活动奖励：${content.otherGift.join(
+          "、"
+        )}`;
+      } else {
+        this.detailOtherGift.textContent = "";
+      }
+    },
+
+    renderExplorationDetail: function () {
+      this.clear();
+    },
+
+    showExplorationsDetailRight: function (id_) {
+      this.clear();
+      const content = mapAction.gameExplorations.get(id_);
+      const totalMainGifts = {
+        diamond: 0,
+        gongmingCrystal: 0,
+        qishiCrystal: 0,
+      };
+
+      const descriptions = [];
+
+      content.items.forEach((item) => {
+        const description = document.createElement("div");
+        description.className =
+          "gift-collection-detail-content-right-exploration";
+        if (item.total > 1 || item.total == 0) {
+          description.textContent = `${item.content}，${sprintf(
+            item.contentTotal,
+            item.total
+          )}`;
+        } else {
+          description.textContent = item.content;
+        }
+        descriptions.push(description);
+
+        if (Array.isArray(item.mainGift)) {
+          item.mainGift.forEach((gift) => {
+            if (totalMainGifts[gift.type]) {
+              totalMainGifts[gift.type] += gift.amount * item.total;
+            } else {
+              totalMainGifts[gift.type] = gift.amount * item.total;
+            }
+          });
+        }
       });
 
-      notBeginEvent.forEach((event) => {
-        this.detailContentLeft.appendChild(event);
+      const mainGiftsMap = new Map();
+      Object.keys(totalMainGifts).forEach((type) => {
+        if (totalMainGifts[type] > 0) {
+          mainGiftsMap.set(type, totalMainGifts[type]);
+        }
       });
+      this._showDetailMainGift(mainGiftsMap);
 
-      endEvent.forEach((event) => {
-        this.detailContentLeft.appendChild(event);
+      descriptions.forEach((description) => {
+        this.detailArea.appendChild(description);
       });
-    });
-  },
+    },
 
-  showEventsDetailRight: function (id_) {
-    const content = mapAction.gameEvents.get(id_);
-    this.showEventsDetailMaingift(content);
-    this.showEventsDetailDate(content);
-    this.detailMethod.textContent = `获取方式：${content.method}`;
-    this.detailDescription.textContent = `活动说明：${content.description}`;
-    if (content.otherGift) {
-      this.detailOtherGift.textContent = `活动奖励：${content.otherGift.join(
-        "、"
-      )}`;
-    } else {
-      this.detailOtherGift.textContent = "";
-    }
-    //this.detailImg.src = content.img;
-  },
+    showExplorationsEverydayDetailRight: function () {
+      this.clear();
 
-  showEventsDetailMaingift: function (content) {
-    while (this.detailMainGift.firstChild) {
-      this.detailMainGift.removeChild(this.detailMainGift.firstChild);
-    }
+      const days = giftCollectionPopup._getGameOpenDays();
+      this._showDetailMainGift(
+        new Map([["diamond", days * giftCollectionPopup.everydayDiamondNum]])
+      );
 
-    if (content.mainGift) {
-      content.mainGift.forEach((gift) => {
-        const giftItem = document.createElement("div");
-        giftItem.className = "gift-item";
+      const description = document.createElement("div");
+      description.className =
+        "gift-collection-detail-content-right-exploration";
+      description.textContent = `完成每日任务可获得【钻石x90】，开服至今共${days}天。`;
+      this.detailArea.appendChild(description);
+    },
 
-        const giftIcon = document.createElement("img");
-        giftIcon.src = `./assets/icons/${gift.type}.png`; // 确保图标路径正确
-        giftIcon.alt = gift.type;
-        giftIcon.className = "gift-icon";
-
-        const giftAmount = document.createElement("span");
-        giftAmount.textContent = `x${gift.amount}`;
-        giftAmount.className = "gift-amount";
-
-        giftItem.appendChild(giftIcon);
-        giftItem.appendChild(giftAmount);
-        this.detailMainGift.appendChild(giftItem);
+    _showDetailMainGift: function (mainGiftsMap) {
+      Object.keys(this.detailMainGiftItem).forEach((type) => {
+        if (mainGiftsMap.has(type)) {
+          this.detailMainGiftItem[type].setAmount(mainGiftsMap.get(type));
+        } else {
+          this.detailMainGiftItem[type].setAmount(0);
+        }
       });
+    },
+
+    clear: function () {
+      while (this.detailArea.firstChild) {
+        this.detailArea.removeChild(this.detailArea.firstChild);
+      }
+    },
+  },
+
+  _getGameOpenDays: function () {
+    const gameStart = new Date("2024-12-05 05:00:00");
+    const today = new Date();
+    let days = Math.ceil((today - gameStart) / giftCollectionPopup.oneDay);
+    if (days < 0) {
+      days = 0;
     }
-  },
-
-  showEventsDetailDate: function (content) {
-    const endDateTextMap = {
-      "2100-12-31": "永久",
-      "2999-12-31": "未知",
-    };
-
-    const endDateDisplay = endDateTextMap[content.endDate] || content.endDate;
-    this.detailDate.textContent = `活动时间：${content.beginDate} 至 ${endDateDisplay}`;
-  },
-
-  showExplorationsDetailLeft: function () {
-    while (this.detailContentLeft.firstChild) {
-      this.detailContentLeft.removeChild(this.detailContentLeft.firstChild);
-    }
-  },
-
-  clearEventsDetailRight: function () {
-    this.detailMainGift.textContent = "";
-    this.detailDate.textContent = "";
-    this.detailMethod.textContent = "";
-    this.detailDescription.textContent = "";
-    this.detailOtherGift.textContent = "";
+    return days;
   },
 };
+
+class MainGift {
+  constructor(type, className) {
+    const giftItem = document.createElement("div");
+    giftItem.className = className;
+
+    const giftIcon = document.createElement("img");
+    giftIcon.src = `./assets/icons/${type}.png`; // 确保图标路径正确
+    giftIcon.alt = type;
+
+    this.giftAmount = document.createElement("span");
+    this.giftAmount.textContent = `x0`;
+
+    giftItem.appendChild(giftIcon);
+    giftItem.appendChild(this.giftAmount);
+    this.giftItem = giftItem;
+  }
+
+  setAmount(amount, alwaysShow = false) {
+    this.giftAmount.textContent = `x${amount}`;
+    if (amount > 0) {
+      this.giftItem.style.display = "flex";
+    } else if (!alwaysShow) {
+      this.giftItem.style.display = "none";
+    }
+  }
+}

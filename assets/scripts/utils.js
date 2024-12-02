@@ -72,6 +72,10 @@ let resourceControl = {
     return `${this._assetsHost()}/datas/common/gameExplorations.json`;
   },
 
+  getGameEventsOtherJsonFilePath: function () {
+    return `${this._assetsHost()}/datas/common/gameEventsOther.json`;
+  },
+
   getTilesFilePath: function () {
     return `${this._assetsHost()}/tiles/xyyy/{z}/{x}/{y}.jpg`;
   },

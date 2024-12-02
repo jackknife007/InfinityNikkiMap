@@ -1,1 +1,188 @@
-[]
+[
+  {
+    "id": 1,
+    "name": "宝箱",
+    "items": [
+      {
+        "content": "打开每个白色宝箱可获得【钻石x5】【噗灵x300】",
+        "contentTotal": "共%s个基础宝箱。",
+        "mainGift": [{ "type": "diamond", "amount": 5 }],
+        "total": 0
+      },
+      {
+        "content": "打开每个蓝色宝箱可获得【钻石x10】【噗灵x500】",
+        "contentTotal": "共%s个蓝色宝箱。",
+        "mainGift": [{ "type": "diamond", "amount": 10 }],
+        "total": 0
+      },
+      {
+        "content": "打开每个粉色宝箱可获得【钻石x30】【噗灵x1000】",
+        "contentTotal": "共%s个粉色宝箱。",
+        "mainGift": [{ "type": "diamond", "amount": 20 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "流转之柱",
+    "items": [
+      {
+        "content": "激活每个流转之柱可获得【钻石x20】",
+        "contentTotal": "共%s个流转之柱。",
+        "mainGift": [{ "type": "diamond", "amount": 20 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "搭配师课题",
+    "items": [
+      {
+        "content": "完成每项搭配师课题任务可获得【钻石x5】",
+        "contentTotal": "共%s个搭配师课题任务。",
+        "mainGift": [{ "type": "diamond", "amount": 5 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "美鸭梨评价",
+    "items": [
+      {
+        "content": "美鸭梨评价评分每增长100可获得【钻石x30】",
+        "contentTotal": "共可获得%s次。",
+        "mainGift": [{ "type": "diamond", "amount": 30 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "搭配势力",
+    "items": [
+      {
+        "content": "挑战结果首次达到优秀可获得【钻石x10】",
+        "contentTotal": "共可获得%s次。",
+        "mainGift": [{ "type": "diamond", "amount": 10 }],
+        "total": 0
+      },
+      {
+        "content": "挑战结果首次达到完美可获得【钻石x20】",
+        "contentTotal": "共可获得%s次。",
+        "mainGift": [{ "type": "diamond", "amount": 20 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "小游戏",
+    "items": [
+      {
+        "content": "首次通过可获得【钻石x10】",
+        "contentTotal": "共%s个小游戏。",
+        "mainGift": [{ "type": "diamond", "amount": 10 }],
+        "total": 0
+      },
+      {
+        "content": "首次完美通过可获得【钻石x30】",
+        "contentTotal": "共%s个小游戏。",
+        "mainGift": [{ "type": "diamond", "amount": 30 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "奇想探索等级",
+    "items": [
+      {
+        "content": "等级每提升5级可获得【钻石x30】",
+        "contentTotal": "共可获得%s次。",
+        "mainGift": [{ "type": "diamond", "amount": 30 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "收集套装",
+    "items": [
+      {
+        "content": "每集齐一套四星套装可获得【钻石x20】",
+        "contentTotal": "共%s个四星套装。",
+        "mainGift": [{ "type": "diamond", "amount": 20 }],
+        "total": 0
+      },
+      {
+        "content": "每集齐一套五星套装可获得【钻石x100】",
+        "contentTotal": "共%s个五星套装。",
+        "mainGift": [{ "type": "diamond", "amount": 20 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "修理坏掉的路灯",
+    "items": [
+      {
+        "content": "每修理一个可获得【钻石x30】",
+        "contentTotal": "共%s个。",
+        "mainGift": [{ "type": "diamond", "amount": 30 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "奇迹之冠搭配赛",
+    "items": [
+      {
+        "content": "评价星级每增长3颗可获得【钻石x30】",
+        "contentTotal": "共可获得%s次。",
+        "mainGift": [{ "type": "diamond", "amount": 30 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "奇迹之冠巅峰赛",
+    "items": [
+      {
+        "content": "18星前评价星级每增长3颗可获得【钻石x120】",
+        "contentTotal": "共可获得%s次。",
+        "mainGift": [{ "type": "diamond", "amount": 120 }],
+        "total": 0
+      },
+      {
+        "content": "评价星级达到21可获得【钻石x90】",
+        "contentTotal": "共可获得%s次。",
+        "mainGift": [{ "type": "diamond", "amount": 90 }],
+        "total": 0
+      },
+      {
+        "content": "评价星级达到22、23、24可分别获得【钻石x30】",
+        "contentTotal": "共可获得%s次。",
+        "mainGift": [{ "type": "diamond", "amount": 30 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "见闻任务",
+    "items": [
+      {
+        "content": "完成每个见闻任务可获得【钻石x20】",
+        "contentTotal": "共%s个。",
+        "mainGift": [{ "type": "diamond", "amount": 20 }],
+        "total": 0
+      }
+    ]
+  }
+]
