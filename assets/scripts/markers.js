@@ -61,7 +61,7 @@ let markerPopup = {
   },
 
   isRepeatClick: function (markerId) {
-    return this.isOpen && this._popupMarkerId === markerId;
+    return this.isOpen() && this._popupMarkerId === markerId;
   },
 
   setEditBtnState: function () {
@@ -289,7 +289,6 @@ function hiddenIgnoredMarkers() {
 }
 
 function addMarkerToCategorySource(marker) {
-  console.log("addMarkerToCategorySource", marker);
   // 更新新category的数据源
   const newFeature = {
     type: "Feature",
