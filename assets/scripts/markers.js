@@ -46,10 +46,14 @@ let markerPopup = {
   },
 
   close: function () {
-    if (this._opened_popup) {
+    if (this.isOpen()) {
       this._opened_popup.remove();
     }
     this._popupMarkerId = 0;
+  },
+
+  isOpen: function () {
+    return this._opened_popup !== null;
   },
 
   setIgnore: function (markerId, categoryId) {
@@ -57,7 +61,7 @@ let markerPopup = {
   },
 
   isRepeatClick: function (markerId) {
-    return this._popupMarker === markerId && this._data.isOpen();
+    return this.isOpen && this._popupMarkerId === markerId;
   },
 
   setEditBtnState: function () {
@@ -69,6 +73,22 @@ function renderMarkers() {
   for (const [categoryId, category] of allDatas.categories.entries()) {
     initLayerMarkers(categoryId, category);
   }
+
+  map.on("click", (e) => {
+    if (markerPopup.isOpen()) {
+      // 查询点击位置的图层
+      const features = map.queryRenderedFeatures(e.point, {
+        layers: Array.from(allDatas.categories.keys()).map(
+          (id) => `category-layer-${id}`
+        ),
+      });
+
+      // 如果点击位置没有找到任何 category-layer 关闭popup
+      if (features.length === 0) {
+        markerPopup.close();
+      }
+    }
+  });
 }
 
 function initLayerMarkers(categoryId, category) {
@@ -159,7 +179,7 @@ function initLayerMarkers(categoryId, category) {
     }
 
     markerPopup.open(markerId);
-    //移动会产生popup抖动 先注释掉
+
     const marker = allDatas.getMarker(markerId);
     map.easeTo({
       center: [marker.lng, marker.lat],
@@ -187,20 +207,6 @@ function initLayerMarkers(categoryId, category) {
     );
     if (features.length === 0 || isCategoryInFeatures) {
       map.getCanvas().style.cursor = "";
-    }
-  });
-
-  map.on("click", (e) => {
-    // 查询点击位置的图层
-    const features = map.queryRenderedFeatures(e.point, {
-      layers: Array.from(allDatas.categories.keys()).map(
-        (id) => `category-layer-${id}`
-      ),
-    });
-
-    // 如果点击位置没有找到任何 category-layer 关闭popup
-    if (features.length === 0) {
-      markerPopup.close();
     }
   });
 }
@@ -283,6 +289,7 @@ function hiddenIgnoredMarkers() {
 }
 
 function addMarkerToCategorySource(marker) {
+  console.log("addMarkerToCategorySource", marker);
   // 更新新category的数据源
   const newFeature = {
     type: "Feature",

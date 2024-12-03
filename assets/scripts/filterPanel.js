@@ -345,7 +345,7 @@ let filterPanel = {
         btn.addPopup("开发者功能");
         btn.addListItem(
           "下载完整位置数据",
-          allDatas.downloadServerMrkers.bind(allDatas)
+          allDatas.downloadServerMarkers.bind(allDatas)
         );
         btn.addListItem(
           "导出新增坐标数据",

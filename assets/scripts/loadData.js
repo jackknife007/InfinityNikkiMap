@@ -785,15 +785,19 @@ let allDatas = {
     input.click();
   },
 
-  downloadServerMrkers: function () {
-    let serverMarkersCopy = new Map(this.serverMarkers);
+  downloadServerMarkers: function () {
+    console.log(this.serverMarkers);
+    console.log(this.newAddMarkers.data);
+    let serverMarkersCopy = [];
     let nextMarkerId = this.maxMarkerId + 1;
-    this.newAddMarkers.data.forEach((marker, markerId) => {
-      marker.id = nextMarkerId;
-      serverMarkersCopy.set(nextMarkerId, marker);
-      serverMarkersCopy.delete(markerId);
-      nextMarkerId += 1;
-    });
+    for (const marker of this.serverMarkers.values()) {
+      if (this.newAddMarkers.data.has(marker.id)) {
+        serverMarkersCopy.push({ ...marker, id: nextMarkerId });
+        nextMarkerId += 1;
+      } else {
+        serverMarkersCopy.push(marker);
+      }
+    }
     let downloadData = {
       timestamp: Date.now(),
       data: Array.from(serverMarkersCopy.values()),

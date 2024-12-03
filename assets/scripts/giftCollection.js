@@ -223,12 +223,10 @@ let giftCollectionPopup = {
           eventTitle.textContent = `${content.name}（未开始）`;
           eventContainer.style.filter = "opacity(0.8)";
           notBeginEvent.push(eventContainer);
-          console.log("not", eventTitle.textContent);
         } else if (endDate < currentDate) {
           eventTitle.textContent = `${content.name}（已结束）`;
           eventContainer.style.filter = "opacity(0.5)";
           endEvent.push(eventContainer);
-          console.log("end", eventTitle.textContent);
         } else {
           const timeDiff = endDate - currentDate;
           const daysDiff = Math.ceil(timeDiff / this.oneDay);
@@ -244,7 +242,6 @@ let giftCollectionPopup = {
             eventTitle.textContent = `${content.name}（进行中）`;
           }
           ongoingEvent.push(eventContainer);
-          console.log("on", eventTitle.textContent);
         }
       });
 
