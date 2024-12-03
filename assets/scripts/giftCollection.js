@@ -191,6 +191,10 @@ let giftCollectionPopup = {
     },
 
     showEventsElements: function (datas) {
+      const notBeginEvent = [];
+      const ongoingEvent = [];
+      const endEvent = [];
+
       datas.forEach((content) => {
         const eventContainer = document.createElement("div");
         eventContainer.className = "gift-collection-detail-element";
@@ -212,9 +216,6 @@ let giftCollectionPopup = {
         const currentDate = new Date();
         const beginDate = new Date(content.beginDate);
         const endDate = new Date(content.endDate);
-        const notBeginEvent = [];
-        const ongoingEvent = [];
-        const endEvent = [];
 
         // 检查当前日期是否在 beginDate 和 endDate 之间
         if (currentDate < beginDate) {
@@ -222,10 +223,12 @@ let giftCollectionPopup = {
           eventTitle.textContent = `${content.name}（未开始）`;
           eventContainer.style.filter = "opacity(0.8)";
           notBeginEvent.push(eventContainer);
+          console.log("not", eventTitle.textContent);
         } else if (endDate < currentDate) {
           eventTitle.textContent = `${content.name}（已结束）`;
           eventContainer.style.filter = "opacity(0.5)";
           endEvent.push(eventContainer);
+          console.log("end", eventTitle.textContent);
         } else {
           const timeDiff = endDate - currentDate;
           const daysDiff = Math.ceil(timeDiff / this.oneDay);
@@ -241,19 +244,20 @@ let giftCollectionPopup = {
             eventTitle.textContent = `${content.name}（进行中）`;
           }
           ongoingEvent.push(eventContainer);
+          console.log("on", eventTitle.textContent);
         }
+      });
 
-        ongoingEvent.forEach((event) => {
-          this.element.appendChild(event);
-        });
+      ongoingEvent.forEach((event) => {
+        this.element.appendChild(event);
+      });
 
-        notBeginEvent.forEach((event) => {
-          this.element.appendChild(event);
-        });
+      notBeginEvent.forEach((event) => {
+        this.element.appendChild(event);
+      });
 
-        endEvent.forEach((event) => {
-          this.element.appendChild(event);
-        });
+      endEvent.forEach((event) => {
+        this.element.appendChild(event);
       });
     },
 
