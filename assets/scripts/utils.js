@@ -4,10 +4,17 @@ let resourceControl = {
   env: "dev",
   // 默认世界名称
   regionName: "xyyy",
+  version: "1.0.0",
 
   init: function () {
     this.loadRegionName();
     this.loadEnv();
+    const version = localStorage.getItem("version");
+    if (version !== this.version) {
+      localStorage.clear();
+      localStorage.setItem("version", this.version);
+      location.reload();
+    }
   },
 
   loadEnv: function () {
