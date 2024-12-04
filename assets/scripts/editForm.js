@@ -195,10 +195,12 @@ let editForm = {
     this.description.setValue(marker?.description || "");
     this.image.setValue(marker?.image || "");
     this.video.setValue(marker?.video || "");
-    this.author.setValue(marker?.author || "default");
-    this.authorLink.setValue(
-      marker?.authorLink || ""
-    );
+    if (developmentMode) {
+      this.author.setValue(marker?.author || "default");
+    } else {
+      this.author.setValue(marker?.author || "");
+    }
+    this.authorLink.setValue(marker?.authorLink || "");
     this.setCategoryOptions(categoryId);
     const firstValue = this.category.element.options[0]?.value;
     this.category.setValue(categoryId || firstValue);

@@ -77,105 +77,133 @@
     "groupTitle": "地点"
   },
   {
-    "id": "12",
+    "id": "100",
     "title": "唱诗蓝龙·基洛",
     "icon": "npc_dragon",
     "groupId": 2,
     "groupTitle": "NPC"
   },
   {
-    "id": "13",
-    "title": "奇想星商人-流浪帽仔",
+    "id": "101",
+    "title": "流浪帽仔",
     "icon": "npc_star_merchant",
     "groupId": 2,
     "groupTitle": "NPC"
   },
   {
-    "id": "14",
+    "id": "102",
     "title": "搭配挑战NPC",
     "icon": "npc_battle",
     "groupId": 2,
     "groupTitle": "NPC"
   },
   {
-    "id": "15",
-    "title": "材料商人",
+    "id": "103",
+    "title": "商人",
     "icon": "npc_materialstore",
     "groupId": 2,
     "groupTitle": "NPC"
   },
   {
-    "id": "16",
+    "id": "200",
     "title": "奇想星",
     "icon": "collection_star",
     "groupId": 3,
     "groupTitle": "收集"
   },
   {
-    "id": "17",
+    "id": "201",
     "title": "灵感露珠",
     "icon": "collection_luzhu",
     "groupId": 3,
     "groupTitle": "收集"
   },
   {
-    "id": "18",
+    "id": "202",
     "title": "钻石宝箱",
     "icon": "collection_chest",
     "groupId": 3,
     "groupTitle": "收集"
   },
   {
-    "id": "19",
+    "id": "203",
     "title": "设计图宝箱",
     "icon": "collection_chest_cloth",
     "groupId": 3,
     "groupTitle": "收集"
   },
   {
-    "id": "20",
+    "id": "204",
     "title": "噗灵",
     "icon": "collection_puling",
     "groupId": 3,
     "groupTitle": "收集"
   },
   {
-    "id": "21",
+    "id": "205",
+    "title": "洞窟内奇想星",
+    "icon": "collection_star_c",
+    "groupId": 3,
+    "groupTitle": "其他"
+  },
+  {
+    "id": "206",
+    "title": "洞窟内灵感露珠",
+    "icon": "collection_luzhu_c",
+    "groupId": 3,
+    "groupTitle": "其他"
+  },
+  {
+    "id": "207",
+    "title": "洞窟内宝箱",
+    "icon": "collection_chest_c",
+    "groupId": 3,
+    "groupTitle": "其他"
+  },
+  {
+    "id": "208",
+    "title": "洞窟内设计图宝箱",
+    "icon": "collection_chest_cloth_c",
+    "groupId": 3,
+    "groupTitle": "其他"
+  },
+  {
+    "id": "300",
     "title": "主线任务",
     "icon": "quest_main",
     "groupId": 4,
     "groupTitle": "任务"
   },
   {
-    "id": "22",
+    "id": "301",
     "title": "世界任务",
     "icon": "quest_shijie",
     "groupId": 4,
     "groupTitle": "任务"
   },
   {
-    "id": "23",
+    "id": "302",
     "title": "见闻任务",
     "icon": "quest_jianwen",
     "groupId": 4,
     "groupTitle": "任务"
   },
   {
-    "id": "24",
+    "id": "303",
     "title": "拍照打卡点",
     "icon": "camera",
     "groupId": 4,
     "groupTitle": "任务"
   },
   {
-    "id": "25",
+    "id": "304",
     "title": "民俗游戏",
     "icon": "minsu-game",
     "groupId": 4,
     "groupTitle": "任务"
   },
   {
-    "id": "26",
+    "id": "400",
     "title": "笔记",
     "icon": "other_default",
     "groupId": 5,
@@ -190,8 +218,64 @@
   },
   {
     "id": "902",
+    "title": "自定义-采集",
+    "icon": "custom_plant",
+    "groupId": 99,
+    "groupTitle": "自定义"
+  },
+  {
+    "id": "903",
+    "title": "自定义-钓鱼",
+    "icon": "custom_fish",
+    "groupId": 99,
+    "groupTitle": "自定义"
+  },
+  {
+    "id": "904",
+    "title": "自定义-捕虫",
+    "icon": "custom_bug",
+    "groupId": 99,
+    "groupTitle": "自定义"
+  },
+  {
+    "id": "905",
+    "title": "自定义-动物",
+    "icon": "custom_animal",
+    "groupId": 99,
+    "groupTitle": "自定义"
+  },
+  {
+    "id": "906",
+    "title": "自定义-拍照",
+    "icon": "custom_photo",
+    "groupId": 99,
+    "groupTitle": "自定义"
+  },
+  {
+    "id": "907",
+    "title": "自定义-战斗",
+    "icon": "custom_fight",
+    "groupId": 99,
+    "groupTitle": "自定义"
+  },
+  {
+    "id": "908",
     "title": "自定义-谜题",
     "icon": "custom_puzzle",
+    "groupId": 99,
+    "groupTitle": "自定义"
+  },
+  {
+    "id": "909",
+    "title": "自定义-奇想星",
+    "icon": "custom_star",
+    "groupId": 99,
+    "groupTitle": "自定义"
+  },
+  {
+    "id": "910",
+    "title": "自定义-衣服",
+    "icon": "custom_cloth",
     "groupId": 99,
     "groupTitle": "自定义"
   }
