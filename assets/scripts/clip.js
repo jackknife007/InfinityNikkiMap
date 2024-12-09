@@ -11,12 +11,12 @@ document.querySelectorAll('.clipboard-btn').forEach(function(btn) {
 clipboardBtn.on("success", function (e) {
   e.clearSelection();
 
-  tips.show("复制成功", e.text);
+  tips.show(resourceControl.i18n("context-menu.toast.copy-success"), e.text);
 });
 clipboardBtn.on("error", function (e) {
   console.error("Action:", e.action);
   console.error("Trigger:", e.trigger);
-  tips.show("复制失败", fallbackMessage(e.action));
+  tips.show(resourceControl.i18n("context-menu.toast.copy-failed"), fallbackMessage(e.action));
 });
 
 let tips = {

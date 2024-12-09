@@ -188,7 +188,7 @@ let allDatas = {
     defaultData: new Map(),
     personalData: new Map(),
     nextPositionId: 1,
-    upperBoungd: 100,
+    upperBound: 100,
     load: function (dataArray) {
       dataArray.forEach((data) => {
         this.defaultData.set(data.id, data);
@@ -242,8 +242,8 @@ let allDatas = {
 
     getNextPositionId: function () {
       let nextPositionId = this.nextPositionId;
-      if (nextPositionId > this.upperBoungd) {
-        tips.show("快速定位已达上限", "请删除部分快速定位后再添加");
+      if (nextPositionId > this.upperBound) {
+        tips.show(resourceControl.i18n("quick-position-form.toast.limit-reached"), resourceControl.i18n("quick-position-form.toast.limit-reached-reason"));
         return null;
       } else {
         this.nextPositionId += 1;
@@ -267,7 +267,7 @@ let allDatas = {
           );
         }
       } catch (error) {
-        console.error("保存快速定位失败:", error);
+        console.error(resourceControl.i18n("quick-position-form.error.save-failed"), error);
       }
     },
 
@@ -317,7 +317,7 @@ let allDatas = {
           this.data.get(marker.categoryId).add(markerId);
         });
       } catch (error) {
-        console.error("读取已标记坐标失败:", error);
+        console.error(resourceControl.i18n("loading.error.marker-read-failed"), error);
       }
     },
 
@@ -409,7 +409,7 @@ let allDatas = {
         }
         this.nextMarkerId = i + 1;
       } catch (error) {
-        console.error("读取自定义坐标失败:", error);
+        console.error(resourceControl.i18n("loading.error.personal-marker-read-failed"), error);
       }
     },
 
@@ -420,7 +420,7 @@ let allDatas = {
     getNextMarkerId: function () {
       let nextMarkerId = this.nextMarkerId;
       if (nextMarkerId > PersonalMarkerIdUpperBound) {
-        tips.show("自定义坐标已达上限", "请删除部分自定义坐标后再添加");
+        tips.show(resourceControl.i18n("edit-form.toast.limit-reached"), resourceControl.i18n("edit-form.toast.limit-reached-reason"));
         return null;
       } else {
         this.nextMarkerId += 1;
@@ -456,7 +456,7 @@ let allDatas = {
           );
         }
       } catch (error) {
-        console.error("保存自定义坐标失败:", error);
+        console.error(resourceControl.i18n("edit-form.error.save-failed"), error);
       }
     },
 
@@ -491,7 +491,7 @@ let allDatas = {
           });
         }
       } catch (error) {
-        console.error("读取新增坐标失败:", error);
+        console.error(resourceControl.i18n("edit-form.error.latest-read-failed"), error);
       }
     },
 
@@ -514,7 +514,7 @@ let allDatas = {
           localStorage.setItem(this._item_key(), JSON.stringify(markersArray));
         }
       } catch (error) {
-        console.error("保存新增坐标失败:", error);
+        console.error(resourceControl.i18n("edit-form.error.save-failed"), error);
       }
     },
 
@@ -537,7 +537,7 @@ let allDatas = {
           });
         }
       } catch (error) {
-        console.error("读取已编辑坐标失败:", error);
+        console.error(resourceControl.i18n("loading.error.edited-marker-read-failed"), error);
       }
     },
 
@@ -560,7 +560,7 @@ let allDatas = {
           localStorage.setItem(this._item_key(), JSON.stringify(markersArray));
         }
       } catch (error) {
-        console.error("保存已编辑坐标失败:", error);
+        console.error(resourceControl.i18n("loading.error.edited-marker-save-failed"), error);
       }
     },
 
@@ -583,7 +583,7 @@ let allDatas = {
           });
         }
       } catch (error) {
-        console.error("读取已删除坐标失败:", error);
+        console.error(resourceControl.i18n("loading.error.deleted-marker-read-failed"), error);
       }
     },
 
@@ -597,7 +597,7 @@ let allDatas = {
         const deletedArray = Array.from(this.data);
         localStorage.setItem(this._item_key(), JSON.stringify(deletedArray));
       } catch (error) {
-        console.error("保存已删除坐标失败:", error);
+        console.error(resourceControl.i18n("loading.error.deleted-marker-save-failed"), error);
       }
     },
 
@@ -671,7 +671,7 @@ let allDatas = {
 
       this.ignoreMarkers.loadFromLocalStorage();
     } catch (error) {
-      console.error("加载数据失败:", error);
+      console.error(resourceControl.i18n("loading.error.load-data-failed"), error);
     }
   },
 
@@ -749,7 +749,7 @@ let allDatas = {
       personalMarkers: Array.from(this.personalMarkers.data.entries()),
       quickPositions: Array.from(this.quickPositions.personalData.entries()),
     };
-    this.downloadDataJson(data, "个人数据备份");
+    this.downloadDataJson(data, resourceControl.i18n("download.personal-markers"));
   },
 
   uploadPersonalData: function () {
@@ -802,12 +802,12 @@ let allDatas = {
       timestamp: Date.now(),
       data: Array.from(serverMarkersCopy.values()),
     };
-    this.downloadDataJson(downloadData, "所有坐标备份(不含自定义)");
+    this.downloadDataJson(downloadData, resourceControl.i18n("download.server-markers"));
   },
 
   downloadNewAddMarkers: function () {
     const data = Array.from(this.newAddMarkers.data.values());
-    this.downloadDataJson(data, "新增数据备份(不含自定义)");
+    this.downloadDataJson(data, resourceControl.i18n("download.new-markers"));
   },
 
   uploadNewAddMarkers: function () {
@@ -845,7 +845,7 @@ let allDatas = {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `${resourceControl.getRegionNameZh()}-${fileName}.json`;
+    link.download = `${resourceControl.getLocalizedRegionName()}-${fileName}.json`;
 
     // 触发下载
     document.body.appendChild(link);

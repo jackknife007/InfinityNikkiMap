@@ -20,7 +20,7 @@ h3 {
   background: url("../../assets/backgrounds/gezi.jpg");
   background-size: 50%;
   display: flex;
-  width: 400px;
+  width: 450px; /* Before: 400 */
   flex-direction: column;
   gap: 8px; /* 统一设置间距 */
   padding: 16px;
@@ -43,7 +43,7 @@ h3 {
 
 .edit-form-label {
   font-size: 13px;
-  min-width: 35px;
+  min-width: 75px; /* Before: 35px */
   text-align: left;
   color: rgb(57, 68, 67);
 }
@@ -85,15 +85,15 @@ h3 {
 
 .save-btn,
 .add-btn {
-  background-color: #65c468;  /* 清新绿色 */
+  background-color: #65c468; /* 清新绿色 */
   color: white;
   border: none;
 }
 
 .cancel-btn {
-  background-color: #e9e9e9;  /* 浅灰色背景 */
-  color: #666;               /* 深灰色文字 */
-  border: 1px solid #ddd;    /* 浅色边框 */
+  background-color: #e9e9e9; /* 浅灰色背景 */
+  color: #666; /* 深灰色文字 */
+  border: 1px solid #ddd; /* 浅色边框 */
 }
 
 .cancel-btn:hover {
@@ -102,7 +102,7 @@ h3 {
 }
 
 .delete-btn {
-  background: #ff7171;     /* 基础蓝色 */
+  background: #ff7171; /* 基础蓝色 */
   color: white;
   border: none;
   padding: 8px 15px;

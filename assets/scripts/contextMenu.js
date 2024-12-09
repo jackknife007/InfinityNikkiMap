@@ -5,19 +5,19 @@ let contextMenu = {
     this.element.className = "context-menu";
     this.close();
 
-    addNewMarkerBtn = this.addItem("添加新标记");
+    addNewMarkerBtn = this.addItem(resourceControl.i18n("context-menu.add-new-marker"));
     addNewMarkerBtn.addEventListener("click", () => {
       this.close();
       editForm.open(0, 0, "add");
     });
 
-    addQuickPositionBtn = this.addItem("添加快速定位");
+    addQuickPositionBtn = this.addItem(resourceControl.i18n("context-menu.add-quick-position"));
     addQuickPositionBtn.addEventListener("click", () => {
       this.close();
       quickPositionForm.open(this.getLngLat().lng, this.getLngLat().lat);
     });
 
-    copyLocationUrlBtn = this.addItem("复制坐标url");
+    copyLocationUrlBtn = this.addItem(resourceControl.i18n("context-menu.copy-location-url"));
     copyLocationUrlBtn.classList.add("clipboard-btn");
     copyLocationUrlBtn.addEventListener("click", () => {
       this.close();

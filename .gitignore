@@ -2,3 +2,4 @@
 .idea/
 .vscode/
 assets/images/*
+.DS_Store

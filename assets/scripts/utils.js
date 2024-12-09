@@ -2,13 +2,19 @@
 
 let resourceControl = {
   env: "dev",
+  lang: {
+    default: "zh-Hans",
+    selected: "",
+    data: { en: null, "zh-Hans": null },
+  },
   // 默认世界名称
   regionName: "xyyy",
   version: "1.0.0",
 
-  init: function () {
+  init: async function () {
     this.loadRegionName();
     this.loadEnv();
+    await this.loadLang();
     const version = localStorage.getItem("version");
     if (version !== this.version) {
       localStorage.clear();
@@ -25,6 +31,28 @@ let resourceControl = {
     }
   },
 
+  loadLang: async function () {
+    const langStorage = localStorage.getItem("lang");
+    let availableLangs = Object.keys(this.lang.data);
+
+    if (langStorage) {
+      this.lang.selected = langStorage;
+    } else {
+      var userLang = navigator.language || navigator.userLanguage;
+      if (availableLangs.includes(userLang)) {
+        this.lang.selected = userLang;
+      } else if (availableLangs.includes(userLang.split("-")[0])) {
+        this.lang.selected = userLang.split("-")[0];
+      }
+    }
+
+    for (let lang of availableLangs) {
+      this.lang.data[lang] = await fetch(
+        `${this._assetsHost()}/i18n/${lang}.json`
+      ).then((res) => res.json());
+    }
+  },
+
   loadRegionName: function () {
     this.regionName = localStorage.getItem("regionName") || this.regionName;
     return this.regionName;
@@ -34,8 +62,10 @@ let resourceControl = {
     return this.regionName;
   },
 
-  getRegionNameZh: function () {
-    return this.regionName === "xyyy" ? "心愿原野" : "未知";
+  getLocalizedRegionName: function () {
+    return this.regionName === "xyyy"
+      ? this.i18n("region.wishfield")
+      : this.i18n("region.unknown");
   },
 
   setRegionName: function (regionName) {
@@ -48,39 +78,57 @@ let resourceControl = {
   },
 
   getGroupsJsonFilePath: function () {
-    return `${this._assetsHost()}/datas/common/groups.json`;
+    return `${this._assetsHost()}/datas/${
+      this.lang.selected
+    }/common/groups.json`;
   },
 
   getCategoriesJsonFilePath: function () {
-    return `${this._assetsHost()}/datas/${this.regionName}/categories.json`;
+    return `${this._assetsHost()}/datas/${this.lang.selected}/${
+      this.regionName
+    }/categories.json`;
   },
 
   getMarkersJsonFilePath: function () {
-    return `${this._assetsHost()}/datas/${this.regionName}/markers.json`;
+    return `${this._assetsHost()}/datas/${this.lang.selected}/${
+      this.regionName
+    }/markers.json`;
   },
 
   getQuickPositionsJsonFilePath: function () {
-    return `${this._assetsHost()}/datas/${this.regionName}/quickPositions.json`;
+    return `${this._assetsHost()}/datas/${this.lang.selected}/${
+      this.regionName
+    }/quickPositions.json`;
   },
 
-  getAnouncementsJsonFilePath: function () {
-    return `${this._assetsHost()}/datas/common/announcements.json`;
+  getAnnouncementsJsonFilePath: function () {
+    return `${this._assetsHost()}/datas/${
+      this.lang.selected
+    }/common/announcements.json`;
   },
 
   getFunctionalUpdatesJsonFilePath: function () {
-    return `${this._assetsHost()}/datas/common/functionalUpdates.json`;
+    return `${this._assetsHost()}/datas/${
+      this.lang.selected
+    }/common/functionalUpdates.json`;
   },
 
   getGameEventsJsonFilePath: function () {
-    return `${this._assetsHost()}/datas/common/gameEvents.json`;
+    return `${this._assetsHost()}/datas/${
+      this.lang.selected
+    }/common/gameEvents.json`;
   },
 
   getGameExplorationsJsonFilePath: function () {
-    return `${this._assetsHost()}/datas/common/gameExplorations.json`;
+    return `${this._assetsHost()}/datas/${
+      this.lang.selected
+    }/common/gameExplorations.json`;
   },
 
   getGameEventsOtherJsonFilePath: function () {
-    return `${this._assetsHost()}/datas/common/gameEventsOther.json`;
+    return `${this._assetsHost()}/datas/${
+      this.lang.selected
+    }/common/gameEventsOther.json`;
   },
 
   getTilesFilePath: function () {
@@ -101,5 +149,36 @@ let resourceControl = {
 
   isMobilePortrait: function () {
     return window.innerWidth <= 768;
+  },
+
+  i18n: function (location, inject = [], lang = this.lang.selected) {
+    let paths = location.split(".");
+    let dictionary = this.lang.data[lang];
+
+    if (!dictionary) return null;
+
+    let localized = dictionary;
+
+    for (let path of paths) {
+      if (localized[path]) {
+        localized = localized[path];
+      } else {
+        if (lang !== this.lang.default) {
+          return this.i18n(location, inject, this.lang.default);
+        } else {
+          return null;
+        }
+      }
+    }
+    
+    if (typeof localized !== "string") {
+      return null;
+    }
+
+    inject.forEach((value, index) => {
+      localized = localized.replace(`{${index}}`, value);
+    });
+
+    return localized;
   },
 };

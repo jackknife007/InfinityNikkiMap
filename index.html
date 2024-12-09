@@ -4,11 +4,11 @@
     <title>无限暖暖在线地图</title>
     <meta charset="UTF-8" />
     <meta
-      content="无限暖暖,无限暖暖地图,无限暖暖互动地图,无限暖暖奇迹大陆"
+      content="无限暖暖,无限暖暖地图,无限暖暖互动地图,无限暖暖奇迹大陆,Infinity Nikki,Infinity Nikki Map,Infinity Nikki Interactive Map"
       name="keywords"
     />
     <meta
-      content="无限暖暖在线地图,由黄大胖不胖制作,确保最新最全的地图信息。B站、小红书:黄大胖不胖"
+      content="无限暖暖在线地图,由黄大胖不胖制作,确保最新最全的地图信息。B站、小红书:黄大胖不胖,Infinity Nikki Online Map,Created By 黄大胖不胖,Latest and up to date map information,Bilibili/Xiaohongshu: @黄大胖不胖"
       name="description"
     />
     <meta
@@ -89,9 +89,12 @@
     <script src="./assets/scripts/quickPositionForm.js"></script>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        resourceControl.init();
+      document.addEventListener("DOMContentLoaded", async () => {
+        await resourceControl.init();
         InitMap();
+        document.title = resourceControl.i18n("head.title")
+        quickPositionForm.render();
+        markerPopup.init();
         mapAction.init();
         map.on("load", async () => {
           // 等待数据加载完成

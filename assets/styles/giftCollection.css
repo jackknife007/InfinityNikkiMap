@@ -71,9 +71,9 @@
   background-size: cover;
   filter: brightness(0.6);
   color: #ffffff;
-  font-size: 0.16rem;
+  font-size: 0.13rem; /* Before: 0.16rem; */
   font-weight: 600;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */ /* Removed due to it looking wrong in english */
   box-shadow: 0 0 1px rgba(189, 158, 112, 0.7),
     0 0 10px rgba(255, 255, 255, 0.5); /* 发光效果 */
 }

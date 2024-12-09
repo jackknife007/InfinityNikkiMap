@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Location"
+  },
+  {
+    "id": 2,
+    "title": "NPC"
+  },
+  {
+    "id": 3,
+    "title": "Collection"
+  },
+  {
+    "id": 4,
+    "title": "Quest"
+  },
+  {
+    "id": 5,
+    "title": "Other"
+  },
+  {
+    "id": 99,
+    "title": "Custom"
+  }
+]

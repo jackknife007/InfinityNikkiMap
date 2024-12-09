@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1,
+    "text": "Florawish",
+    "lng": 31.6365,
+    "lat": -1.2637,
+    "zoom": 5
+  },
+  {
+    "id": 2,
+    "text": "Palace Ruins",
+    "lng": 56.7636,
+    "lat": -56.8793,
+    "zoom": 5
+  },
+  {
+    "id": 3,
+    "text": "Stoneville",
+    "lng": -17.1055,
+    "lat": -23.955,
+    "zoom": 4
+  }
+]
+
+

@@ -1,0 +1,178 @@
+{
+  "head": {
+    "title": "Infinity Nikki - Interactive Map"
+  },
+  "console": {
+    "panel-failed": "Failed to load panel",
+    "icon-failed": "Icon \"{0}\" failed to load:",
+    "data-failed": "Failed to load data"
+  },
+  "error": {
+    "background-img-failed": "Failed to load background image"
+  },
+  "attribution": "Sharing is allowed however please include the source @黄大胖不胖",
+  "region": {
+    "wishfield": "Wishfield",
+    "unknown": "Unknown"
+  },
+  "filter-panel-header": {
+    "toolbar": {
+      "all-show": "Show All",
+      "all-hidden": "Hide All"
+    },
+    "img": "filter-panel-header-img-en"
+  },
+  "filter-panel-sider": {
+    "personal": {
+      "title": "Data Settings",
+      "export": "Export Data",
+      "import": "Import Data",
+      "reset-found-markers": "Reset Found Markers",
+      "reset-personal-markers": "Reset Custom Markers",
+      "reset-quick-positions": "Reset Quick Positions",
+      "confirmations": {
+        "reset": "Are you sure you'd like to reset all {0} data?",
+        "reset-personal-markers": "Are you sure you'd like to reset all {0} custom markers?",
+        "reset-quick-positions": "Are you sure you'd like to reset all {0} custom quick positions?"
+      }
+    },
+    "developer": {
+      "title": "Developer Options",
+      "export-server-markers": "Export Server Markers",
+      "export-personal-markers": "Export Custom Markers",
+      "import-personal-markers": "Import Custom Markers",
+      "reset-all": "Reset All Data",
+      "confirmations": {
+        "reset-all": "Are you sure you'd like to reset all modifications (excluding customizations) for {0}?"
+      }
+    }
+  },
+  "filter-panel-footer": {
+    "track": "Track Progress",
+    "hide-ignore-marker": "Hide Found Markers"
+  },
+  "context-menu": {
+    "add-new-marker": "Add New Marker",
+    "add-quick-position": "Add Quick Position",
+    "copy-location-url": "Copy Location URL",
+    "toast": {
+      "copy-success": "Copied To Clipboard",
+      "copy-failed": "Copy Failed"
+    }
+  },
+  "map-action-buttons": {
+    "fullscreen": "Fullscreen",
+    "update-dialogue": "Bulletin Board",
+    "gift": "Benefits & Rewards",
+    "language": "Language"
+  },
+  "edit-form": {
+    "title": "Add Custom Marker",
+    "name": "Name",
+    "category": "Category",
+    "description": "Description",
+    "image-link": "Image Link",
+    "image": "Image",
+    "video-link": "Video Link",
+    "video": "Video",
+    "author": "Author",
+    "author-link": "Author Link",
+    "button": {
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "toast": {
+      "delete-success": "Deleted Successfully",
+      "save-failed": "Save Failed",
+      "save-failed-reason": "Cannot move markers between default and custom categories",
+      "save-success": "Saved Successfully",
+      "add-success": "Added Successfully",
+      "limit-reached": "You've reached the limit on custom markers",
+      "limit-reached-reason": "Please remove some custom markers before you add more"
+    },
+    "error": {
+      "save-failed": "Failed to save custom marker: ",
+      "latest-read-failed": "Failed to read latest custom marker: ",
+      "latest-save-failed": "Failed to save latest custom marker: "
+    }
+  },
+  "quick-position-form": {
+    "title": "Add Quick Position",
+    "placeholder": "Quick position title",
+    "delete": "Delete Quick Position",
+    "buttons": {
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete"
+    },
+    "toast": {
+      "delete-success": "Deleted Successfully",
+      "delete-success-reason": "Quick position \"{0}\" has been deleted",
+      "missing-title": "Please add a position title",
+      "missing-title-reason": "Choose a good name",
+      "limit-reached": "You've reached the limit on quick positions",
+      "limit-reached-reason": "Please remove some quick positions before you add more"
+    },
+    "error": {
+      "save-failed": "Failed to save quick position: "
+    }
+  },
+  "gift-popup": {
+    "title": "Benefits & Rewards",
+    "total": "Total: ",
+    "tabs": {
+      "activities": "Activities",
+      "world-exploration": "World Exploration",
+      "other": "Other Activities"
+    },
+    "not-started": "{0} (Not Started)",
+    "ended": "{0} (Ended)",
+    "last-day": "{0} (Last Day)",
+    "end-soon": "{0} (Ending Soon)",
+    "in-progress": "{0} (In Progress)",
+    "daily-task-wishes": "【Daily Task】 Daily Wishes",
+    "everyday-exploration": "Completing daily tasks will earn you [Diamond x90]. The server has been open for {0} days.",
+    "end-permanent": "Permanent",
+    "end-unknown": "Unknown",
+    "activity-time": "Time: {0} until {1}",
+    "activity-method": "How To: {0}",
+    "activity-description": "Description: {0}",
+    "activity-rewards": "Rewards: {0}"
+  },
+  "update-popup": {
+    "tabs": {
+      "description": "Description",
+      "feature-updates": "Feature Updates"
+    }
+  },
+  "marker-popup": {
+    "contributor": "Contributor: ",
+    "default": "黄大胖不胖",
+    "anonymous": "Anonymous",
+    "missing-description": "No Description Set",
+    "error": {
+      "image-failed": "Failed to load image ¯\\_ (ツ) _/¯"
+    },
+    "update-time": "Updated At: ",
+    "unknown-update-time": "Unknown",
+    "found": "Found",
+    "copy-location-link": "Copy Location Link"
+  },
+  "loading": {
+    "error": {
+      "marker-read-failed": "Failed to read default markers: ",
+      "personal-marker-read-failed": "Failed to read custom markers: ",
+      "edited-marker-read-failed": "Failed to read edited markers: ",
+      "edited-marker-save-failed": "Failed to save edited markers: ",
+      "deleted-marker-read-failed": "Failed to read deleted markers: ",
+      "deleted-marker-save-failed": "Failed to save deleted markers: ",
+      "load-data-failed": "Failed to load data: "
+    }
+  },
+  "download": {
+    "personal-markers": "Personal Marker Backup",
+    "server-markers": "Server Markers Backup",
+    "new-markers": "New Marker Backup"
+  }
+}
