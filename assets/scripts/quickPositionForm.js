@@ -1,5 +1,5 @@
-class QuickPositionForm {
-  constructor() {
+let quickPositionForm = {
+  render: function () {
     // 创建遮罩层
     this.overlay = document.createElement("div");
     this.overlay.className = "quick-position-form-overlay";
@@ -10,14 +10,14 @@ class QuickPositionForm {
 
     // 创建标题
     const title = document.createElement("div");
-    title.textContent = "添加快速定位";
+    title.textContent = resourceControl.i18n("quick-position-form.title");
     title.className = "quick-position-form-title";
     this.container.appendChild(title);
 
     // 创建输入框
     this.titleInput = document.createElement("input");
     this.titleInput.type = "text";
-    this.titleInput.placeholder = "请输入标题";
+    this.titleInput.placeholder = resourceControl.i18n("quick-position-form.placeholder");
     this.container.appendChild(this.titleInput);
 
     // 创建按钮容器
@@ -26,14 +26,15 @@ class QuickPositionForm {
 
     // 创建取消按钮
     const cancelButton = document.createElement("button");
-    cancelButton.textContent = "取消";
+    cancelButton.textContent = resourceControl.i18n("quick-position-form.buttons.cancel");
+
     cancelButton.className = "cancel-btn";
     cancelButton.onclick = () => this.close();
     buttonContainer.appendChild(cancelButton);
 
     // 创建保存按钮
     const saveButton = document.createElement("button");
-    saveButton.textContent = "保存";
+    saveButton.textContent = resourceControl.i18n("quick-position-form.buttons.save");
     saveButton.className = "save-btn";
     saveButton.onclick = () => this.save();
     buttonContainer.appendChild(saveButton);
@@ -49,24 +50,24 @@ class QuickPositionForm {
         this.close();
       }
     });
-  }
+  },
 
-  open(lng, lat) {
-    this.lng = lng;
+  open: function (lng, lat) {
+      this.lng = lng;
     this.lat = lat;
     document.getElementById("root").appendChild(this.overlay);
     this.titleInput.focus();
-  }
+  },
 
-  close() {
+  close: function() {
     this.overlay.remove();
     this.titleInput.value = "";
-  }
+  },
 
-  save() {
+  save: function () {
     const title = this.titleInput.value.trim();
     if (!title) {
-      tips.show("请输入地点", "起个好听的名字吧");
+      tips.show(resourceControl.i18n("quick-position-form.toast.missing-title"), resourceControl.i18n("quick-position-form.toast.missing-title-reason"));
       return;
     }
 
@@ -81,6 +82,3 @@ class QuickPositionForm {
     this.close();
   }
 }
-
-// 创建全局实例
-const quickPositionForm = new QuickPositionForm();

@@ -18,7 +18,11 @@ let giftCollectionPopup = {
     const detailTabContainer = document.createElement("div");
     detailTabContainer.className = "gift-collection-detail-tab";
 
-    const tabs = ["活动", "世界探索", "其他活动"];
+    const tabs = [
+      resourceControl.i18n("gift-popup.tabs.activities"),
+      resourceControl.i18n("gift-popup.tabs.world-exploration"),
+      resourceControl.i18n("gift-popup.tabs.other"),
+    ];
     this.activeTab = 0;
     this.tabButtons = [];
     tabs.forEach((tabName, index) => {
@@ -72,7 +76,9 @@ let giftCollectionPopup = {
       this.totalContainer = document.createElement("div");
       this.totalContainer.className = "gift-collection-total";
 
-      this.totalContainer.innerHTML = "<span>共计: </span>";
+      this.totalContainer.innerHTML = `<span>${resourceControl.i18n(
+        "gift-popup.total"
+      )}</span>`;
       this.mainGifts["diamond"] = new MainGift("diamond", "total-gift-item");
       this.mainGifts["gongmingCrystal"] = new MainGift(
         "gongmingCrystal",
@@ -220,11 +226,13 @@ let giftCollectionPopup = {
         // 检查当前日期是否在 beginDate 和 endDate 之间
         if (currentDate < beginDate) {
           // 添加“已结束”字样
-          eventTitle.textContent = `${content.name}（未开始）`;
+          eventTitle.textContent = resourceControl.i18n("gift-popup.not-started", [content.name])
           eventContainer.style.filter = "opacity(0.8)";
           notBeginEvent.push(eventContainer);
         } else if (endDate < currentDate) {
-          eventTitle.textContent = `${content.name}（已结束）`;
+          eventTitle.textContent = resourceControl.i18n("gift-popup.ended", [
+            content.name,
+          ]);
           eventContainer.style.filter = "opacity(0.5)";
           endEvent.push(eventContainer);
         } else {
@@ -233,13 +241,22 @@ let giftCollectionPopup = {
 
           if (daysDiff <= 1) {
             // 添加“最后一天”字样
-            eventTitle.textContent = `${content.name}（最后一天）`;
+            eventTitle.textContent = resourceControl.i18n(
+              "gift-popup.last-day",
+              [content.name]
+            );
           } else if (daysDiff <= 3) {
             // 添加“即将结束”字样
-            eventTitle.textContent = `${content.name}（即将结束）`;
+            eventTitle.textContent = resourceControl.i18n(
+              "gift-popup.end-soon",
+              [content.name]
+            );
           } else {
             // 添加“进行中”字样
-            eventTitle.textContent = `${content.name}（进行中）`;
+            eventTitle.textContent = resourceControl.i18n(
+              "gift-popup.in-progress",
+              [content.name]
+            );
           }
           ongoingEvent.push(eventContainer);
         }
@@ -264,7 +281,9 @@ let giftCollectionPopup = {
       everydayContainer.className = "gift-collection-detail-element";
 
       const everydayTitle = document.createElement("span");
-      everydayTitle.textContent = "【每日任务】朝夕心愿";
+      everydayTitle.textContent = resourceControl.i18n(
+        "gift-popup.daily-task-wishes"
+      );
       everydayContainer.appendChild(everydayTitle);
 
       everydayContainer.addEventListener("click", () => {
@@ -376,20 +395,30 @@ let giftCollectionPopup = {
       this._showDetailMainGift(mainGiftsMap);
 
       const endDateTextMap = {
-        "2100-12-31": "永久",
-        "2999-12-31": "未知",
+        "2100-12-31": resourceControl.i18n("gift-popup.end-permanent"),
+        "2999-12-31": resourceControl.i18n("gift-popup.end-unknown"),
       };
       const endDateDisplay = endDateTextMap[content.endDate] || content.endDate;
-      this.detailDate.textContent = `活动时间：${content.beginDate} 至 ${endDateDisplay}`;
+      this.detailDate.textContent = resourceControl.i18n(
+        "gift-popup.activity-time",
+        [content.beginDate, endDateDisplay]
+      );
 
-      this.detailMethod.textContent = `获取方式：${content.method}`;
+      this.detailMethod.textContent = resourceControl.i18n(
+        "gift-popup.activity-method",
+        [content.method]
+      );
 
-      this.detailDescription.textContent = `活动说明：${content.description}`;
+      this.detailDescription.textContent = resourceControl.i18n(
+        "gift-popup.activity-description",
+        [content.description]
+      );
 
       if (content.otherGift) {
-        this.detailOtherGift.textContent = `活动奖励：${content.otherGift.join(
-          "、"
-        )}`;
+        this.detailOtherGift.textContent = resourceControl.i18n(
+          "gift-popup.activity-rewards",
+          [content.otherGift.join("、")]
+        );
       } else {
         this.detailOtherGift.textContent = "";
       }
@@ -459,7 +488,10 @@ let giftCollectionPopup = {
       const description = document.createElement("div");
       description.className =
         "gift-collection-detail-content-right-exploration";
-      description.textContent = `完成每日任务可获得【钻石x90】，开服至今共${days}天。`;
+      description.textContent = resourceControl.i18n(
+        "gift-popup.everyday-exploration",
+        [days]
+      );
       this.detailArea.appendChild(description);
     },
 

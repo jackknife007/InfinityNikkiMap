@@ -1,0 +1,285 @@
+[
+  {
+    "id": 1,
+    "title": "Warp Spire",
+    "icon": "world_trans",
+    "groupId": 1,
+    "groupTitle": "Location"
+  },
+  {
+    "id": 2,
+    "title": "Surprise-O-Matic",
+    "icon": "world_lottery",
+    "groupId": 1,
+    "groupTitle": "Location"
+  },
+  {
+    "id": 3,
+    "title": "Stylist's Guild",
+    "icon": "world_basecamp",
+    "groupId": 1,
+    "groupTitle": "Location"
+  },
+  {
+    "id": 4,
+    "title": "Marques Boutique",
+    "icon": "world_clothstore",
+    "groupId": 1,
+    "groupTitle": "Location"
+  },
+  {
+    "id": 5,
+    "title": "House",
+    "icon": "world_house",
+    "groupId": 1,
+    "groupTitle": "Location"
+  },
+  {
+    "id": 6,
+    "title": "Whimcycle Rental",
+    "icon": "world_bike",
+    "groupId": 1,
+    "groupTitle": "Location"
+  },
+  {
+    "id": 7,
+    "title": "Cave",
+    "icon": "world_cave",
+    "groupId": 1,
+    "groupTitle": "Location"
+  },
+  {
+    "id": 8,
+    "title": "Curio Domain",
+    "icon": "world_level",
+    "groupId": 1,
+    "groupTitle": "Location"
+  },
+  {
+    "id": 9,
+    "title": "Gliding Station",
+    "icon": "world_glide",
+    "groupId": 1,
+    "groupTitle": "Location"
+  },
+  {
+    "id": "10",
+    "title": "Catapult Seal",
+    "icon": "world_seal",
+    "groupId": 1,
+    "groupTitle": "Location"
+  },
+  {
+    "id": "11",
+    "title": "Mini-Games",
+    "icon": "world_minigame",
+    "groupId": 1,
+    "groupTitle": "Location"
+  },
+  {
+    "id": "100",
+    "title": "Dragon",
+    "icon": "npc_dragon",
+    "groupId": 2,
+    "groupTitle": "NPC"
+  },
+  {
+    "id": "101",
+    "title": "Whimstar Merchant",
+    "icon": "npc_star_merchant",
+    "groupId": 2,
+    "groupTitle": "NPC"
+  },
+  {
+    "id": "102",
+    "title": "Styling Challenge",
+    "icon": "npc_battle",
+    "groupId": 2,
+    "groupTitle": "NPC"
+  },
+  {
+    "id": "103",
+    "title": "Material Merchant",
+    "icon": "npc_materialstore",
+    "groupId": 2,
+    "groupTitle": "NPC"
+  },
+  {
+    "id": "200",
+    "title": "Whimstar",
+    "icon": "collection_star",
+    "groupId": 3,
+    "groupTitle": "Collection"
+  },
+  {
+    "id": "201",
+    "title": "Dew of Inspiration",
+    "icon": "collection_luzhu",
+    "groupId": 3,
+    "groupTitle": "Collection",
+    "css": "font-size: 0.12rem;"
+  },
+  {
+    "id": "202",
+    "title": "Basic Chest",
+    "icon": "collection_chest",
+    "groupId": 3,
+    "groupTitle": "Collection"
+  },
+  {
+    "id": "203",
+    "title": "Clothing Chest",
+    "icon": "collection_chest_cloth",
+    "groupId": 3,
+    "groupTitle": "Collection"
+  },
+  {
+    "id": "204",
+    "title": "Bling",
+    "icon": "collection_puling",
+    "groupId": 3,
+    "groupTitle": "Collection"
+  },
+  {
+    "id": "205",
+    "title": "Whimstar (Cave)",
+    "icon": "collection_star_c",
+    "groupId": 3,
+    "groupTitle": "Collection"
+  },
+  {
+    "id": "206",
+    "title": "Dew of Inspiration (Cave)",
+    "icon": "collection_luzhu_c",
+    "groupId": 3,
+    "groupTitle": "Collection",
+    "css": "font-size: 0.09rem"
+  },
+  {
+    "id": "207",
+    "title": "Basic Chest (Cave)",
+    "icon": "collection_chest_c",
+    "groupId": 3,
+    "groupTitle": "Collection"
+  },
+  {
+    "id": "208",
+    "title": "Clothing Chest (Cave)",
+    "icon": "collection_chest_cloth_c",
+    "groupId": 3,
+    "groupTitle": "Collection",
+    "css":"font-size: 0.11rem"
+  },
+  {
+    "id": "300",
+    "title": "Main Quest",
+    "icon": "quest_main",
+    "groupId": 4,
+    "groupTitle": "Quest"
+  },
+  {
+    "id": "301",
+    "title": "World Quest",
+    "icon": "quest_shijie",
+    "groupId": 4,
+    "groupTitle": "Quest"
+  },
+  {
+    "id": "302",
+    "title": "Random Quest",
+    "icon": "quest_jianwen",
+    "groupId": 4,
+    "groupTitle": "Quest"
+  },
+  {
+    "id": "303",
+    "title": "Photo Spot",
+    "icon": "camera",
+    "groupId": 4,
+    "groupTitle": "Quest"
+  },
+  {
+    "id": "304",
+    "title": "Folk Game",
+    "icon": "minsu-game",
+    "groupId": 4,
+    "groupTitle": "Quest"
+  },
+  {
+    "id": "400",
+    "title": "Notes",
+    "icon": "other_default",
+    "groupId": 5,
+    "groupTitle": "Other"
+  },
+  {
+    "id": "901",
+    "title": "Custom Default",
+    "icon": "custom_default",
+    "groupId": 99,
+    "groupTitle": "Custom"
+  },
+  {
+    "id": "902",
+    "title": "Custom Plant",
+    "icon": "custom_plant",
+    "groupId": 99,
+    "groupTitle": "Custom"
+  },
+  {
+    "id": "903",
+    "title": "Custom Fish",
+    "icon": "custom_fish",
+    "groupId": 99,
+    "groupTitle": "Custom"
+  },
+  {
+    "id": "904",
+    "title": "Custom Bug",
+    "icon": "custom_bug",
+    "groupId": 99,
+    "groupTitle": "Custom"
+  },
+  {
+    "id": "905",
+    "title": "Custom Animal",
+    "icon": "custom_animal",
+    "groupId": 99,
+    "groupTitle": "Custom"
+  },
+  {
+    "id": "906",
+    "title": "Custom Photo",
+    "icon": "custom_photo",
+    "groupId": 99,
+    "groupTitle": "Custom"
+  },
+  {
+    "id": "907",
+    "title": "Custom Fight",
+    "icon": "custom_fight",
+    "groupId": 99,
+    "groupTitle": "Custom"
+  },
+  {
+    "id": "908",
+    "title": "Custom Puzzle",
+    "icon": "custom_puzzle",
+    "groupId": 99,
+    "groupTitle": "Custom"
+  },
+  {
+    "id": "909",
+    "title": "Custom Star",
+    "icon": "custom_star",
+    "groupId": 99,
+    "groupTitle": "Custom"
+  },
+  {
+    "id": "910",
+    "title": "Custom Cloth",
+    "icon": "custom_cloth",
+    "groupId": 99,
+    "groupTitle": "Custom"
+  }
+]

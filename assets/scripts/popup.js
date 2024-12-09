@@ -20,7 +20,7 @@ class MarkerPopupContent {
     const copyBtn = document.createElement("div");
     copyBtn.className = "marker-popup-copy-location-btn";
     copyBtn.classList.add("clipboard-btn");
-    copyBtn.title = "复制位置链接";
+    copyBtn.title = resourceControl.i18n("marker-popup.copy-location-link");
     leftContainer.appendChild(copyBtn);
 
     // 创建编辑按钮
@@ -80,7 +80,7 @@ class MarkerPopupContent {
 
     const ignoreText = document.createElement("div");
     ignoreText.className = "marker-popup-ignore-text";
-    ignoreText.textContent = "已找到";
+    ignoreText.textContent = resourceControl.i18n("marker-popup.found");
     ignoreControl.appendChild(ignoreText);
 
     const checkbox = document.createElement("input");
@@ -133,7 +133,7 @@ class MarkerPopupContent {
     this.editBtn.setAttribute("data-category-id", categoryId);
     this.setEditBtnState();
 
-    this.updateTime.textContent = `(更新时间：${updateTime || "未知"})`;
+    this.updateTime.textContent = `(${resourceControl.i18n("marker-popup.update-time")}${updateTime || resourceControl.i18n("marker-popup.unknown-upload-time")})`;
   }
 
   updateImage(image) {
@@ -196,14 +196,14 @@ class MarkerPopupContent {
 
       // 添加错误处理
       img.onerror = () => {
-        this.imageContainer.innerHTML = "不知道为什么图片没加载成功";
+        this.imageContainer.innerHTML = resourceControl.i18n("marker-popup.error.image-failed");
         this.imageContainer.style.color = "rgba(209, 207, 184, 0.8)";
       };
     }
   }
 
   updateDescription(description) {
-    this.description.textContent = description || "暂无描述";
+    this.description.textContent = description || resourceControl.i18n("missing-description");
   }
 
   updateVideo(video) {
@@ -261,9 +261,9 @@ class MarkerPopupContent {
   updateAuthor(author, authorLink) {
     let authorWrapper = author
       ? author === "default"
-        ? "黄大胖不胖"
+        ? resourceControl.i18n("marker-popup.default")
         : author
-      : "佚名";
+      : resourceControl.i18n("marker-popup.anonymous");
     if (author === "default" || authorLink) {
       const authorLinkElement = document.createElement("a");
       authorLinkElement.target = "_blank"; // 新窗口打开
@@ -275,10 +275,10 @@ class MarkerPopupContent {
       authorLinkElement.textContent = authorWrapper;
 
       // 组装作者信息
-      this.author.textContent = "贡献者： ";
+      this.author.textContent = resourceControl.i18n("marker-popup.contributor");
       this.author.appendChild(authorLinkElement);
     } else {
-      this.author.textContent = "贡献者： " + authorWrapper;
+      this.author.textContent = resourceControl.i18n("marker-popup.contributor") + authorWrapper;
     }
   }
 

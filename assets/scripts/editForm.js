@@ -21,38 +21,63 @@ let editForm = {
 
     // 创建标题
     const title = document.createElement("h3");
-    title.textContent = "编辑坐标点";
+    title.textContent = resourceControl.i18n("edit-form.title");
     this.container.appendChild(title);
 
     // 创建表单元素
-    this.name = new FormElement("text", "名称", "名称", "edit-name");
+    this.name = new FormElement(
+      "text",
+      resourceControl.i18n("edit-form.name"),
+      resourceControl.i18n("edit-form.name"),
+      "edit-name"
+    );
     this.container.appendChild(this.name.wrapper);
 
-    this.category = new FormElement("select", "分类", "分类", "edit-category");
+    this.category = new FormElement(
+      "select",
+      resourceControl.i18n("edit-form.category"),
+      resourceControl.i18n("edit-form.category"),
+      "edit-category"
+    );
     this.setCategoryOptions();
     this.container.appendChild(this.category.wrapper);
 
     this.description = new FormElement(
       "textarea",
-      "描述",
-      "描述",
+      resourceControl.i18n("edit-form.description"),
+      resourceControl.i18n("edit-form.description"),
       "edit-description"
     );
     this.container.appendChild(this.description.wrapper);
 
-    this.image = new FormElement("text", "图片链接", "图片", "edit-image");
+    this.image = new FormElement(
+      "text",
+      resourceControl.i18n("edit-form.image-link"),
+      resourceControl.i18n("edit-form.image"),
+      "edit-image"
+    );
     this.container.appendChild(this.image.wrapper);
 
-    this.video = new FormElement("text", "视频链接", "视频", "edit-video");
+    this.video = new FormElement(
+      "text",
+      resourceControl.i18n("edit-form.video-link"),
+      resourceControl.i18n("edit-form.video"),
+      "edit-video"
+    );
     this.container.appendChild(this.video.wrapper);
 
-    this.author = new FormElement("text", "作者", "作者", "edit-author");
+    this.author = new FormElement(
+      "text",
+      resourceControl.i18n("edit-form.author"),
+      resourceControl.i18n("edit-form.author"),
+      "edit-author"
+    );
     this.container.appendChild(this.author.wrapper);
 
     this.authorLink = new FormElement(
       "text",
-      "作者链接",
-      "作者链接",
+      resourceControl.i18n("edit-form.author-link"),
+      resourceControl.i18n("edit-form.author-link"),
       "edit-author-link"
     );
     this.container.appendChild(this.authorLink.wrapper);
@@ -61,22 +86,34 @@ let editForm = {
     const buttonContainer = document.createElement("div");
     buttonContainer.className = "edit-form-buttons";
 
-    this.deleteBtn = this.createBtn("删除", "delete-btn");
+    this.deleteBtn = this.createBtn(
+      resourceControl.i18n("edit-form.button.delete"),
+      "delete-btn"
+    );
     this.deleteBtn.addEventListener("click", () => {
       allDatas.deleteMarker(this.markerId, this.categoryId);
       deleteMarkerFromCategorySource(this.markerId, this.categoryId);
-      tips.show("删除成功", this.name.getValue());
+      tips.show(
+        resourceControl.i18n("edit-form.toast.delete-success"),
+        this.name.getValue()
+      );
       this.close();
     });
     buttonContainer.appendChild(this.deleteBtn);
 
-    this.cancelBtn = this.createBtn("取消", "cancel-btn");
+    this.cancelBtn = this.createBtn(
+      resourceControl.i18n("edit-form.button.cancel"),
+      "cancel-btn"
+    );
     this.cancelBtn.addEventListener("click", () => {
       this.close();
     });
     buttonContainer.appendChild(this.cancelBtn);
 
-    this.saveBtn = this.createBtn("保存", "save-btn");
+    this.saveBtn = this.createBtn(
+      resourceControl.i18n("edit-form.button.save"),
+      "save-btn"
+    );
     this.saveBtn.addEventListener("click", () => {
       const updatedMarker = {
         ...allDatas.getMarker(this.markerId),
@@ -88,7 +125,10 @@ let editForm = {
         allDatas.isPersonalCategory(this.categoryId) !==
         allDatas.isPersonalCategory(updatedMarker.categoryId)
       ) {
-        tips.show("保存失败", "不能在默认分类和自定义分类之间移动标记");
+        tips.show(
+          resourceControl.i18n("edit-form.toast.save-failed"),
+          resourceControl.i18n("edit-form.toast.save-failed-reason")
+        );
       } else {
         if (this.categoryId === updatedMarker.categoryId) {
           allDatas.editMarker(updatedMarker);
@@ -99,22 +139,31 @@ let editForm = {
           allDatas.addMarker(updatedMarker);
           addMarkerToCategorySource(updatedMarker);
         }
-        tips.show("保存成功", updatedMarker.name);
+        tips.show(
+          resourceControl.i18n("edit-form.toast.save-success"),
+          updatedMarker.name
+        );
       }
       this.close();
     });
     buttonContainer.appendChild(this.saveBtn);
 
-    this.addBtn = this.createBtn("新建", "add-btn");
+    this.addBtn = this.createBtn(
+      resourceControl.i18n("edit-form.button.save"),
+      "add-btn"
+    );
     this.addBtn.addEventListener("click", () => {
       const newMarker = {
         ...contextMenu.getLngLat(),
         ...this.getFormData(),
       };
       let isSuccess = allDatas.addMarker(newMarker);
-      if(isSuccess) {
+      if (isSuccess) {
         addMarkerToCategorySource(newMarker);
-        tips.show("新增成功", newMarker.name);
+        tips.show(
+          resourceControl.i18n("edit-form.toast.add-success"),
+          newMarker.name
+        );
       }
       this.close();
     });

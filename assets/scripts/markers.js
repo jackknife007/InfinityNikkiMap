@@ -13,8 +13,12 @@ let markerPopup = {
     anchor: "bottom",
   }),
 
-  _content: new MarkerPopupContent(),
+  _content: null,
   _popupMarkerId: 0,
+
+  init: function () {
+    this._content = new MarkerPopupContent(); // Added to ensure lang file loads before creation
+  },
 
   choosePopup: function () {
     if (resourceControl.isMobilePortrait()) {
@@ -103,7 +107,7 @@ function initLayerMarkers(categoryId, category) {
     `./assets/icons/markers/${category.icon}.png`,
     (error, image) => {
       if (error) {
-        console.warn(`图标 ${category.icon} 加载失败:`, error);
+        console.warn(resourceControl.i18n("error.icon-failed", [category.icon]), error);        
         return;
       }
 

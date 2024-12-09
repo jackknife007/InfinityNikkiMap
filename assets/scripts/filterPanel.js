@@ -165,7 +165,7 @@ let filterPanel = {
 
       filterPanel.style.visibility = "visible";
     } catch (error) {
-      console.error("加载面板失败:", error);
+      console.error(resourceControl.i18n("console.panel-failed"), error);
     }
   },
 
@@ -220,7 +220,7 @@ let filterPanel = {
       element: null,
       render: function () {
         const btn = new SiderBtn("location");
-        btn.addPopup("快速定位");
+        btn.addPopup(resourceControl.i18n("context-menu.add-quick-position"));
         allDatas.quickPositions.defaultData.forEach((location) => {
           btn.addListItem(location.text, () => {
             map.flyTo({
@@ -265,7 +265,7 @@ let filterPanel = {
 
           // 创建标题
           const title = document.createElement("div");
-          title.innerHTML = `删除快速定位: ${location.text}`;
+          title.innerHTML = `${resourceControl.i18n("quick-position-form.delete")}: ${location.text}`;
           title.className = "quick-position-form-title";
           container.appendChild(title);
 
@@ -275,7 +275,7 @@ let filterPanel = {
 
           // 创建取消按钮
           const cancelButton = document.createElement("button");
-          cancelButton.textContent = "取消";
+          cancelButton.textContent = resourceControl.i18n("quick-position-form.buttons.cancel");
           cancelButton.className = "cancel-btn";
           cancelButton.onclick = () => {
             overlay.remove();
@@ -284,14 +284,14 @@ let filterPanel = {
 
           // 创建保存按钮
           const saveButton = document.createElement("button");
-          saveButton.textContent = "删除";
-          saveButton.className = "save-btn";
+          saveButton.textContent = resourceControl.i18n("quick-position-form.buttons.delete");
+          saveButton.className = "delete-btn";
           saveButton.onclick = () => {
             const locationId = parseInt(newItem.dataset.locationId);
             allDatas.quickPositions.delete(locationId);
             newItem.remove();
             overlay.remove();
-            tips.show("删除成功", `快速定位{${location.text}}已删除`);
+            tips.show(resourceControl.i18n("quick-position-form.toast.delete-success"), resourceControl.i18n("quick-position-form.toast.delete-success-reason", [location.text]));
           };
           buttonContainer.appendChild(saveButton);
 
@@ -306,32 +306,49 @@ let filterPanel = {
       element: null,
       render: function () {
         const btn = new SiderBtn("user");
-        btn.addPopup("个人数据操作");
+        btn.addPopup(resourceControl.i18n("filter-panel-sider.personal.title"));
         btn.addListItem(
-          "下载个人数据",
+          resourceControl.i18n("filter-panel-sider.personal.export"),
           allDatas.downloadPersonalData.bind(allDatas)
         );
         btn.addListItem(
-          "导入个人数据",
+          resourceControl.i18n("filter-panel-sider.personal.import"),
           allDatas.uploadPersonalData.bind(allDatas)
         );
-        btn.addListItem("重置进度", () =>
-          showConfirmation(
-            "确定要重置当前区域所有进度吗？",
-            allDatas.ignoreMarkers.clear.bind(allDatas.ignoreMarkers)
-          )
+        btn.addListItem(
+          resourceControl.i18n("filter-panel-sider.personal.reset-found-markers"),
+          () =>
+            showConfirmation(
+              resourceControl.i18n(
+                "filter-panel-sider.personal.confirmations.reset",
+                [resourceControl.getLocalizedRegionName()]
+              ),
+              allDatas.ignoreMarkers.clear.bind(allDatas.ignoreMarkers)
+            )
         );
-        btn.addListItem("清理自定义标记", () =>
-          showConfirmation(
-            "确定要清理当前区域所有自定义标记吗？",
-            allDatas.personalMarkers.clear.bind(allDatas.personalMarkers)
-          )
+        btn.addListItem(
+          resourceControl.i18n("filter-panel-sider.personal.reset-personal-markers"),
+          () =>
+            showConfirmation(
+              resourceControl.i18n(
+                "filter-panel-sider.personal.confirmations.reset-personal-markers",
+                [resourceControl.getLocalizedRegionName()]
+              ),
+              allDatas.personalMarkers.clear.bind(allDatas.personalMarkers)
+            )
         );
-        btn.addListItem("清理个人快速定位", () =>
-          showConfirmation(
-            "确定要清理当前区域所有个人快速定位吗？",
-            allDatas.quickPositions.clear.bind(allDatas.quickPositions)
-          )
+        btn.addListItem(
+          resourceControl.i18n(
+            "filter-panel-sider.personal.reset-quick-positions"
+          ),
+          () =>
+            showConfirmation(
+              resourceControl.i18n(
+                "filter-panel-sider.personal.confirmations.reset-quick-positions",
+                [resourceControl.getLocalizedRegionName()]
+              ),
+              allDatas.quickPositions.clear.bind(allDatas.quickPositions)
+            )
         );
         this.element = btn;
         return btn.container;
@@ -342,24 +359,39 @@ let filterPanel = {
       element: null,
       render: function () {
         const btn = new SiderBtn("development");
-        btn.addPopup("开发者功能");
+        btn.addPopup(
+          resourceControl.i18n("filter-panel-sider.developer.title")
+        );
         btn.addListItem(
-          "下载完整位置数据",
+          resourceControl.i18n(
+            "filter-panel-sider.developer.export-server-markers"
+          ),
           allDatas.downloadServerMarkers.bind(allDatas)
         );
         btn.addListItem(
-          "导出新增坐标数据",
+          resourceControl.i18n(
+            "filter-panel-sider.developer.export-personal-markers"
+          ),
           allDatas.downloadNewAddMarkers.bind(allDatas)
         );
         btn.addListItem(
-          "覆盖新增坐标数据",
+          resourceControl.i18n(
+            "filter-panel-sider.developer.import-personal-markers"
+          ),
           allDatas.uploadNewAddMarkers.bind(allDatas)
         );
-        btn.addListItem("清理所有修改", () =>
-          showConfirmation(
-            "确定要清理当前区域所有修改(不含自定义)吗？",
-            allDatas.clearDevelopMarkers.bind(allDatas)
-          )
+        btn.addListItem(
+          resourceControl.i18n(
+            "filter-panel-sider.developer.reset-all"
+          ),
+          () =>
+            showConfirmation(
+              resourceControl.i18n(
+                "filter-panel-sider.developer.confirmations.reset-all",
+                [resourceControl.getLocalizedRegionName()]
+              ),
+              allDatas.clearDevelopMarkers.bind(allDatas)
+            )
         );
         this.element = btn;
         this.toggleDevelopMode();
@@ -405,7 +437,9 @@ let filterPanel = {
         filterPanelHeader.className = "filter-panel-header";
 
         const filterPanelHeaderImg = document.createElement("div");
-        filterPanelHeaderImg.className = "filter-panel-header-img";
+        filterPanelHeaderImg.className = resourceControl.i18n(
+          "filter-panel-header.img"
+        );
         filterPanelHeader.appendChild(filterPanelHeaderImg);
 
         const filterPanelHeaderToolBar = document.createElement("div");
@@ -422,7 +456,9 @@ let filterPanel = {
         render: function () {
           this.element = document.createElement("span");
           this.element.className = "filter-panel-header-toolbar-btn";
-          this.element.textContent = "显示全部";
+          this.element.textContent = resourceControl.i18n(
+            "filter-panel-header.toolbar.all-show"
+          );
           return this.element;
         },
       },
@@ -432,7 +468,9 @@ let filterPanel = {
         render: function () {
           this.element = document.createElement("span");
           this.element.className = "filter-panel-header-toolbar-btn";
-          this.element.textContent = "隐藏全部";
+          this.element.textContent = resourceControl.i18n(
+            "filter-panel-header.toolbar.all-hidden"
+          );
           return this.element;
         },
       },
@@ -492,6 +530,7 @@ let filterPanel = {
             const title = document.createElement("span");
             title.className = "filter-panel-category-title";
             title.textContent = category.title;
+            title.style = category.css;
 
             // 创建右侧数量显示
             const count = document.createElement("span");
@@ -624,7 +663,9 @@ let filterPanel = {
 
           // 创建文本
           const textSpan = document.createElement("span");
-          textSpan.textContent = "追踪进度";
+          textSpan.textContent = resourceControl.i18n(
+            "filter-panel-footer.track"
+          );
 
           element.appendChild(this.checkbox);
           element.appendChild(textSpan);
@@ -649,7 +690,9 @@ let filterPanel = {
           this.checkbox.className = "filter-footer-control-checkbox";
 
           const textSpan = document.createElement("span");
-          textSpan.textContent = "隐藏已找到的坐标";
+          textSpan.textContent = resourceControl.i18n(
+            "filter-panel-footer.hide-ignore-marker"
+          );
 
           element.appendChild(this.checkbox);
           element.appendChild(textSpan);
@@ -689,7 +732,7 @@ function loadBackgroundImage(url) {
     const img = new Image();
     img.src = url;
     img.onload = () => resolve();
-    img.onerror = () => reject(new Error("背景图片加载失败"));
+    img.onerror = () => reject(new Error(resourceControl.i18n("error.background-img-failed")));
   });
 }
 
@@ -742,7 +785,7 @@ class SiderBtn {
     // 创建 popup-list-title
     const popupListTitle = document.createElement("h3");
     popupListTitle.className = "filter-sider-popup-list-title";
-    popupListTitle.innerHTML = `${title}<br>(${resourceControl.getRegionNameZh()})`;
+    popupListTitle.innerHTML = `${title}<br>(${resourceControl.getLocalizedRegionName()})`;
 
     // 创建 popup-list-item-container
     this.popupListItemContainer = document.createElement("div");

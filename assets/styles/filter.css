@@ -58,9 +58,18 @@
   z-index: 2;
 }
 
-.filter-panel-header-img {
+.filter-panel-header-img-en {
   height: 1.2rem;
-  background: url("../../assets/backgrounds/wxnn-logo5.png");
+  background: url("../../assets/backgrounds/en/wxnn-logo5.png");
+  background-size: 70%;
+  margin: 0.1rem;
+  background-position: center; /* 图片居中显示 */
+  background-repeat: no-repeat; /* 防止图片重复 */
+}
+
+.filter-panel-header-img-zh-Hans {
+  height: 1.2rem;
+  background: url("../../assets/backgrounds/zh-Hans/wxnn-logo5.png");
   background-size: 70%;
   margin: 0.1rem;
   background-position: center; /* 图片居中显示 */
@@ -133,6 +142,7 @@
   font-weight: bold;
   color: rgb(209, 207, 184);
   margin-bottom: 0.03rem;
+  margin-left: 0.05rem;
   cursor: pointer;
 }
 
@@ -177,7 +187,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.14rem;
+  font-size: 0.13rem; /* Before: 0.14rem */
   color: rgb(219, 218, 198);
 }
 
@@ -240,7 +250,7 @@
 /* 文本样式 */
 .filter-footer-control span {
   color: rgb(209, 207, 184);
-  font-size: 14px;
+  font-size: 13px; /* Before: 14px */
   user-select: none;
 }
 
@@ -426,7 +436,7 @@
   font-size: 0.14rem;
   line-height: 0.16rem;
   color: #d3bc8e;
-  width: 1.5rem; /* 固定宽度 */
+  min-width: 1.5rem; /* 固定宽度 */
   max-height: 400px; /* 最大高度 */
   overflow-y: auto;
   scrollbar-width: thin;
@@ -514,8 +524,6 @@
   .filter-panel-sider-mobile-popup-btn-active .filter-sider-popup {
     display: block;
   }
-
-
 }
 
 /* 适配手机横屏 */

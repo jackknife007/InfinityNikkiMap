@@ -1,5 +1,8 @@
-# InfinityNikkiMap
+# Infinity Nikki Interactive Map
 
+> Supported Languages: [Chinese (Simplified), English]
+
+> 支持的语言：[中文（简体），英语]
 
 <!-- 关于本项目 -->
 ## 关于本项目

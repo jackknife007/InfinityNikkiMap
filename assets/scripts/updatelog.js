@@ -7,7 +7,10 @@ let updateLogPopup = {
     const tabContainer = document.createElement("div");
     tabContainer.className = "update-dialog-tab";
 
-    const tabs = ["说明", "功能更新"];
+    const tabs = [
+      resourceControl.i18n("update-popup.tabs.description"),
+      resourceControl.i18n("update-popup.tabs.feature-updates"),
+    ];
     this.tabContents = [mapAction.announcements, mapAction.functionalUpdates];
 
     this.activeTab = 0;

@@ -239,7 +239,7 @@ class MapActionBtn {
     this.footer.className = "screen-popup-footer";
 
     const footerText = document.createElement("span");
-    footerText.textContent = "可以转载，请注明出处哟 @黄大胖不胖";
+    footerText.textContent = resourceControl.i18n("attribution");
     this.footer.appendChild(footerText);
 
     this.container.appendChild(this.header);
@@ -293,7 +293,7 @@ let mapAction = {
         gameExplorations,
         gameEventsOther,
       ] = await Promise.all([
-        fetch(resourceControl.getAnouncementsJsonFilePath()).then((res) =>
+        fetch(resourceControl.getAnnouncementsJsonFilePath()).then((res) =>
           res.json()
         ),
         fetch(resourceControl.getFunctionalUpdatesJsonFilePath()).then((res) =>
@@ -321,7 +321,7 @@ let mapAction = {
         gameEventsOther.map((event) => [event.id, event])
       );
     } catch (error) {
-      console.error("加载数据失败:", error);
+      console.error(resourceControl.i18n("error.data-failed"), error);
     }
 
     const btnContainer = document.createElement("div");
@@ -338,6 +338,9 @@ let mapAction = {
     // 奖励介绍按钮
     btnContainer.appendChild(this.giftBtn.render());
 
+    // Language Button
+    btnContainer.appendChild(this.languageBtn.render());
+
     // 将按钮容器添加到地图容器
     document.querySelector(".map-container").appendChild(btnContainer);
   },
@@ -345,7 +348,10 @@ let mapAction = {
   fullScreenBtn: {
     render: function () {
       this.element = new MapActionBtn();
-      const btn = this.element.renderBtn("全屏", "elf");
+      const btn = this.element.renderBtn(
+        resourceControl.i18n("map-action-buttons.fullscreen"),
+        "elf"
+      );
       btn.onclick = () => {
         if (!document.fullscreenElement) {
           // 进入全屏
@@ -375,9 +381,14 @@ let mapAction = {
   updateDialogBtn: {
     render: function () {
       this.element = new MapActionBtn();
-      const btn = this.element.renderBtn("公告板", "board");
+      const btn = this.element.renderBtn(
+        resourceControl.i18n("map-action-buttons.update-dialogue"),
+        "board"
+      );
 
-      this.element.renderPopup("公告板");
+      this.element.renderPopup(
+        resourceControl.i18n("map-action-buttons.update-dialogue")
+      );
       this.element.setPopupContent(this.content.render());
       return btn;
     },
@@ -392,9 +403,12 @@ let mapAction = {
   giftBtn: {
     render: function () {
       this.element = new MapActionBtn();
-      const btn = this.element.renderBtn("福利&奖励", "gift");
+      const btn = this.element.renderBtn(
+        resourceControl.i18n("map-action-buttons.gift"),
+        "gift"
+      );
 
-      this.element.renderPopup("福利 & 奖励");
+      this.element.renderPopup(resourceControl.i18n("gift-popup.title"));
       this.element.setPopupContent(this.content.render());
       return btn;
     },
@@ -403,6 +417,30 @@ let mapAction = {
       render: function () {
         return giftCollectionPopup.render();
       },
+    },
+  },
+
+  languageBtn: {
+    render: function () {
+      this.element = new MapActionBtn();
+      const btn = this.element.renderBtn(
+        resourceControl.i18n("map-action-buttons.language"),
+        "language"
+      );
+      // Consider making this a dropdown
+      btn.onclick = () => {
+        let availableLangs = Object.keys(resourceControl.lang.data);
+        let index = availableLangs.indexOf(resourceControl.lang.selected);
+        let next = index + 1;
+
+        if (next > availableLangs.length - 1) next = 0;
+
+        localStorage.setItem("lang", availableLangs[next]);
+
+        // It would be better to do this without a reload
+        location.reload();
+      };
+      return btn;
     },
   },
 };
