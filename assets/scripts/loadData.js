@@ -488,6 +488,7 @@ let allDatas = {
           markersArray.forEach((marker) => {
             this.data.set(parseInt(marker.id), marker);
             allDatas.serverMarkers.set(parseInt(marker.id), marker);
+            allDatas.nextMarkerId = Math.max(allDatas.nextMarkerId, marker.id);
           });
         }
       } catch (error) {

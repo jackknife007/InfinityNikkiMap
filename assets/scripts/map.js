@@ -22,7 +22,7 @@ function InitMap() {
           maxZoom: 6,
           keepBuffer: 8,
 
-          bounds: [-112.45, -70.58, 108.93, 68.36], // 全球范围
+          bounds: [-112.45, -70.58, 132.51, 68.36], // 全球范围
         },
       },
       layers: [
