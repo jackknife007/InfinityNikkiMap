@@ -70,7 +70,11 @@ let markerPopup = {
 };
 
 function renderMarkers() {
-  for (const [categoryId, category] of allDatas.categories.entries()) {
+  const sortedCategories = Array.from(allDatas.categories.entries()).sort(
+    ([idA], [idB]) => idB - idA
+  ); // 大 ID 在前，会被先添加，所以显示在下方
+
+  for (const [categoryId, category] of sortedCategories) {
     initLayerMarkers(categoryId, category);
   }
 
@@ -145,7 +149,7 @@ function initLayerMarkers(categoryId, category) {
         source: `category-${categoryId}`,
         layout: {
           "icon-image": category.icon,
-          "icon-size": 0.5,
+          "icon-size": 0.4,
           "icon-allow-overlap": true,
           "icon-ignore-placement": true, // 禁用图标自动调整位置
         },

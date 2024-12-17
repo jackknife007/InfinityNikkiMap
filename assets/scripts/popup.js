@@ -203,7 +203,31 @@ class MarkerPopupContent {
   }
 
   updateDescription(description) {
-    this.description.textContent = description || "暂无描述";
+    if (!description) {
+      this.description.textContent = "暂无描述";
+      return;
+    }
+    this.description.innerHTML = description;
+    this.description.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault(); // 阻止默认跳转
+        const locationId = link.getAttribute("lo");
+        console.log(locationId);
+        if (locationId) {
+          // 这里添加处理 locationId 的代码
+          // 例如：跳转到对应的坐标点
+          const marker = allDatas.getMarker(parseInt(locationId));
+
+          if (marker) {
+            map.flyTo({
+              center: [marker.lng, marker.lat],
+              zoom: 5,
+            });
+            markerPopup.open(marker.id);
+          }
+        }
+      });
+    });
   }
 
   updateVideo(video) {
