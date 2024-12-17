@@ -193,6 +193,8 @@ let giftCollectionPopup = {
     showEventsElements: function (datas) {
       const notBeginEvent = [];
       const ongoingEvent = [];
+      const almostEndEvent = [];
+      const lastdayEvent = [];
       const endEvent = [];
 
       datas.forEach((content) => {
@@ -229,20 +231,30 @@ let giftCollectionPopup = {
           endEvent.push(eventContainer);
         } else {
           const timeDiff = endDate - currentDate;
-          const daysDiff = Math.ceil(timeDiff / this.oneDay);
+          const daysDiff = Math.ceil(timeDiff / giftCollectionPopup.oneDay);
 
           if (daysDiff <= 1) {
             // 添加“最后一天”字样
             eventTitle.textContent = `${content.name}（最后一天）`;
+            lastdayEvent.push(eventContainer);
           } else if (daysDiff <= 3) {
             // 添加“即将结束”字样
             eventTitle.textContent = `${content.name}（即将结束）`;
+            almostEndEvent.push(eventContainer);
           } else {
             // 添加“进行中”字样
             eventTitle.textContent = `${content.name}（进行中）`;
+            ongoingEvent.push(eventContainer);
           }
-          ongoingEvent.push(eventContainer);
         }
+      });
+
+      lastdayEvent.forEach((event) => {
+        this.element.appendChild(event);
+      });
+
+      almostEndEvent.forEach((event) => {
+        this.element.appendChild(event);
       });
 
       ongoingEvent.forEach((event) => {
