@@ -96,10 +96,11 @@ let resourceControl = {
   },
 
   isMobile: function () {
-    return window.innerWidth <= 768 || window.innerHeight <= 768;
+    const ua = navigator.userAgent.toLowerCase();
+    return /mobile|android|iphone|ipad|phone/i.test(ua);;
   },
 
   isMobilePortrait: function () {
-    return window.innerWidth <= 768;
+    return this.isMobile() && window.innerWidth <= 768;
   },
 };

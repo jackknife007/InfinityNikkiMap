@@ -77,6 +77,20 @@
     "groupTitle": "地点"
   },
   {
+    "id": "12",
+    "title": "浮絮巨鸥",
+    "icon": "world_bird",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
+    "id": "13",
+    "title": "路灯",
+    "icon": "world_lamp",
+    "groupId": 1,
+    "groupTitle": "地点"
+  },
+  {
     "id": "100",
     "title": "唱诗蓝龙·基洛",
     "icon": "npc_dragon",

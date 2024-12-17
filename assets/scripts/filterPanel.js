@@ -1,8 +1,96 @@
 let developmentMode = false;
 
+const areas = [
+  { id: 0, name: "心愿原野", lng: -11.11, lat: 2.55, zoom: 1 },
+  { id: 100, name: "纪念山地", lng: 11.21, lat: -2.62, zoom: 5 },
+  { id: 200, name: "花愿镇", lng: 39.28, lat: 0.27, zoom: 4 },
+  { id: 300, name: "微风绿野", lng: 27.46, lat: -45.02, zoom: 3 },
+  { id: 400, name: "小石树田村", lng: -20, lat: -25.65, zoom: 4 },
+  {
+    id: 401,
+    name: "染织工坊旁石树",
+    lng: -20.82,
+    lat: 14.13,
+    zoom: 5.8,
+  },
+  {
+    id: 402,
+    name: "火冠石树",
+    lng: -6.74,
+    lat: -24.79,
+    zoom: 5.8,
+  },
+  { id: 500, name: "石树田无人区", lng: -61.34, lat: 16.26, zoom: 3 },
+  {
+    id: 501,
+    name: "麦浪农场",
+    lng: -42.62,
+    lat: -11.58,
+    zoom: 5.46,
+  },
+  {
+    id: 502,
+    name: "涟漪庄园",
+    lng: -58.98,
+    lat: -14.43,
+    zoom: 5.13,
+  },
+  {
+    id: 503,
+    name: "乘风磨坊",
+    lng: -84.84,
+    lat: 1.36,
+    zoom: 5.18,
+  },
+  {
+    id: 504,
+    name: "欢乐市集",
+    lng: -59.86,
+    lat: 8.32,
+    zoom: 4.87,
+  },
+  {
+    id: 505,
+    name: "呜呜车站",
+    lng: -36.36,
+    lat: 16.93,
+    zoom: 5.07,
+  },
+  {
+    id: 506,
+    name: "星空钓场",
+    lng: -80.84,
+    lat: 27.67,
+    zoom: 5,
+  },
+  {
+    id: 507,
+    name: "丰饶古村",
+    lng: -17.43,
+    lat: 38.68,
+    zoom: 4.75,
+  },
+  {
+    id: 508,
+    name: "石之冠",
+    lng: -52.84,
+    lat: 41.6,
+    zoom: 4,
+  },
+  { id: 600, name: "祈愿树林", lng: 92.55, lat: 22.71, zoom: 3 },
+  {
+    id: 601,
+    name: "千愿巨树",
+    lng: 103.93,
+    lat: 32.81,
+    zoom: 5.51,
+  },
+];
+
 let filterPanel = {
   element: null,
   mobilePopupAtiveBtn: null,
+  currentAreaId: 0,
   // 创建 filter-panel
   render: async function () {
     try {
@@ -77,6 +165,8 @@ let filterPanel = {
         this.sider.developmentBtn.toggleDevelopMode();
         developmentMode = !developmentMode;
         markerPopup.setEditBtnState();
+        editForm.area.setDevelop();
+        editForm.level.setDevelop();
       });
 
       if (resourceControl.isMobile()) {
@@ -411,10 +501,92 @@ let filterPanel = {
         const filterPanelHeaderToolBar = document.createElement("div");
         filterPanelHeaderToolBar.className = "filter-panel-header-toolbar";
 
+        filterPanelHeaderToolBar.appendChild(this.areaSelector.render());
         filterPanelHeaderToolBar.appendChild(this.allShowBtn.render());
         filterPanelHeaderToolBar.appendChild(this.allHiddenBtn.render());
         filterPanelHeader.appendChild(filterPanelHeaderToolBar);
         return filterPanelHeader;
+      },
+
+      areaSelector: {
+        render: function () {
+          const container = document.createElement("div");
+          container.className = "filter-panel-header-area";
+
+          const title = document.createElement("span");
+          title.textContent = "区域：";
+          container.appendChild(title);
+
+          this.selector = document.createElement("div");
+          this.selector.className = "area-selector";
+
+          this.selected = document.createElement("div");
+          this.selected.className = "selected-area";
+          this.selected.textContent = areas.find(
+            (a) => a.id === filterPanel.currentAreaId
+          ).name;
+
+          this.dropdownBtn = document.createElement("span");
+          this.dropdownBtn.className = "dropdown-btn";
+          this.dropdownBtn.innerHTML = "▼";
+          this.selected.appendChild(this.dropdownBtn);
+
+          const dropdown = document.createElement("div");
+          dropdown.className = "area-dropdown";
+          dropdown.style.display = "none"; // 设置初始状态
+
+          this.selected.onclick = () => {
+            const isVisible = dropdown.style.display === "block";
+            dropdown.style.display = isVisible ? "none" : "block";
+          };
+
+          areas.forEach((area) => {
+            if (area.id % 100 !== 0) return;
+            const option = document.createElement("div");
+            option.className = "area-option";
+            option.textContent = area.name;
+            option.setAttribute("data-area-id", area.id);
+            option.onclick = () => {
+              dropdown.style.display = "none";
+              filterPanel.content.header.areaSelector.setSelected(
+                area.id,
+                area.name
+              );
+              layers.filterArea(area);
+            };
+            dropdown.appendChild(option);
+          });
+
+          this.selector.appendChild(this.selected);
+          this.selector.appendChild(dropdown);
+
+          document.addEventListener("click", (e) => {
+            if (!this.selector.contains(e.target)) {
+              dropdown.style.display = "none";
+            }
+          });
+
+          container.appendChild(this.selector);
+          return container;
+        },
+
+        disable: function () {
+          this.selector.classList.add("disabled");
+        },
+
+        enable: function () {
+          this.selector.classList.remove("disabled");
+        },
+
+        setSelected: function (areaId, areaName) {
+          filterPanel.currentAreaId = areaId;
+          this.selected.textContent = areaName;
+          this.selected.appendChild(this.dropdownBtn);
+        },
+
+        getCurrentArea: function () {
+          return areas.find((a) => a.id === filterPanel.currentAreaId);
+        },
       },
 
       allShowBtn: {
@@ -604,6 +776,7 @@ let filterPanel = {
 
         footerLeftButtons.appendChild(this.trackBtn.render());
         footerLeftButtons.appendChild(this.hideIgnoreMarkerBtn.render());
+        footerLeftButtons.appendChild(this.levelBtn.render());
 
         filterPanelFooter.appendChild(footerLeftButtons);
         filterPanelFooter.appendChild(this.developBtn.render());
@@ -666,6 +839,39 @@ let filterPanel = {
         },
       },
 
+      levelBtn: {
+        checkbox: null,
+        render: function () {
+          // 创建容器
+          const element = document.createElement("label");
+          element.className = "filter-footer-control";
+
+          // 创建 checkbox
+          this.checkbox = document.createElement("input");
+          this.checkbox.type = "checkbox";
+          this.checkbox.className = "filter-footer-control-checkbox";
+
+          const textSpan = document.createElement("span");
+          textSpan.textContent = "分层显示";
+
+          element.appendChild(this.checkbox);
+          element.appendChild(textSpan);
+
+          // 添加切换事件
+          this.checkbox.addEventListener("change", (e) => {
+            if (e.target.checked) {
+              map.setLayoutProperty(`level-layer`, "visibility", "visible");
+              filterPanel.content.header.allHiddenBtn.element.click();
+            } else {
+              map.setLayoutProperty(`level-layer`, "visibility", "none");
+              filterPanel.content.header.allShowBtn.element.click();
+              layers.sider.back();
+            }
+          });
+          return element;
+        },
+      },
+
       developBtn: {
         element: null,
         render: function () {
@@ -698,9 +904,37 @@ function UpdateCategoryCountShow(categoryId, onlyChangeIgnore = false) {
   const categoryElement = document.getElementById(`category-${categoryId}`);
   const category = allDatas.categories.get(categoryId);
 
+  function getAreaMarkerCount(markersId, areaId) {
+    let count = 0;
+    markersId.forEach((markerId) => {
+      const marker = allDatas.serverMarkers.get(markerId);
+      if (marker) {
+        if (
+          areaId % 100 === 0 &&
+          marker.areaId >= areaId &&
+          marker.areaId < areaId + 100
+        ) {
+          count++;
+        }
+        if (areaId % 100 !== 0 && marker.areaId === areaId) {
+          count++;
+        }
+      }
+    });
+    return count;
+  }
   if (filterPanel.content.footer.trackBtn.isChecked()) {
-    const totalCount = category.markersId.size;
-    const ignoredCount = allDatas.ignoreMarkers.data.get(categoryId)?.size || 0;
+    const totalCount =
+      filterPanel.currentAreaId === 0
+        ? category.markersId.size
+        : getAreaMarkerCount(category.markersId, filterPanel.currentAreaId);
+    const ignoredCount =
+      filterPanel.currentAreaId === 0
+        ? allDatas.ignoreMarkers.data.get(categoryId)?.size || 0
+        : getAreaMarkerCount(
+            allDatas.ignoreMarkers.data.get(categoryId) || new Set(),
+            filterPanel.currentAreaId
+          );
     countElement.textContent = `${ignoredCount} / ${totalCount}`;
     if (totalCount === ignoredCount) {
       categoryElement.style.background = "rgba(62, 138, 73, 0.3)"; // 完成状态背景色
@@ -709,7 +943,10 @@ function UpdateCategoryCountShow(categoryId, onlyChangeIgnore = false) {
     }
   } else if (!onlyChangeIgnore) {
     // 显示总数
-    countElement.textContent = category.markersId.size;
+    countElement.textContent =
+      filterPanel.currentAreaId === 0
+        ? category.markersId.size
+        : getAreaMarkerCount(category.markersId, filterPanel.currentAreaId);
     categoryElement.style.background = ""; // 恢复默认背景
   }
 }

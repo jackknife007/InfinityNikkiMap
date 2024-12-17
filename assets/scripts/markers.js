@@ -128,6 +128,10 @@ function initLayerMarkers(categoryId, category) {
                 type: "Point",
                 coordinates: [marker.lng, marker.lat],
               },
+              properties: {
+                areaId: marker.areaId || 0,
+                level: marker.level || 0,
+              },
             };
           }),
         },
@@ -260,6 +264,10 @@ function showIgnoredMarkers() {
               type: "Point",
               coordinates: [marker.lng, marker.lat],
             },
+            properties: {
+              areaId: marker.areaId || 0,
+              level: marker.level || 0,
+            },
           });
         }
       });
@@ -296,6 +304,10 @@ function addMarkerToCategorySource(marker) {
     geometry: {
       type: "Point",
       coordinates: [marker.lng, marker.lat],
+    },
+    properties: {
+      areaId: marker.areaId || 0,
+      level: marker.level || 0,
     },
   };
   const newSource = map.getSource(`category-${marker.categoryId}`);

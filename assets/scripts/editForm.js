@@ -32,6 +32,34 @@ let editForm = {
     this.setCategoryOptions();
     this.container.appendChild(this.category.wrapper);
 
+    this.area = new FormElement("select", "地区", "地区", "edit-area");
+
+    for (const { id, name } of areas) {
+      const option = document.createElement("option");
+      option.value = id;
+      option.textContent = name;
+      this.area.element.appendChild(option);
+    }
+    this.container.appendChild(this.area.wrapper);
+
+    this.level = new FormElement("select", "分层", "分层", "edit-level");
+
+    const levels = [
+      { id: 0, name: "奇迹大陆" },
+      { id: 1, name: "一层" },
+      { id: 2, name: "二层" },
+      { id: 3, name: "三层" },
+      { id: 4, name: "四层" },
+    ];
+
+    for (const { id, name } of levels) {
+      const option = document.createElement("option");
+      option.value = id;
+      option.textContent = name;
+      this.level.element.appendChild(option);
+    }
+    this.container.appendChild(this.level.wrapper);
+
     this.description = new FormElement(
       "textarea",
       "描述",
@@ -112,7 +140,7 @@ let editForm = {
         ...this.getFormData(),
       };
       let isSuccess = allDatas.addMarker(newMarker);
-      if(isSuccess) {
+      if (isSuccess) {
         addMarkerToCategorySource(newMarker);
         tips.show("新增成功", newMarker.name);
       }
@@ -141,6 +169,8 @@ let editForm = {
       author: this.author.getValue().trim(),
       authorLink: this.authorLink.getValue().trim(),
       categoryId: parseInt(this.category.getValue()),
+      areaId: parseInt(this.area.getValue()),
+      level: parseInt(this.level.getValue()),
       updateTime: new Date()
         .toLocaleString("zh-cn", {
           year: "numeric",
@@ -204,6 +234,11 @@ let editForm = {
     this.setCategoryOptions(categoryId);
     const firstValue = this.category.element.options[0]?.value;
     this.category.setValue(categoryId || firstValue);
+    this.area.setDevelop();
+    this.area.setValue(marker?.areaId || 0);
+
+    this.level.setDevelop();
+    this.level.setValue(marker?.level || 0);
 
     if (typeOfBtn === "edit") {
       this.saveBtn.style.display = "block";
@@ -274,5 +309,13 @@ class FormElement {
 
   setValue(value) {
     this.element.value = value;
+  }
+
+  setDevelop() {
+    if (!developmentMode) {
+      this.wrapper.classList.add("develop-inactive");
+    } else {
+      this.wrapper.classList.remove("develop-inactive");
+    }
   }
 }

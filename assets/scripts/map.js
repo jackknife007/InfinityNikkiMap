@@ -1,58 +1,6 @@
 // 初始化地图
 let map;
 
-function InitMap() {
-  map = new mapboxgl.Map({
-    container: "map",
-    style: {
-      version: 8,
-      background: {
-        type: "background",
-        paint: {
-          "background-color": "#000000",
-        },
-      },
-      sources: {
-        "custom-tiles": {
-          type: "raster",
-          tiles: [resourceControl.getTilesFilePath()],
-          tileSize: 256,
-          attributionControl: false,
-          minZoom: 1,
-          maxZoom: 6,
-          keepBuffer: 8,
-
-          bounds: [-112.45, -70.58, 132.51, 68.36], // 全球范围
-        },
-      },
-      layers: [
-        {
-          id: "custom-layer",
-          type: "raster",
-          source: "custom-tiles",
-          paint: {
-            "raster-fade-duration": 100,
-          },
-        },
-      ],
-    },
-    zoom: 2,
-    minZoom: 1,
-    maxZoom: 6,
-    maxBounds: [
-      [-360, -90], // 西南角坐标 [经度, 纬度]
-      [360, 90], // 东北角坐标 [经度, 纬度]
-    ],
-    renderWorldCopies: false, // 关闭地图重复
-    doubleClickZoom: false, // 禁用双击缩放
-    dragRotate: true,
-    touchPitch: false,
-    touchZoomRotate: true,
-  });
-
-  // 添加缩放控件到地图
-  map.addControl(new ZoomSliderControl(), "bottom-right");
-}
 
 // 创建自定义滑块控件
 class ZoomSliderControl {
@@ -181,7 +129,71 @@ class ZoomSliderControl {
     this._container.parentNode.removeChild(this._container);
     this._map = undefined;
   }
+
+  hide() {
+    this._container.style.visibility = "hidden";
+  }
+
+  show() {
+    this._container.style.visibility = "visible";
+  }
 }
+
+let zoomSliderControl = new ZoomSliderControl();
+
+function InitMap() {
+  map = new mapboxgl.Map({
+    container: "map",
+    style: {
+      version: 8,
+      background: {
+        type: "background",
+        paint: {
+          "background-color": "#000000",
+        },
+      },
+      sources: {
+        "custom-tiles": {
+          type: "raster",
+          tiles: [resourceControl.getTilesFilePath()],
+          tileSize: 256,
+          attributionControl: false,
+          minZoom: 1,
+          maxZoom: 6,
+          keepBuffer: 8,
+
+          bounds: [-112.45, -70.58, 132.51, 68.36], // 全球范围
+        },
+      },
+      layers: [
+        {
+          id: "custom-layer",
+          type: "raster",
+          source: "custom-tiles",
+          paint: {
+            "raster-fade-duration": 100,
+          },
+        },
+      ],
+    },
+    zoom: 2,
+    minZoom: 1,
+    maxZoom: 6,
+    maxBounds: [
+      [-360, -90], // 西南角坐标 [经度, 纬度]
+      [360, 90], // 东北角坐标 [经度, 纬度]
+    ],
+    renderWorldCopies: false, // 关闭地图重复
+    doubleClickZoom: false, // 禁用双击缩放
+    dragRotate: true,
+    touchPitch: false,
+    touchZoomRotate: true,
+  });
+
+  // 添加缩放控件到地图
+  map.addControl(zoomSliderControl, "bottom-right");
+}
+
 
 class MapActionBtn {
   renderBtn(name, iconImgSrc) {
@@ -284,6 +296,8 @@ let mapAction = {
   gameExplorations: new Map(),
   gameEventsOther: new Map(),
 
+  element: null,
+
   init: async function () {
     try {
       const [
@@ -338,8 +352,18 @@ let mapAction = {
     // 奖励介绍按钮
     btnContainer.appendChild(this.giftBtn.render());
 
+    this.element = btnContainer;
+
     // 将按钮容器添加到地图容器
     document.querySelector(".map-container").appendChild(btnContainer);
+  },
+
+  hide: function () {
+    this.element.style.visibility = "hidden";
+  },
+
+  show: function () {
+    this.element.style.visibility = "visible";
   },
 
   fullScreenBtn: {

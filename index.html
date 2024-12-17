@@ -45,9 +45,11 @@
     <link href="./libs/mapbox-gl/mapbox-gl.css" rel="stylesheet" />
     <script src="./libs/clipboard/clipboard.min.js"></script>
     <script src="./libs/sprintf/sprintf.min.js"></script>
+    <script src="https://unpkg.com/react-device-detect/dist/lib.js"></script>
     <link rel="stylesheet" href="./assets/styles/base.css" />
     <link rel="stylesheet" href="./assets/styles/map.css" />
     <link rel="stylesheet" href="./assets/styles/filter.css" />
+    <link rel="stylesheet" href="./assets/styles/layer.css" />
     <link rel="stylesheet" href="./assets/styles/popup.css" />
     <link rel="stylesheet" href="./assets/styles/edit-marker.css" />
     <link rel="stylesheet" href="./assets/styles/qkPositionForm.css" />
@@ -84,6 +86,7 @@
     <script src="./assets/scripts/editForm.js"></script>
     <script src="./assets/scripts/popup.js"></script>
     <script src="./assets/scripts/markers.js"></script>
+    <script src="./assets/scripts/layer.js"></script>
     <script src="./assets/scripts/contextMenu.js"></script>
     <script src="./assets/scripts/clip.js"></script>
     <script src="./assets/scripts/quickPositionForm.js"></script>
@@ -100,6 +103,7 @@
           editForm.render();
           contextMenu.render();
           renderMarkers();
+          layers.render();
           filterPanel.render();
           tips.render();
 
