@@ -402,7 +402,7 @@ let filterPanel = {
           allDatas.downloadPersonalData.bind(allDatas)
         );
         btn.addListItem(
-          "导入个人数据",
+          "导入在线地图数据",
           allDatas.uploadPersonalData.bind(allDatas)
         );
         btn.addListItem("重置进度", () =>

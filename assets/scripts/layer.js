@@ -57,7 +57,7 @@ const btns = [
   {
     id: 5,
     name: "星空钓场",
-    maxLevel: 2,
+    maxLevel: 3,
     coordinates: [-83.12, 29.56],
     areaId: 506,
     bound: [
@@ -107,6 +107,17 @@ const btns = [
     bound: [
       [-24.35, -30.51],
       [3.96, -17.92],
+    ],
+  },
+  {
+    id: 10,
+    name: "千愿巨树",
+    maxLevel: 4,
+    coordinates: [103.95, 32.87],
+    areaId: 601,
+    bound: [
+      [89.29, 27.31],
+      [114.77, 37.76],
     ],
   },
 ];
@@ -184,7 +195,6 @@ let layers = {
       this.element.style.display = "flex";
       this.currentAreaId = btns[layerBtnId].areaId;
       for (let i = 0; i < this.maxLevel; i++) {
-        console.log(i, btns[layerBtnId].maxLevel);
         if (i < btns[layerBtnId].maxLevel) {
           this.levelButtons.elements[i].btn.style.display = "block";
         } else {

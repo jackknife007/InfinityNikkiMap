@@ -212,7 +212,6 @@ class MarkerPopupContent {
       link.addEventListener("click", (e) => {
         e.preventDefault(); // 阻止默认跳转
         const locationId = link.getAttribute("lo");
-        console.log(locationId);
         if (locationId) {
           // 这里添加处理 locationId 的代码
           // 例如：跳转到对应的坐标点

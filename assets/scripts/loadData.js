@@ -787,8 +787,6 @@ let allDatas = {
   },
 
   downloadServerMarkers: function () {
-    console.log(this.serverMarkers);
-    console.log(this.newAddMarkers.data);
     let serverMarkersCopy = [];
     let nextMarkerId = this.maxMarkerId + 1;
     for (const marker of this.serverMarkers.values()) {

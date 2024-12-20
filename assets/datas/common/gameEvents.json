@@ -1,5 +1,59 @@
 [
   {
+    "id": 31,
+    "name": "超级激化",
+    "beginDate": "2024-12-21 04:00:00",
+    "endDate": "2024-12-28 03:59:59",
+    "method": "素材激化幻境",
+    "description": "活动期间，进入素材激化幻境，使用素材激化台可换取双倍材料，每日超级激化活跃能量点数上限为120点"
+  },
+  {
+    "id": 30,
+    "name": "滴滴，伙伴节邀约",
+    "beginDate": "2024-12-19 11:00:00",
+    "endDate": "2024-12-30 03:49:59",
+    "method": "完成任务【愿望集会】后开启，游戏内活动大厅",
+    "description": "完成活动可获得钻石、称号等奖励",
+    "mainGift": [{ "type": "diamond", "amount": 370 }],
+    "otherGift": [
+      "噗灵x170000",
+      "闪亮泡泡x150",
+      "纯真丝线x100",
+      "称号【最佳拍档】"
+    ]
+  },
+  {
+    "id": 29,
+    "name": "伙伴节赠礼",
+    "beginDate": "2024-12-19 11:00:00",
+    "endDate": "2024-12-30 03:49:59",
+    "method": "游戏内活动大厅",
+    "description": "累计登录7天可获得限时启示水晶和闪光粒子",
+    "mainGift": [{ "type": "qishiCrystal", "amount": 5 }],
+    "otherGift": ["闪光粒子x340"]
+  },
+  {
+    "id": 28,
+    "name": "12月19日问题修复补偿",
+    "beginDate": "2024-12-19 11:00:00",
+    "endDate": "2024-12-25 23:59:59",
+    "method": "游戏内邮件",
+    "description": "表达一下歉意，比活动送的还多",
+    "mainGift": [{ "type": "diamond", "amount": 500 }]
+  },
+  {
+    "id": 27,
+    "name": "12月19日停服维护补偿",
+    "beginDate": "2024-12-19 11:00:00",
+    "endDate": "2024-12-25 23:59:59",
+    "method": "游戏内邮件",
+    "description": "【伙伴节】系列活动开启！",
+    "mainGift": [
+      { "type": "gongmingCrystal", "amount": 1 },
+      { "type": "diamond", "amount": 200 }
+    ]
+  },
+  {
     "id": 26,
     "name": "IGN2024年度游戏提名贺礼",
     "beginDate": "2024-12-11 22:00:00",
@@ -72,7 +126,7 @@
     "id": 19,
     "name": "星愿绮幻夜·暖暖生日直播兑换码",
     "beginDate": "2024-12-06 00:00:00",
-    "endDate": "2999-12-31",
+    "endDate": "2024-12-31 23:59:59",
     "method": "游戏内兑换，兑换码【与暖暖繁星织梦】",
     "description": "与暖暖繁星织梦！",
     "mainGift": [{ "type": "diamond", "amount": 520 }]
