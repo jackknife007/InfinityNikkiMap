@@ -101,6 +101,12 @@ let layers = {
     levelButtons: {
       elements: [],
       render: function (container) {
+        const allBtn = document.createElement("button");
+        allBtn.className = "level-btn";
+        allBtn.textContent = "ALL";
+        this.elements.push({ btn: allBtn, level: 0 });
+        container.appendChild(allBtn);
+
         for (let i = 1; i <= layers.sider.maxLevel; i++) {
           const btn = document.createElement("button");
           btn.className = "level-btn";
@@ -116,16 +122,29 @@ let layers = {
             );
             btn.classList.add("active");
             // 设置过滤器
-            allDatas.categories.forEach((_, categoryId) => {
-              const layerId = `category-layer-${categoryId}`;
-              if (map.getLayer(layerId)) {
-                map.setFilter(layerId, [
-                  "all",
-                  ["==", ["get", "areaId"], filterPanel.currentAreaId],
-                  ["==", ["get", "level"], level],
-                ]);
-              }
-            });
+            if (level === 0) {
+              allDatas.categories.forEach((_, categoryId) => {
+                const layerId = `category-layer-${categoryId}`;
+                if (map.getLayer(layerId)) {
+                  map.setFilter(layerId, [
+                    "==",
+                    ["get", "areaId"],
+                    filterPanel.currentAreaId,
+                  ]);
+                }
+              });
+            } else {
+              allDatas.categories.forEach((_, categoryId) => {
+                const layerId = `category-layer-${categoryId}`;
+                if (map.getLayer(layerId)) {
+                  map.setFilter(layerId, [
+                    "all",
+                    ["==", ["get", "areaId"], filterPanel.currentAreaId],
+                    ["==", ["get", "level"], level],
+                  ]);
+                }
+              });
+            }
           };
         }
       },
@@ -150,8 +169,8 @@ let layers = {
     show: function (layerBtnId) {
       this.element.style.display = "flex";
       this.currentAreaId = btns[layerBtnId].areaId;
-      for (let i = 0; i < this.maxLevel; i++) {
-        if (i < btns[layerBtnId].maxLevel) {
+      for (let i = 0; i <= this.maxLevel; i++) {
+        if (i <= btns[layerBtnId].maxLevel) {
           this.levelButtons.elements[i].btn.style.display = "block";
         } else {
           this.levelButtons.elements[i].btn.style.display = "none";
@@ -180,8 +199,8 @@ let layers = {
         ]);
         layers.filterArea(fatherArea);
         this.currentAreaId = null;
+        zoomSliderControl.show();
         if (resourceControl.isMobile()) {
-          zoomSliderControl.show();
           mapAction.show();
         }
       }
@@ -284,8 +303,8 @@ let layers = {
       for (const categoryId of allDatas.categories.keys()) {
         UpdateCategoryCountShow(categoryId);
       }
+      zoomSliderControl.hide();
       if (resourceControl.isMobile()) {
-        zoomSliderControl.hide();
         mapAction.hide();
       }
       layers.sider.show(layerAreaId);
