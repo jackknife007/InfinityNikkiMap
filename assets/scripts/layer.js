@@ -5,10 +5,6 @@ const btns = [
     maxLevel: 3,
     coordinates: [-40.48, -12.09],
     areaId: 501,
-    bound: [
-      [-57.84, -19.96],
-      [-25.72, -2.68],
-    ],
   },
   {
     id: 1,
@@ -16,10 +12,6 @@ const btns = [
     maxLevel: 3,
     coordinates: [-59.59, -16.83],
     areaId: 502,
-    bound: [
-      [-87.47, -23.02],
-      [-49.02, -5.29],
-    ],
   },
   {
     id: 2,
@@ -27,10 +19,6 @@ const btns = [
     maxLevel: 3,
     coordinates: [-83.31, 0.07],
     areaId: 503,
-    bound: [
-      [-105.2, -7.48],
-      [-66.95, 10.48],
-    ],
   },
   {
     id: 3,
@@ -38,10 +26,6 @@ const btns = [
     maxLevel: 3,
     coordinates: [-59.21, 7.16],
     areaId: 504,
-    bound: [
-      [-85.05, -3.86],
-      [-37.24, 19.59],
-    ],
   },
   {
     id: 4,
@@ -49,10 +33,6 @@ const btns = [
     maxLevel: 3,
     coordinates: [-36.58, 16.7],
     areaId: 505,
-    bound: [
-      [-62.3, 5.07],
-      [-11.32, 28.28],
-    ],
   },
   {
     id: 5,
@@ -60,10 +40,6 @@ const btns = [
     maxLevel: 3,
     coordinates: [-83.12, 29.56],
     areaId: 506,
-    bound: [
-      [-111.17, 15.93],
-      [-56.69, 39.24],
-    ],
   },
   {
     id: 6,
@@ -71,10 +47,6 @@ const btns = [
     maxLevel: 3,
     coordinates: [-15, 37.69],
     areaId: 507,
-    bound: [
-      [-35, 29.78],
-      [-3.95, 47.81],
-    ],
   },
   {
     id: 7,
@@ -82,10 +54,6 @@ const btns = [
     maxLevel: 4,
     coordinates: [-51.33, 38.36],
     areaId: 508,
-    bound: [
-      [-92.09, 27.47],
-      [-13.62, 55.15],
-    ],
   },
   {
     id: 8,
@@ -93,10 +61,6 @@ const btns = [
     maxLevel: 3,
     coordinates: [-21.04, -14.86],
     areaId: 401,
-    bound: [
-      [-29.77, -18.74],
-      [-10.19, -9.64],
-    ],
   },
   {
     id: 9,
@@ -104,21 +68,13 @@ const btns = [
     maxLevel: 3,
     coordinates: [-5.96, -24.79],
     areaId: 402,
-    bound: [
-      [-24.35, -30.51],
-      [3.96, -17.92],
-    ],
   },
   {
     id: 10,
     name: "千愿巨树",
-    maxLevel: 4,
+    maxLevel: 5,
     coordinates: [103.95, 32.87],
     areaId: 601,
-    bound: [
-      [89.29, 27.31],
-      [114.77, 37.76],
-    ],
   },
 ];
 
@@ -313,7 +269,11 @@ let layers = {
 
     map.on("click", `level-layer`, (e) => {
       const layerAreaId = e.features[0].id;
-      map.setMaxBounds(btns[layerAreaId].bound);
+      map.easeTo({
+        center: btns[layerAreaId].coordinates,
+        zoom: 5,
+        curve: 1.1, // 飞行曲线
+      });
       map.setLayoutProperty(`level-layer`, "visibility", "none");
       filterPanel.content.header.areaSelector.disable();
       filterPanel.content.header.allShowBtn.element.click();

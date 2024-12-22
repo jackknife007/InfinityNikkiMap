@@ -44,7 +44,7 @@ let contextMenu = {
 
       // 如果不在自定义图层上，显示菜单
       if (!isOnCustomLayer) {
-        //console.log(e.lngLat.lng, e.lngLat.lat, map.getZoom().toFixed(2));
+        console.log(e.lngLat.lng, e.lngLat.lat, map.getZoom().toFixed(2));
         contextMenu.setLngLat(e.lngLat.lng.toFixed(4), e.lngLat.lat.toFixed(4));
         contextMenu.open(e.point.x, e.point.y);
 
