@@ -51,6 +51,7 @@ let editForm = {
       { id: 3, name: "三层" },
       { id: 4, name: "四层" },
       { id: 5, name: "五层" },
+      { id: 6, name: "六层" },
     ];
 
     for (const { id, name } of levels) {

@@ -51,7 +51,7 @@ const btns = [
   {
     id: 7,
     name: "石之冠",
-    maxLevel: 4,
+    maxLevel: 6,
     coordinates: [-51.33, 38.36],
     areaId: 508,
   },

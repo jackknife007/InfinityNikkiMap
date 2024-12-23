@@ -42,13 +42,6 @@
     "groupTitle": "收集"
   },
   {
-    "id": "104",
-    "title": "噗灵",
-    "icon": "collection_puling",
-    "groupId": 2,
-    "groupTitle": "收集"
-  },
-  {
     "id": "105",
     "title": "洞窟内奇想星",
     "icon": "collection_star_c",
@@ -85,8 +78,8 @@
   },
   {
     "id": "111",
-    "title": "路灯修理",
-    "icon": "world_lamp",
+    "title": "噗灵怪",
+    "icon": "collection_puling",
     "groupId": 2,
     "groupTitle": "收集"
   },
@@ -133,6 +126,34 @@
     "groupTitle": "任务"
   },
   {
+    "id": "206",
+    "title": "小游戏",
+    "icon": "quest_minigame",
+    "groupId": 3,
+    "groupTitle": "任务"
+  },
+  {
+    "id": "207",
+    "title": "路灯修理",
+    "icon": "quest_lamp",
+    "groupId": 3,
+    "groupTitle": "任务"
+  },
+  {
+    "id": "208",
+    "title": "知识竞赛",
+    "icon": "quest_question",
+    "groupId": 3,
+    "groupTitle": "任务"
+  },
+  {
+    "id": "209",
+    "title": "奇趣踩踩盘",
+    "icon": "quest_palette",
+    "groupId": 3,
+    "groupTitle": "任务"
+  },
+  {
     "id": "300",
     "title": "钓鱼点",
     "icon": "material_fish",
@@ -154,9 +175,30 @@
     "groupTitle": "地点"
   },
   {
+    "id": "411",
+    "title": "唱诗蓝龙·基洛",
+    "icon": "world_dragon",
+    "groupId": 5,
+    "groupTitle": "地点"
+  },
+  {
+    "id": "412",
+    "title": "流浪帽仔",
+    "icon": "world_star_merchant",
+    "groupId": 5,
+    "groupTitle": "地点"
+  },
+  {
     "id": "402",
-    "title": "服装店",
+    "title": "服装商人",
     "icon": "world_clothstore",
+    "groupId": 5,
+    "groupTitle": "地点"
+  },
+  {
+    "id": "413",
+    "title": "材料商人",
+    "icon": "world_materialstore",
     "groupId": 5,
     "groupTitle": "地点"
   },
@@ -164,6 +206,13 @@
     "id": "403",
     "title": "房屋建筑",
     "icon": "world_house",
+    "groupId": 5,
+    "groupTitle": "地点"
+  },
+  {
+    "id": "406",
+    "title": "洞窟",
+    "icon": "world_cave",
     "groupId": 5,
     "groupTitle": "地点"
   },
@@ -182,9 +231,9 @@
     "groupTitle": "地点"
   },
   {
-    "id": "406",
-    "title": "洞窟",
-    "icon": "world_cave",
+    "id": "408",
+    "title": "弹射海豹",
+    "icon": "world_seal",
     "groupId": 5,
     "groupTitle": "地点"
   },
@@ -196,45 +245,9 @@
     "groupTitle": "地点"
   },
   {
-    "id": "408",
-    "title": "弹射海豹",
-    "icon": "world_seal",
-    "groupId": 5,
-    "groupTitle": "地点"
-  },
-  {
-    "id": "409",
-    "title": "小游戏",
-    "icon": "world_minigame",
-    "groupId": 5,
-    "groupTitle": "地点"
-  },
-  {
     "id": "410",
     "title": "浮絮巨鸥",
     "icon": "world_bird",
-    "groupId": 5,
-    "groupTitle": "地点"
-  },
-
-  {
-    "id": "411",
-    "title": "唱诗蓝龙·基洛",
-    "icon": "world_dragon",
-    "groupId": 5,
-    "groupTitle": "地点"
-  },
-  {
-    "id": "412",
-    "title": "流浪帽仔",
-    "icon": "world_star_merchant",
-    "groupId": 5,
-    "groupTitle": "地点"
-  },
-  {
-    "id": "413",
-    "title": "商人",
-    "icon": "world_materialstore",
     "groupId": 5,
     "groupTitle": "地点"
   },
