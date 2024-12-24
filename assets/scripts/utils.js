@@ -92,7 +92,7 @@ let resourceControl = {
   },
 
   _assetsHost: function () {
-    return this.env === "prod" ? "https://map-assets.nikkimomo.cc" : "./assets";
+    return this.env === "uat" ? "https://map-assets.nikkimomo.cc" : "./assets";
   },
 
   isMobile: function () {
