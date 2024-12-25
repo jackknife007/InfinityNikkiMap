@@ -933,10 +933,10 @@ function UpdateCategoryCountShow(categoryId, onlyChangeIgnore = false) {
     filterPanel.currentAreaId === 0
       ? category.markersId.size
       : getAreaMarkerCount(category.markersId, filterPanel.currentAreaId);
+  const group = allDatas.groups.get(category.groupId);
+  const groupDiv = document.getElementById(`group-${group.id}`);
   if (totalCount === 0) {
     categoryElement.style.display = "none";
-    const group = allDatas.groups.get(category.groupId);
-    const groupDiv = document.getElementById(`group-${group.id}`);
     const allCategoriesHidden = Array.from(
       groupDiv.querySelectorAll(".filter-panel-category")
     ).every((div) => div.style.display === "none");
@@ -944,6 +944,7 @@ function UpdateCategoryCountShow(categoryId, onlyChangeIgnore = false) {
       groupDiv.style.display = "none";
     }
   } else {
+    groupDiv.style.display = "";
     categoryElement.style.display = "";
   }
 
