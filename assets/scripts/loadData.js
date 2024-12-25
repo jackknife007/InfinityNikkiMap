@@ -3,6 +3,7 @@
 const PersonalMarkerIdUpperBound = 31 * 10;
 const NormalMarkerIdLowerBound = 31 * 400 + 1;
 const newAddMarkerIdLowerBound = 31 * 20000 + 1;
+const ActivityMarkerIdLowerBound = 31 * 16000 + 1;
 
 class IgnoreStateStorage {
   constructor(name, offset = 1, shardSize = 100) {
@@ -842,7 +843,7 @@ let allDatas = {
       if (this.newAddMarkers.data.has(marker.id)) {
         serverMarkersCopy.push({ ...marker, id: nextMarkerId });
         nextMarkerId += 1;
-      } else {
+      } else if (marker.id < ActivityMarkerIdLowerBound) {
         serverMarkersCopy.push(marker);
       }
     }
