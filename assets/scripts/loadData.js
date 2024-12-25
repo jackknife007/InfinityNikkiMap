@@ -2,7 +2,7 @@
 
 const PersonalMarkerIdUpperBound = 31 * 10;
 const NormalMarkerIdLowerBound = 31 * 400 + 1;
-const newAddMarkerIdLowerBound = 31 * 10000 + 1;
+const newAddMarkerIdLowerBound = 31 * 20000 + 1;
 
 class IgnoreStateStorage {
   constructor(name, offset = 1, shardSize = 100) {
@@ -609,23 +609,42 @@ let allDatas = {
 
   load: async function () {
     try {
-      const [groups, categories, markers, qkPos] = await Promise.all([
-        fetch(resourceControl.getGroupsJsonFilePath()).then((res) =>
-          res.json()
-        ),
-        fetch(resourceControl.getCategoriesJsonFilePath()).then((res) =>
-          res.json()
-        ),
-        fetch(resourceControl.getMarkersJsonFilePath()).then((res) =>
-          res.json()
-        ),
-        fetch(resourceControl.getQuickPositionsJsonFilePath()).then((res) =>
-          res.json()
-        ),
-      ]);
+      const [groups, categories, markers, qkPos, gameActivity] =
+        await Promise.all([
+          fetch(resourceControl.getGroupsJsonFilePath()).then((res) =>
+            res.json()
+          ),
+          fetch(resourceControl.getCategoriesJsonFilePath()).then((res) =>
+            res.json()
+          ),
+          fetch(resourceControl.getMarkersJsonFilePath()).then((res) =>
+            res.json()
+          ),
+          fetch(resourceControl.getQuickPositionsJsonFilePath()).then((res) =>
+            res.json()
+          ),
+          fetch(resourceControl.getGameActivityJsonFilePath()).then((res) =>
+            res.json()
+          ),
+        ]);
 
       this.dataTimestamp = markers.timestamp;
       this.quickPositions.load(qkPos);
+
+      markers.data.forEach((marker) => {
+        this.serverMarkers.set(parseInt(marker.id), marker);
+        this.maxMarkerId = Math.max(this.maxMarkerId, marker.id);
+      });
+
+      // 加载localStorage数据
+      this.newAddMarkers.loadFromLocalStorage();
+      this.editedMarkers.loadFromLocalStorage();
+      this.deletedMarkers.loadFromLocalStorage();
+
+      // 加载活动数据
+      const promises = [];
+      this.processGameActivity(promises, gameActivity);
+      await Promise.all(promises);
 
       groups.forEach((group) => {
         group.categoriesInfo = [];
@@ -642,16 +661,6 @@ let allDatas = {
           group.categoriesInfo.push(categoryId);
         }
       });
-
-      markers.data.forEach((marker) => {
-        this.serverMarkers.set(parseInt(marker.id), marker);
-        this.maxMarkerId = Math.max(this.maxMarkerId, marker.id);
-      });
-
-      // 加载localStorage数据
-      this.newAddMarkers.loadFromLocalStorage();
-      this.editedMarkers.loadFromLocalStorage();
-      this.deletedMarkers.loadFromLocalStorage();
 
       // 设定serverMarkers的分类
       this.serverMarkers.forEach((marker) => {
@@ -673,6 +682,46 @@ let allDatas = {
       this.ignoreMarkers.loadFromLocalStorage();
     } catch (error) {
       console.error("加载数据失败:", error);
+    }
+  },
+
+  processGameActivity: async function (promises, gameActivity) {
+    const now = new Date();
+
+    for (const activity of gameActivity) {
+      const startTime = new Date(activity.startTime);
+      const endTime = new Date(activity.endTime);
+
+      if (now >= startTime && now <= endTime) {
+        promises.push(
+          fetch(
+            resourceControl.getGameActivityMarkerJsonFilePath(
+              activity.fileSuffix
+            )
+          )
+            .then((response) => response.json())
+            .then((markers) => {
+              markers.data.forEach((marker) => {
+                allDatas.serverMarkers.set(parseInt(marker.id), marker);
+                allDatas.maxMarkerId = Math.max(
+                  allDatas.maxMarkerId,
+                  marker.id
+                );
+              });
+              if (markers.data.length > 0) {
+                const group = {
+                  id: 98,
+                  title: activity.name,
+                  categoriesInfo: [],
+                };
+                allDatas.groups.set(98, group);
+              }
+            })
+            .catch((error) => {
+              console.error(`加载活动${activity.name}的markers失败:`, error);
+            })
+        );
+      }
     }
   },
 

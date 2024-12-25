@@ -627,6 +627,7 @@ let filterPanel = {
           this.categoriesContainer.set(group.id, []); // 初始化空数组
           const groupDiv = document.createElement("div");
           groupDiv.className = "filter-panel-group";
+          groupDiv.id = `group-${group.id}`;
 
           // 添加分组标题
           const groupTitle = document.createElement("div");
@@ -670,6 +671,9 @@ let filterPanel = {
             count.id = `category-count-${category.id}`;
             count.className = "filter-panel-category-count";
             count.textContent = category.markersId.size;
+            if (category.markersId.size === 0) {
+              categoryDiv.style.display = "none";
+            }
 
             categoryDiv.appendChild(icon);
             categoryDiv.appendChild(title);
@@ -904,6 +908,8 @@ function UpdateCategoryCountShow(categoryId, onlyChangeIgnore = false) {
   const categoryElement = document.getElementById(`category-${categoryId}`);
   const category = allDatas.categories.get(categoryId);
 
+  if (!categoryElement) return;
+
   function getAreaMarkerCount(markersId, areaId) {
     let count = 0;
     markersId.forEach((markerId) => {
@@ -923,11 +929,25 @@ function UpdateCategoryCountShow(categoryId, onlyChangeIgnore = false) {
     });
     return count;
   }
+  const totalCount =
+    filterPanel.currentAreaId === 0
+      ? category.markersId.size
+      : getAreaMarkerCount(category.markersId, filterPanel.currentAreaId);
+  if (totalCount === 0) {
+    categoryElement.style.display = "none";
+    const group = allDatas.groups.get(category.groupId);
+    const groupDiv = document.getElementById(`group-${group.id}`);
+    const allCategoriesHidden = Array.from(
+      groupDiv.querySelectorAll(".filter-panel-category")
+    ).every((div) => div.style.display === "none");
+    if (allCategoriesHidden) {
+      groupDiv.style.display = "none";
+    }
+  } else {
+    categoryElement.style.display = "";
+  }
+
   if (filterPanel.content.footer.trackBtn.isChecked()) {
-    const totalCount =
-      filterPanel.currentAreaId === 0
-        ? category.markersId.size
-        : getAreaMarkerCount(category.markersId, filterPanel.currentAreaId);
     const ignoredCount =
       filterPanel.currentAreaId === 0
         ? allDatas.ignoreMarkers.data.get(categoryId)?.size || 0
@@ -943,10 +963,7 @@ function UpdateCategoryCountShow(categoryId, onlyChangeIgnore = false) {
     }
   } else if (!onlyChangeIgnore) {
     // 显示总数
-    countElement.textContent =
-      filterPanel.currentAreaId === 0
-        ? category.markersId.size
-        : getAreaMarkerCount(category.markersId, filterPanel.currentAreaId);
+    countElement.textContent = totalCount;
     categoryElement.style.background = ""; // 恢复默认背景
   }
 }

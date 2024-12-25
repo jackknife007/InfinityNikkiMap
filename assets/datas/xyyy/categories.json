@@ -266,6 +266,27 @@
     "groupTitle": "其他"
   },
   {
+    "id": "801",
+    "title": "限时·逸事任务",
+    "icon": "quest_yishi",
+    "groupId": 98,
+    "groupTitle": "活动"
+  },
+  {
+    "id": "800",
+    "title": "限时·见闻任务",
+    "icon": "quest_jianwen",
+    "groupId": 98,
+    "groupTitle": "活动"
+  },
+  {
+    "id": "802",
+    "title": "限时·路灯修理",
+    "icon": "quest_lamp",
+    "groupId": 98,
+    "groupTitle": "活动"
+  },
+  {
     "id": "901",
     "title": "自定义-默认",
     "icon": "custom_default",

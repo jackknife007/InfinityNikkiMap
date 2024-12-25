@@ -63,6 +63,16 @@ let resourceControl = {
     return `${this._assetsHost()}/datas/${this.regionName}/quickPositions.json`;
   },
 
+  getGameActivityJsonFilePath: function () {
+    return `${this._assetsHost()}/datas/common/gameActivity.json`;
+  },
+
+  getGameActivityMarkerJsonFilePath: function (fileSuffix) {
+    return `${this._assetsHost()}/datas/${
+      this.regionName
+    }/markers_${fileSuffix}.json`;
+  },
+
   getAnouncementsJsonFilePath: function () {
     return `${this._assetsHost()}/datas/common/announcements.json`;
   },
@@ -97,7 +107,7 @@ let resourceControl = {
 
   isMobile: function () {
     const ua = navigator.userAgent.toLowerCase();
-    return /mobile|android|iphone|ipad|phone/i.test(ua);;
+    return /mobile|android|iphone|ipad|phone/i.test(ua);
   },
 
   isMobilePortrait: function () {

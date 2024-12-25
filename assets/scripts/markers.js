@@ -110,8 +110,10 @@ function initLayerMarkers(categoryId, category) {
         console.warn(`图标 ${category.icon} 加载失败:`, error);
         return;
       }
+      if (!map.hasImage(category.icon)) {
+        map.addImage(category.icon, image);
+      }
 
-      map.addImage(category.icon, image);
       addLayerWithSource();
     }
   );
