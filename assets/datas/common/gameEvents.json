@@ -5,8 +5,9 @@
     "beginDate": "2024-12-30 11:00:00",
     "endDate": "2025-01-24 03:49:59",
     "method": "完成任务【出发！愿望梦境仓库】后开启，游戏内活动大厅",
-    "description": "活动期间完成相应任务，获取星辉碎片，可获得3星套装",
-    "otherGift": ["3星套装【星夜归途】"]
+    "description": "活动期间完成相应任务，获取星辉碎片，可获得钻石和3星套装",
+    "mainGift": [{ "type": "diamond", "amount": 400 }],
+    "otherGift": ["3星套装【星夜归途】", "噗灵x20000", "幻彩泡泡·性感x100"]
   },
   {
     "id": 37,
@@ -24,10 +25,8 @@
     "endDate": "2025-01-24 03:49:59",
     "method": "完成任务【出发！愿望梦境仓库】后开启，游戏内活动大厅",
     "description": "在悠悠垂钓协会至天鹅羽亭附近的水域钓到粉色缎带鱼可以兑换奖励。完成活动逸事、见闻任务可获得钻石、称号等奖励",
-    "mainGift": [
-      { "type": "diamond", "amount": 300 },
-      { "type": "qishiCrystal", "amount": 1 }
-    ]
+    "mainGift": [{ "type": "diamond", "amount": 310 }],
+    "otherGift": ["噗灵x190000", "纯真丝线x200", "闪亮泡泡x400", "闪光粒子x115"]
   },
   {
     "id": 35,
@@ -36,9 +35,13 @@
     "endDate": "2025-01-24 03:49:59",
     "method": "完成任务【出发！愿望梦境仓库】后开启，游戏内活动大厅",
     "description": "完成活动逸事、见闻任务可获得钻石、设计图等奖励",
-    "mainGift": [
-      { "type": "diamond", "amount": 300 },
-      { "type": "qishiCrystal", "amount": 1 }
+    "mainGift": [{ "type": "diamond", "amount": 210 }],
+    "otherGift": [
+      "噗灵x190000",
+      "纯真丝线x350",
+      "闪亮泡泡x400",
+      "设计图【幸运满满】",
+      "祝福闪光【风之律·头部】"
     ]
   },
   {
@@ -48,9 +51,13 @@
     "endDate": "2025-01-24 03:49:59",
     "method": "完成限时风物任务【拯救“许愿星云”大作战】后开启，游戏内活动大厅",
     "description": "限定时间内通过指定关卡可获得钻石、名片背景等奖励",
-    "mainGift": [
-      { "type": "diamond", "amount": 300 },
-      { "type": "qishiCrystal", "amount": 1 }
+    "mainGift": [{ "type": "diamond", "amount": 600 }],
+    "otherGift": [
+      "噗灵x490000",
+      "纯真丝线x1500",
+      "闪亮泡泡x800",
+      "闪光粒子x275",
+      "名片【愿落星河间】"
     ]
   },
   {
@@ -60,10 +67,8 @@
     "endDate": "2025-01-24 03:49:59",
     "method": "完成任务【出发！愿望梦境仓库】后开启，游戏内活动大厅",
     "description": "完成活动风物任务可获得钻石等奖励",
-    "mainGift": [
-      { "type": "diamond", "amount": 300 },
-      { "type": "qishiCrystal", "amount": 1 }
-    ]
+    "mainGift": [{ "type": "diamond", "amount": 150 }],
+    "otherGift": ["噗灵x120000", "纯真丝线x600", "设计图【回忆星芒】"]
   },
   {
     "id": 32,
