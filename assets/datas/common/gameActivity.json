@@ -1,11 +1,20 @@
 [
   {
     "id": 1,
-    "name": "伙伴节",
+    "name": "伙伴节（2024-12-30 03:49:59结束）",
     "desc": "伙伴节",
     "region": "xyyy",
     "startTime": "2024-12-19 11:00:00",
     "endTime": "2024-12-30 03:49:59",
     "fileSuffix": "huobanjie"
+  },
+  {
+    "id": 2,
+    "name": "流星季（2025-01-24 03:49:59结束）",
+    "desc": "流星季",
+    "region": "xyyy",
+    "startTime": "2024-12-30 11:00:00",
+    "endTime": "2025-01-24 03:49:59",
+    "fileSuffix": "liuxingji"
   }
 ]

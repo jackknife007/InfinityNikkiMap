@@ -1,5 +1,83 @@
 [
   {
+    "id": 38,
+    "name": "繁星入夜",
+    "beginDate": "2024-12-30 11:00:00",
+    "endDate": "2025-01-24 03:49:59",
+    "method": "完成任务【出发！愿望梦境仓库】后开启，游戏内活动大厅",
+    "description": "活动期间完成相应任务，获取星辉碎片，可获得3星套装",
+    "otherGift": ["3星套装【星夜归途】"]
+  },
+  {
+    "id": 37,
+    "name": "星愿之礼",
+    "beginDate": "2024-12-30 11:00:00",
+    "endDate": "2025-01-13 09:59:59",
+    "method": "完成任务【出发！愿望梦境仓库】后开启，游戏内活动大厅",
+    "description": "累计登录7天可获得【启示水晶x10】",
+    "mainGift": [{ "type": "qishiCrystal", "amount": 10 }]
+  },
+  {
+    "id": 36,
+    "name": "上钩吧！粉色缎带鱼",
+    "beginDate": "2024-12-30 11:00:00",
+    "endDate": "2025-01-24 03:49:59",
+    "method": "完成任务【出发！愿望梦境仓库】后开启，游戏内活动大厅",
+    "description": "在悠悠垂钓协会至天鹅羽亭附近的水域钓到粉色缎带鱼可以兑换奖励。完成活动逸事、见闻任务可获得钻石、称号等奖励",
+    "mainGift": [
+      { "type": "diamond", "amount": 300 },
+      { "type": "qishiCrystal", "amount": 1 }
+    ]
+  },
+  {
+    "id": 35,
+    "name": "流星下的心愿奇遇",
+    "beginDate": "2024-12-30 11:00:00",
+    "endDate": "2025-01-24 03:49:59",
+    "method": "完成任务【出发！愿望梦境仓库】后开启，游戏内活动大厅",
+    "description": "完成活动逸事、见闻任务可获得钻石、设计图等奖励",
+    "mainGift": [
+      { "type": "diamond", "amount": 300 },
+      { "type": "qishiCrystal", "amount": 1 }
+    ]
+  },
+  {
+    "id": 34,
+    "name": "让我们一起触碰流星吧！",
+    "beginDate": "2024-12-30 11:00:00",
+    "endDate": "2025-01-24 03:49:59",
+    "method": "完成限时风物任务【拯救“许愿星云”大作战】后开启，游戏内活动大厅",
+    "description": "限定时间内通过指定关卡可获得钻石、名片背景等奖励",
+    "mainGift": [
+      { "type": "diamond", "amount": 300 },
+      { "type": "qishiCrystal", "amount": 1 }
+    ]
+  },
+  {
+    "id": 33,
+    "name": "流星点亮的心愿",
+    "beginDate": "2024-12-30 11:00:00",
+    "endDate": "2025-01-24 03:49:59",
+    "method": "完成任务【出发！愿望梦境仓库】后开启，游戏内活动大厅",
+    "description": "完成活动风物任务可获得钻石等奖励",
+    "mainGift": [
+      { "type": "diamond", "amount": 300 },
+      { "type": "qishiCrystal", "amount": 1 }
+    ]
+  },
+  {
+    "id": 32,
+    "name": "12月30日停服补偿",
+    "beginDate": "2024-12-30 10:00:00",
+    "endDate": "2025-01-05 23:59:59",
+    "method": "素材激化幻境",
+    "description": "停服维护更新已结束，现为您发放停服维护补偿，请查收",
+    "mainGift": [
+      { "type": "diamond", "amount": 300 },
+      { "type": "gongmingCrystal", "amount": 1 }
+    ]
+  },
+  {
     "id": 31,
     "name": "超级激化",
     "beginDate": "2024-12-21 04:00:00",
