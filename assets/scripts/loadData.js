@@ -704,10 +704,6 @@ let allDatas = {
             .then((markers) => {
               markers.data.forEach((marker) => {
                 allDatas.serverMarkers.set(parseInt(marker.id), marker);
-                allDatas.maxMarkerId = Math.max(
-                  allDatas.maxMarkerId,
-                  marker.id
-                );
               });
               if (markers.data.length > 0) {
                 const group = {

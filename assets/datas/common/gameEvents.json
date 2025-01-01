@@ -1,5 +1,24 @@
 [
   {
+    "id": 40,
+    "name": "《无限暖暖》新年贺礼",
+    "beginDate": "2025-01-01 00:00:00",
+    "endDate": "2025-01-03 23:59:59",
+    "method": "游戏内邮件",
+    "description": "祝搭配师们开心快乐地开启新年篇章！",
+    "mainGift": [{ "type": "diamond", "amount": 200 }],
+    "otherGift": ["噗灵x20000"]
+  },
+  {
+    "id": 39,
+    "name": "12月30日问题修复补偿补偿",
+    "beginDate": "2024-12-30 22:00:00",
+    "endDate": "2025-01-23 23:59:59",
+    "method": "游戏内邮件",
+    "description": "问题修复补偿（伙伴节还给500钻呢，这次只有200了）",
+    "mainGift": [{ "type": "diamond", "amount": 200 }]
+  },
+  {
     "id": 38,
     "name": "繁星入夜",
     "beginDate": "2024-12-30 11:00:00",
@@ -75,7 +94,7 @@
     "name": "12月30日停服补偿",
     "beginDate": "2024-12-30 10:00:00",
     "endDate": "2025-01-05 23:59:59",
-    "method": "素材激化幻境",
+    "method": "游戏内邮件",
     "description": "停服维护更新已结束，现为您发放停服维护补偿，请查收",
     "mainGift": [
       { "type": "diamond", "amount": 300 },
@@ -149,7 +168,7 @@
     "id": 25,
     "name": "全球下载量突破1000万贺礼",
     "beginDate": "2024-12-09 18:00:00",
-    "endDate": "2024-12-30 23:59:59",
+    "endDate": "2024-12-31 23:59:59",
     "method": "游戏内邮件",
     "description": "在奇想的旅程中，用每一个坚实的步伐，见证每一次悦动的光辉，向着闪闪发光的前路，一同迈进！",
     "mainGift": [{ "type": "gongmingCrystal", "amount": 10 }]
@@ -158,7 +177,7 @@
     "id": 24,
     "name": "1.0探索季版本问题修复谢礼",
     "beginDate": "2024-12-08 22:00:00",
-    "endDate": "2024-12-31 23:59:59",
+    "endDate": "2024-12-29 23:59:59",
     "method": "游戏内邮件",
     "description": "更美好的奇迹大陆离不开各位搭配师的热爱和陪伴。",
     "mainGift": [{ "type": "diamond", "amount": 1000 }]
@@ -393,5 +412,14 @@
     "method": "游戏内活动大厅",
     "description": "搭配师完成【朝夕心愿】累计心愿之辉，达到目标数，累计可以获得。",
     "mainGift": [{ "type": "gongmingCrystal", "amount": 18 }]
+  },
+  {
+    "id": 0,
+    "name": "添加官方企微专属见面礼",
+    "beginDate": "2024-12-14 11:00:00",
+    "endDate": "2100-12-31",
+    "method": "微信添加【搭配师小助手】",
+    "description": "添加官方企业微信可领取小助手专属见面礼！",
+    "mainGift": [{ "type": "diamond", "amount": 60 }]
   }
 ]
