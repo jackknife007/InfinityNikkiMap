@@ -1,42 +1,157 @@
 [
   {
     "id": 1,
-    "name": "宝箱",
-    "items": [
-      {
-        "content": "打开每个白色宝箱可获得【钻石x5】【噗灵x300】",
-        "contentTotal": "共%s个基础宝箱。",
-        "mainGift": [{ "type": "diamond", "amount": 5 }],
-        "total": 0
-      },
-      {
-        "content": "打开每个蓝色宝箱可获得【钻石x10】【噗灵x500】",
-        "contentTotal": "共%s个蓝色宝箱。",
-        "mainGift": [{ "type": "diamond", "amount": 10 }],
-        "total": 0
-      },
-      {
-        "content": "打开每个粉色宝箱可获得【钻石x30】【噗灵x1000】",
-        "contentTotal": "共%s个粉色宝箱。",
-        "mainGift": [{ "type": "diamond", "amount": 20 }],
-        "total": 0
-      }
-    ]
-  },
-  {
-    "id": 2,
     "name": "流转之柱",
     "items": [
       {
         "content": "激活每个流转之柱可获得【钻石x20】",
         "contentTotal": "共%s个流转之柱。",
         "mainGift": [{ "type": "diamond", "amount": 20 }],
-        "total": 0
+        "total": 85
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "宝箱",
+    "items": [
+      {
+        "content": "打开每个白色宝箱可获得【钻石x5】【噗灵x300】【经验x20】",
+        "contentTotal": "共%s个白色宝箱。",
+        "mainGift": [{ "type": "diamond", "amount": 5 }],
+        "total": 202
+      },
+      {
+        "content": "打开每个蓝色宝箱可获得【钻石x10】【噗灵x500】【经验x20】【纯真丝线x10】",
+        "contentTotal": "共%s个蓝色宝箱。",
+        "mainGift": [{ "type": "diamond", "amount": 10 }],
+        "total": 163
+      },
+      {
+        "content": "打开每个粉色宝箱可获得【钻石x30】【噗灵x1000】【经验x40】【纯真丝线x20】",
+        "contentTotal": "共%s个粉色宝箱。",
+        "mainGift": [{ "type": "diamond", "amount": 30 }],
+        "total": 50
+      },
+      {
+        "content": "打开每个设计图宝箱可获得【钻石x30】【噗灵x1000】【经验x40】【纯真丝线x20】【设计图】",
+        "contentTotal": "共%s个设计图宝箱。",
+        "mainGift": [{ "type": "diamond", "amount": 30 }],
+        "total": 82
       }
     ]
   },
   {
     "id": 3,
+    "name": "主线任务",
+    "items": [
+      {
+        "content": "完成主线序章任务可获得【共鸣水晶x2】【噗灵x20000】【纯真丝线x200】",
+        "mainGift": [{ "type": "gongmingCrystal", "amount": 2 }],
+        "total": 1
+      },
+      {
+        "content": "完成主线第一章任务可获得【共鸣水晶x2】【钻石x100】【噗灵x60000】【经验x3100】【纯真丝线x400】【闪亮泡泡x100】【闪光粒子x30】",
+        "mainGift": [
+          { "type": "gongmingCrystal", "amount": 2 },
+          { "type": "diamond", "amount": 100 }
+        ],
+        "total": 1
+      },
+      {
+        "content": "完成主线第二章任务可获得【共鸣水晶x2】【钻石x100】【噗灵x70000】【经验x4000】【纯真丝线x440】【闪亮泡泡x400】",
+        "mainGift": [
+          { "type": "gongmingCrystal", "amount": 2 },
+          { "type": "diamond", "amount": 100 }
+        ],
+        "total": 1
+      },
+      {
+        "content": "完成主线第三章任务可获得【共鸣水晶x2】【钻石x100】【噗灵x80000】【经验x4000】【纯真丝线x480】【闪亮泡泡x400】",
+        "mainGift": [
+          { "type": "gongmingCrystal", "amount": 2 },
+          { "type": "diamond", "amount": 100 }
+        ],
+        "total": 1
+      },
+      {
+        "content": "完成主线第四章任务可获得【共鸣水晶x2】【钻石x100】【噗灵x80000】【经验x4000】【纯真丝线x480】【闪亮泡泡x400】",
+        "mainGift": [
+          { "type": "gongmingCrystal", "amount": 2 },
+          { "type": "diamond", "amount": 100 }
+        ],
+        "total": 1
+      },
+      {
+        "content": "完成主线第五章任务可获得【共鸣水晶x2】【钻石x150】【噗灵x100000】【经验x5000】【纯真丝线x600】【闪亮泡泡x500】",
+        "mainGift": [
+          { "type": "gongmingCrystal", "amount": 2 },
+          { "type": "diamond", "amount": 150 }
+        ],
+        "total": 1
+      },
+      {
+        "content": "完成主线第六章任务可获得【共鸣水晶x3】【钻石x150】【噗灵x120000】【经验x6000】【纯真丝线x720】【闪亮泡泡x600】",
+        "mainGift": [
+          { "type": "gongmingCrystal", "amount": 3 },
+          { "type": "diamond", "amount": 150 }
+        ],
+        "total": 1
+      },
+      {
+        "content": "完成主线第七章任务可获得【共鸣水晶x3】【钻石x150】【噗灵x120000】【经验x6000】【纯真丝线x720】【闪亮泡泡x600】",
+        "mainGift": [
+          { "type": "gongmingCrystal", "amount": 3 },
+          { "type": "diamond", "amount": 150 }
+        ],
+        "total": 1
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "逸事任务",
+    "items": [
+      {
+        "content": "完成每个逸事任务可获得【钻石x20】",
+        "contentTotal": "共%s个。",
+        "mainGift": [{ "type": "diamond", "amount": 20 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "见闻任务",
+    "items": [
+      {
+        "content": "完成每个见闻任务可获得【钻石x20】",
+        "contentTotal": "共%s个。",
+        "mainGift": [{ "type": "diamond", "amount": 20 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "奇想探索等级",
+    "items": [
+      {
+        "content": "等级每提升5级可获得【钻石x30】",
+        "contentTotal": "共可获得%s次。",
+        "mainGift": [{ "type": "diamond", "amount": 30 }],
+        "total": 20
+      },
+      {
+        "content": "等级达到7、11、14、18、22、26、31、34、38、42、46、51、56、61、64、68、72、76、82、86、92、96可获得【共鸣水晶x1】",
+        "contentTotal": "共可获得%s次。",
+        "mainGift": [{ "type": "gongmingCrystal", "amount": 1 }],
+        "total": 22
+      }
+    ]
+  },
+  {
+    "id": 7,
     "name": "搭配师课题",
     "items": [
       {
@@ -48,97 +163,122 @@
     ]
   },
   {
-    "id": 4,
+    "id": 8,
     "name": "美鸭梨评价",
     "items": [
       {
         "content": "美鸭梨评价评分每增长100可获得【钻石x30】",
         "contentTotal": "共可获得%s次。",
         "mainGift": [{ "type": "diamond", "amount": 30 }],
-        "total": 0
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "name": "搭配势力",
-    "items": [
-      {
-        "content": "挑战结果首次达到优秀可获得【钻石x10】",
-        "contentTotal": "共可获得%s次。",
-        "mainGift": [{ "type": "diamond", "amount": 10 }],
-        "total": 0
+        "total": 99
       },
       {
-        "content": "挑战结果首次达到完美可获得【钻石x20】",
+        "content": "美鸭梨评价评分每增长1000可额外获得【钻石x70】",
         "contentTotal": "共可获得%s次。",
-        "mainGift": [{ "type": "diamond", "amount": 20 }],
-        "total": 0
-      }
-    ]
-  },
-  {
-    "id": 6,
-    "name": "小游戏",
-    "items": [
-      {
-        "content": "首次通过可获得【钻石x10】",
-        "contentTotal": "共%s个小游戏。",
-        "mainGift": [{ "type": "diamond", "amount": 10 }],
-        "total": 0
+        "mainGift": [{ "type": "diamond", "amount": 70 }],
+        "total": 9
       },
       {
-        "content": "首次完美通过可获得【钻石x30】",
-        "contentTotal": "共%s个小游戏。",
-        "mainGift": [{ "type": "diamond", "amount": 30 }],
-        "total": 0
-      }
-    ]
-  },
-  {
-    "id": 7,
-    "name": "奇想探索等级",
-    "items": [
-      {
-        "content": "等级每提升5级可获得【钻石x30】",
+        "content": "美鸭梨评价评分到达500后，每增长1000可获得【共鸣水晶x1】",
         "contentTotal": "共可获得%s次。",
-        "mainGift": [{ "type": "diamond", "amount": 30 }],
-        "total": 0
-      }
-    ]
-  },
-  {
-    "id": 8,
-    "name": "收集套装",
-    "items": [
-      {
-        "content": "每集齐一套四星套装可获得【钻石x20】",
-        "contentTotal": "共%s个四星套装。",
-        "mainGift": [{ "type": "diamond", "amount": 20 }],
-        "total": 0
-      },
-      {
-        "content": "每集齐一套五星套装可获得【钻石x100】",
-        "contentTotal": "共%s个五星套装。",
-        "mainGift": [{ "type": "diamond", "amount": 20 }],
-        "total": 0
+        "mainGift": [{ "type": "gongmingCrystal", "amount": 1 }],
+        "total": 10
       }
     ]
   },
   {
     "id": 9,
-    "name": "修理坏掉的路灯",
+    "name": "搭配势力",
     "items": [
       {
-        "content": "每修理一个可获得【钻石x30】",
-        "contentTotal": "共%s个。",
+        "content": "挑战搭配团，首次达到优秀可获得【钻石x10】，首次达到完美可获得【钻石x20】",
+        "contentTotal": "共可获得%s次。",
         "mainGift": [{ "type": "diamond", "amount": 30 }],
-        "total": 0
+        "total": 61
+      },
+      {
+        "content": "挑战天王，首次达到优秀可获得【钻石x30】，首次达到完美可获得【共鸣水晶x1】",
+        "contentTotal": "共可获得%s次。",
+        "mainGift": [
+          { "type": "diamond", "amount": 30 },
+          { "type": "gongmingCrystal", "amount": 1 }
+        ],
+        "total": 4
       }
     ]
   },
   {
     "id": 10,
+    "name": "小游戏",
+    "items": [
+      {
+        "content": "首次通过可获得【钻石x10】，首次完美通过可获得【钻石x30】",
+        "contentTotal": "共%s个小游戏。",
+        "mainGift": [{ "type": "diamond", "amount": 40 }],
+        "total": 42
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "民俗游戏",
+    "items": [
+      {
+        "content": "首次通过可获得【钻石x10】",
+        "contentTotal": "共%s个民俗游戏。",
+        "mainGift": [{ "type": "diamond", "amount": 10 }],
+        "total": 44
+      },
+      {
+        "content": "完成每个类别的游戏找塞吉托领取【钻石x100】",
+        "contentTotal": "共%s个类别。",
+        "mainGift": [{ "type": "diamond", "amount": 100 }],
+        "total": 4
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "修理花愿镇坏掉的路灯",
+    "items": [
+      {
+        "content": "每修理一个可获得【钻石x30】【噗灵x10000】",
+        "contentTotal": "共%s个。",
+        "mainGift": [{ "type": "diamond", "amount": 30 }],
+        "total": 6
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "祈愿树林奇趣踩踩盘",
+    "items": [
+      {
+        "content": "每完成一个可获得【钻石x40】",
+        "contentTotal": "共%s个。",
+        "mainGift": [{ "type": "diamond", "amount": 40 }],
+        "total": 3
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "name": "收集套装",
+    "items": [
+      {
+        "content": "每集齐一套四星套装可获得【钻石x20】",
+        "mainGift": [{ "type": "diamond", "amount": 20 }],
+        "total": 0
+      },
+      {
+        "content": "每集齐一套五星套装可获得【钻石x100】",
+        "mainGift": [{ "type": "diamond", "amount": 20 }],
+        "total": 0
+      }
+    ]
+  },
+  {
+    "id": 15,
     "name": "奇迹之冠搭配赛",
     "items": [
       {
@@ -150,7 +290,7 @@
     ]
   },
   {
-    "id": 11,
+    "id": 16,
     "name": "奇迹之冠巅峰赛",
     "items": [
       {
@@ -169,18 +309,6 @@
         "content": "评价星级达到22、23、24可分别获得【钻石x30】",
         "contentTotal": "共可获得%s次。",
         "mainGift": [{ "type": "diamond", "amount": 30 }],
-        "total": 0
-      }
-    ]
-  },
-  {
-    "id": 12,
-    "name": "见闻任务",
-    "items": [
-      {
-        "content": "完成每个见闻任务可获得【钻石x20】",
-        "contentTotal": "共%s个。",
-        "mainGift": [{ "type": "diamond", "amount": 20 }],
         "total": 0
       }
     ]

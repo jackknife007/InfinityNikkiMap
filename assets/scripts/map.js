@@ -159,10 +159,10 @@ function InitMap() {
           tileSize: 256,
           attributionControl: false,
           minZoom: 1,
-          maxZoom: 6,
+          maxZoom: resourceControl.getTilesMaxZoom(),
           keepBuffer: 8,
 
-          bounds: [-112.45, -70.58, 132.51, 68.36], // 全球范围
+          bounds: resourceControl.getTilesBounds(), // 全球范围
         },
       },
       layers: [
@@ -178,7 +178,7 @@ function InitMap() {
     },
     zoom: 2,
     minZoom: 1,
-    maxZoom: 6,
+    maxZoom: resourceControl.getTilesMaxZoom(),
     maxBounds: [
       [-360, -90], // 西南角坐标 [经度, 纬度]
       [360, 90], // 东北角坐标 [经度, 纬度]

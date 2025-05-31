@@ -94,7 +94,27 @@ let resourceControl = {
   },
 
   getTilesFilePath: function () {
-    return `${this._assetsHost()}/tiles/xyyy/{z}/{x}/{y}.jpg`;
+    return `${this._assetsHost()}/tiles/${this.regionName}/{z}/{x}/{y}.jpg`;
+  },
+
+  getTilesMaxZoom: function () {
+    if (this.regionName === "xyyy") {
+      return 6;
+    } else if (this.regionName === "hyqd") {
+      return 3;
+    } else {
+      return 6;
+    }
+  },
+
+  getTilesBounds: function () {
+    if (this.regionName === "xyyy") {
+      return [-112.45, -70.58, 132.51, 68.36];
+    } else if (this.regionName === "hyqd") {
+      return [-180, -90, 180, 90];
+    } else {
+      return [-112.45, -70.58, 132.51, 68.36];
+    }
   },
 
   getMarkerImageFilePath: function (image) {

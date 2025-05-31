@@ -1,17 +1,39 @@
 let developmentMode = false;
 
 const areas = [
-  { id: 0, name: "心愿原野", lng: -11.11, lat: 2.55, zoom: 1 },
-  { id: 100, name: "纪念山地", lng: 11.21, lat: -2.62, zoom: 5 },
-  { id: 200, name: "花愿镇", lng: 39.28, lat: 0.27, zoom: 4 },
-  { id: 300, name: "微风绿野", lng: 27.46, lat: -45.02, zoom: 3 },
-  { id: 400, name: "小石树田村", lng: -20, lat: -25.65, zoom: 4 },
+  { id: 0, name: "心愿原野", lng: -11.11, lat: 2.55, zoom: 1, region: "xyyy" },
+  {
+    id: 100,
+    name: "纪念山地",
+    lng: 11.21,
+    lat: -2.62,
+    zoom: 5,
+    region: "xyyy",
+  },
+  { id: 200, name: "花愿镇", lng: 39.28, lat: 0.27, zoom: 4, region: "xyyy" },
+  {
+    id: 300,
+    name: "微风绿野",
+    lng: 27.46,
+    lat: -45.02,
+    zoom: 3,
+    region: "xyyy",
+  },
+  {
+    id: 400,
+    name: "小石树田村",
+    lng: -20,
+    lat: -25.65,
+    zoom: 4,
+    region: "xyyy",
+  },
   {
     id: 401,
     name: "染织工坊旁石树",
     lng: -20.82,
     lat: 14.13,
     zoom: 5.8,
+    region: "xyyy",
   },
   {
     id: 402,
@@ -19,14 +41,23 @@ const areas = [
     lng: -6.74,
     lat: -24.79,
     zoom: 5.8,
+    region: "xyyy",
   },
-  { id: 500, name: "石树田无人区", lng: -61.34, lat: 16.26, zoom: 3 },
+  {
+    id: 500,
+    name: "石树田无人区",
+    lng: -61.34,
+    lat: 16.26,
+    zoom: 3,
+    region: "xyyy",
+  },
   {
     id: 501,
     name: "麦浪农场",
     lng: -42.62,
     lat: -11.58,
     zoom: 5.46,
+    region: "xyyy",
   },
   {
     id: 502,
@@ -34,6 +65,7 @@ const areas = [
     lng: -58.98,
     lat: -14.43,
     zoom: 5.13,
+    region: "xyyy",
   },
   {
     id: 503,
@@ -41,6 +73,7 @@ const areas = [
     lng: -84.84,
     lat: 1.36,
     zoom: 5.18,
+    region: "xyyy",
   },
   {
     id: 504,
@@ -48,6 +81,7 @@ const areas = [
     lng: -59.86,
     lat: 8.32,
     zoom: 4.87,
+    region: "xyyy",
   },
   {
     id: 505,
@@ -55,6 +89,7 @@ const areas = [
     lng: -36.36,
     lat: 16.93,
     zoom: 5.07,
+    region: "xyyy",
   },
   {
     id: 506,
@@ -62,6 +97,7 @@ const areas = [
     lng: -80.84,
     lat: 27.67,
     zoom: 5,
+    region: "xyyy",
   },
   {
     id: 507,
@@ -69,6 +105,7 @@ const areas = [
     lng: -17.43,
     lat: 38.68,
     zoom: 4.75,
+    region: "xyyy",
   },
   {
     id: 508,
@@ -76,14 +113,31 @@ const areas = [
     lng: -52.84,
     lat: 41.6,
     zoom: 4,
+    region: "xyyy",
   },
-  { id: 600, name: "祈愿树林", lng: 92.55, lat: 22.71, zoom: 3 },
+  {
+    id: 600,
+    name: "祈愿树林",
+    lng: 92.55,
+    lat: 22.71,
+    zoom: 3,
+    region: "xyyy",
+  },
   {
     id: 601,
     name: "千愿巨树",
     lng: 103.93,
     lat: 32.81,
     zoom: 5.51,
+    region: "xyyy",
+  },
+  {
+    id: 10000,
+    name: "花焰群岛",
+    lng: -11.11,
+    lat: 2.55,
+    zoom: 1,
+    region: "hyqd",
   },
 ];
 
@@ -547,14 +601,37 @@ let filterPanel = {
             option.textContent = area.name;
             option.setAttribute("data-area-id", area.id);
             option.onclick = () => {
-              dropdown.style.display = "none";
+              localStorage.setItem("regionName", area.region);
+              localStorage.setItem("selectedAreaId", area.id);
+
+              if (resourceControl.getRegionName() !== area.region) {
+                window.location.reload();
+              } else {
+                dropdown.style.display = "none";
+                filterPanel.content.header.areaSelector.setSelected(
+                  area.id,
+                  area.name
+                );
+                layers.filterArea(area);
+              }
+            };
+            dropdown.appendChild(option);
+
+            const savedAreaId = localStorage.getItem("selectedAreaId");
+            if (savedAreaId && area.id === parseInt(savedAreaId)) {
               filterPanel.content.header.areaSelector.setSelected(
                 area.id,
                 area.name
               );
-              layers.filterArea(area);
-            };
-            dropdown.appendChild(option);
+              if (map.loaded()) {
+                layers.filterArea(area);
+                console.log("map loaded");
+              } else {
+                map.on("load", () => {
+                  layers.filterArea(area);
+                });
+              }
+            }
           });
 
           this.selector.appendChild(this.selected);
